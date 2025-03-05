@@ -1,4 +1,5 @@
-<div class="dropdown d-flex justify-content-end p-3">
+<div class="dropdown d-flex justify-content-end p-3 bg-dark-subtle shadow-sm">
+    <button class="btn btn-light shadow me-3 rounded-circle" id="btn-switch"><i class="bi bi-brightness-high" id="switch-icon"></i></button>
     <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
         <strong>mdo</strong>
@@ -10,3 +11,19 @@
         <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
     </ul>
 </div>
+
+<script>
+    document.getElementById('btn-switch').addEventListener('click',()=>{
+        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+            document.documentElement.setAttribute('data-bs-theme','light')
+            document.getElementById('switch-icon').className = "bi bi-brightness-high";
+            document.getElementById('btn-switch').className = "btn btn-light shadow me-3 rounded-circle"
+        }
+        else {
+            document.documentElement.setAttribute('data-bs-theme','dark')
+            document.getElementById('switch-icon').className = "bi bi-moon";
+            document.getElementById('btn-switch').className = "btn btn-dark shadow me-3 rounded-circle"
+
+        }
+    })
+</script>

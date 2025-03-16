@@ -1,6 +1,10 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
-
+<div class="m-5">
+    <a href="{{ path('app_admin_user_new') }}" type="button" class="btn btn-primary">Ajouter un utilisateur</a>
+    <table id="table-display" class="table table-striped" style="width:100%">
+    </table>
+</div>
 {% endblock body %}
 

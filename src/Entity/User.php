@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\Table(name: '`user`')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\HasLifecycleCallbacks]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,6 +40,9 @@ class User
     #[ORM\Column]
     private ?bool $newsletter = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     /**
      * @var Collection<int, Recipe>
      */
@@ -45,8 +52,11 @@ class User
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'userId')]
-    private Collection $commentID;
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
+    private Collection $comments;
+
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
 
     public function __construct()
     {
@@ -59,6 +69,18 @@ class User
         return $this->id;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -130,6 +152,17 @@ class User
 
         return $this;
     }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Recipe>
@@ -164,7 +197,7 @@ class User
     /**
      * @return Collection<int, Comment>
      */
-    public function getCommentID(): Collection
+    public function getComments(): Collection
     {
         return $this->comments;
     }
@@ -173,7 +206,7 @@ class User
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setUserId($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -183,8 +216,8 @@ class User
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUserId() === $this) {
-                $comment->setUserId(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
@@ -194,5 +227,17 @@ class User
     public function getRoles(): array
     {
         // TODO: Implement getRoles() method.
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
     }
 }

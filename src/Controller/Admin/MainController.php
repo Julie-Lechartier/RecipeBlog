@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin', name: 'admin')]
 class MainController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'app_admin_index')]
     public function index(): Response
     {
         return $this->render('admin/index.html.twig');

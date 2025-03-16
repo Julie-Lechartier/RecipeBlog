@@ -1,27 +1,40 @@
-<form class="flex justify-content-center align-content-center" style="width: 70%">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Prénom</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+{{ form_start(form) }}
+
+<div class="container ">
+    <div class="row">
+        <div class="mb-3">
+            <label for="InputFirstname" class="form-label">{{ form_label(form.firstname) }}</label>
+            {{ form_widget(form.firstname) }}
+        </div>
+        <div class="mb-3">
+            <label for="inputLastname" class="form-label">{{ form_label(form.lastname) }}</label>
+            {{ form_widget(form.lastname) }}
+        </div>
+        <div class="mb-3">
+            <label for="inputUsername" class="form-label">{{ form_label(form.username) }}</label>
+            {{ form_widget(form.username) }}
+        </div>
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">{{ form_label(form.email) }}</label>
+            {{ form_widget(form.email) }}
+
+        </div>
+        <div class="mb-3">
+            <label for="inputBirthDate" class="form-label">{{ form_label(form.birthDate) }}</label>
+            {{ form_widget(form.birthDate) }}
+
+        </div>
+        <div class="mb-3">
+            <label for="InputPassword1" class="form-label">{{ form_label((form.password)) }}</label>
+            {{ form_widget(form.password) }}
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-check-label" for="exampleCheck1">{{ form_label(form.newsletter) }}</label>
+            {{ form_widget(form.newsletter, {'attr' : {'class' : 'form-check-input'}}) }}
+        </div>
+        <button type="submit" class="btn btn-primary" href="{{ path('app_admin_user_index') }}">Submit</button>
     </div>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Nom</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Nom</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Adresse mail</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemple@email.com">
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
+
+
+{{ form_end(form) }}

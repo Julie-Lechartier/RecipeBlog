@@ -1,0 +1,8 @@
+{% extends "admin/base.html.twig" %}
+{% block body %}
+    <div class="m-5">
+        <a href="{{ path('app_admin_recipe_new') }}" type="button" class="btn btn-primary">Ajouter une recette</a>
+        <table id="table-display" class="table table-striped" style="width:100%">
+        </table>
+    </div>
+{% endblock %}

@@ -25,15 +25,12 @@ class Recipe
     #[ORM\Column(nullable: true)]
     private ?int $preparationTime = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
-
     #[ORM\Column]
     private ?int $serving = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipeId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $author = null;
+    private ?User $author = null;
 
     /**
      * @var Collection<int, RecipeCategory>
@@ -47,10 +44,18 @@ class Recipe
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipeId', orphanRemoval: true)]
     private Collection $commentId;
 
+    /**
+     * @var Collection<int, Media>
+     */
+
+    #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
+    private ?Collection $step;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->commentId = new ArrayCollection();
+        $this->step = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,17 +99,6 @@ class Recipe
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getServing(): ?int
     {
@@ -118,12 +112,12 @@ class Recipe
         return $this;
     }
 
-    public function getAuthor(): ?user
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?user $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 
@@ -183,4 +177,14 @@ class Recipe
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Media>
+     */
+
+    public function getStep(): Collection
+    {
+        return $this->step;
+    }
+
 }

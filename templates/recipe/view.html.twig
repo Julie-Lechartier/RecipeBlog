@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-5">
+                <img src="https://picsum.photos/400/200" class="rounded-2" alt="image de la recette">
+            </div>
+            <div class="col-7">
+                <h1>{{ recipe.title }}</h1>
+                <div class="d-flex justify-content-between">
+                    <p>Dessert</p>
+                    <p>Temps de préparation: {{ recipe.preparationTime }}min.</p>
+                </div>
+                <p class="text-end">Nombres de services: {{ recipe.serving }} personnes</p>
+                <p>
+                    {{ recipe.description }}
+                </p>
+
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-5">
+                <h2>Ingrédient</h2>
+                <div class="d-flex justify-content-between w-50">
+                    <p>100g</p>
+                    <p>Pépite de chocolat</p>
+                </div>
+            </div>
+            <div class="col-7">
+                <h2>Instructions</h2>
+                {% for step in steps %}
+                    <div>
+                        <h4>Étape {{ step.stepNumber }}</h4>
+                        <p>{{ step.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

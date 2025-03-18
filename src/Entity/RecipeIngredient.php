@@ -15,11 +15,11 @@ class RecipeIngredient
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Recipe $recipeId = null;
+    private ?Recipe $recipe = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ingredient $ingredientId = null;
+    private ?ingredient $ingredient = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $quantity = null;
@@ -29,26 +29,26 @@ class RecipeIngredient
         return $this->id;
     }
 
-    public function getRecipeId(): ?Recipe
+    public function getRecipe(): ?Recipe
     {
-        return $this->recipeId;
+        return $this->recipe;
     }
 
-    public function setRecipeId(?Recipe $recipeId): static
+    public function setRecipe(?Recipe $recipe): static
     {
-        $this->recipeId = $recipeId;
+        $this->recipe = $recipe;
 
         return $this;
     }
 
-    public function getIngredientId(): ?ingredient
+    public function getIngredient(): ?ingredient
     {
-        return $this->ingredientId;
+        return $this->ingredient;
     }
 
-    public function setIngredientId(?ingredient $ingredientId): static
+    public function setIngredient(?ingredient $ingredient): static
     {
-        $this->ingredientId = $ingredientId;
+        $this->ingredient = $ingredient;
 
         return $this;
     }

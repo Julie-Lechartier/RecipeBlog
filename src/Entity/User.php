@@ -58,10 +58,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $role = null;
+
+    /**
+     * @var Collection<int, Media>
+     */
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'avatar_id')]
+    private Collection $avatarId;
+
     public function __construct()
     {
         $this->recipeId = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->avatarId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,4 +250,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): static
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getAvatarId(): Collection
+    {
+        return $this->avatarId;
+    }
+
+    public function addAvatarId(Media $avatarId): static
+    {
+        if (!$this->avatarId->contains($avatarId)) {
+            $this->avatarId->add($avatarId);
+            $avatarId->setAvatarId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvatarId(Media $avatarId): static
+    {
+        if ($this->avatarId->removeElement($avatarId)) {
+            // set the owning side to null (unless already changed)
+            if ($avatarId->getAvatarId() === $this) {
+                $avatarId->setAvatarId(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

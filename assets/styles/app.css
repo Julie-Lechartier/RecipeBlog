@@ -3,6 +3,7 @@
     --dark-green: #8DAA91;
     --green: #A7C4A0;
     --brown: #A67B5B;
+    --brown-rgba: 166, 123, 91;
     --cherry: #D83F4D;
 }
 .bg-dark-green{
@@ -16,6 +17,21 @@
 }
 .bg-cherry{
     background-color: var(--cherry)!important;
+}
+.bg-card{
+    background-color: rgba(var(--brown-rgba), 0.1)!important;
+}
+.text-dark-green{
+    color: var(--dark-green)!important;
+}
+.text-green{
+    color: var(--green)!important;
+}
+.text-brown{
+    color: var(--brown)!important;
+}
+.text-cherry{
+    color: var(--cherry)!important;
 }
 /* Custom Color End */
 
@@ -59,4 +75,50 @@
 .offcanvas-fullscreen {
     width: 100vw !important;
     max-width: 100% !important;
+}
+
+/* Custom image filter*/
+.bg-image{
+    filter: grayscale(70%);
+}
+
+
+/* Recipe Card */
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.card {
+    width: 14rem;
+    flex-shrink: 0;
+}
+
+.scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+@media (max-width: 768px) {
+    .card-home {
+        width: 14rem;
+    }
+    .card{
+        width:11rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-home {
+        width: 12rem;
+    }
 }

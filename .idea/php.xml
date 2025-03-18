@@ -146,6 +146,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap-icons" />
       <path value="$PROJECT_DIR$/vendor/omines/datatables-bundle" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/vendor/bluemmb/faker-picsum-photos-provider" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

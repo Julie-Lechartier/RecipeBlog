@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-lg bg-dark-green" aria-label="Offcanvas navbar large">
+<header class="navbar navbar-expand-lg bg-dark-green p-0" aria-label="Offcanvas navbar large">
     <div class="container-flex  w-100">
         <div class="row gap-lg-4 px-2 mx-0 no-wrap align-items-center">
             <!-- Modal nav button Start -->
@@ -10,28 +10,25 @@
                 </span>
             </button>
             <!-- Modal nav button End -->
+{#            <div class="col-lg-3 col-8 d-flex justify-content-center">#}
+{#                <a href="{{ path('home') }}">#}
+{#                    <img src="{{ asset('images/logo-white.png') }}" alt="logo" class="w-100">#}
+{#                </a>#}
+{#            </div>#}
             <!-- Nav Start -->
             <div class=" col-7 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
                  tabindex="-1" id="offcanvasNavbar"
                  aria-labelledby="offcanvasNavbarLabel">
                 <!-- Nav Mobile header-->
                 <div class="offcanvas-header justify-content-between border-bottom">
-                    <button type="button" class="bg-transparent border-1 rounded-circle icon icon-2 border-secondary-subtle"
+                    <button type="button" class="bg-transparent border-1 icon border-0"
                             data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-chevron-left icon-2-size"></i>
                     </button>
                     <h5 class="offcanvas-title text-custom-black" id="offcanvasNavbarLabel">Menu</h5>
                 </div>
                 <!-- Nav body -->
-                <div class="offcanvas-body overflow-hidden">
+                <div class="offcanvas-body overflow-lg-hidden">
                     <ul class="navbar-nav gap-2 justify-content-end flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
-                        <li class="nav-item ">
-                            <a href="#" class="nav-link text-white">Membres</a>
-                            <span class="d-lg-none d-block border-top m-2"></span>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="#" class="nav-link text-white">Formations</a>
-                            <span class="d-lg-none d-block border-top m-2"></span>
-                        </li>
                         <li class="nav-item dropdown ">
                             <button class="btn dropdown-toggle text-white text-uppercase tw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Recettes
@@ -44,29 +41,6 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
-                <!-- Nav Mobile footer  -->
-                <div class="d-lg-none d-flex m-4">
-                    <div class="col-8 text-start fw-lighter text-body-secondary border-end">
-                        <p class="text-custom-black">À propos</p>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">Qui sommes-nous</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">CGU</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">Charte éthique</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link ">Espace annonceur</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <!-- Desktop Search bar Start -->

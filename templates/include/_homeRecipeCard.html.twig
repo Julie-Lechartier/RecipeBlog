@@ -1,22 +1,24 @@
-<div class="card-home rounded-4 border-0 shadow-sm" style="width: 20rem; height:19rem">
-    <div class="position-relative">
-    <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-top-4" alt="...">
-    <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">Card title</h5>
-    </div>
-    <div class="card-body px-4 pb-0">
-        <ul class="p-0">
-            <li class="d-flex gap-2">
-                <i class="bi bi-stopwatch text-dark-green"></i>
-                <p>1 heure</p>
-            </li>
-            <li class="d-flex gap-2">
-                <i class="bi bi-person text-dark-green"></i>
-                <p>4 personnes</p>
-            </li>
-            <li class=" d-flex gap-2">
-                <i class="bi bi-bookmark text-dark-green"></i>
-                <p>Dessert</p>
-            </li>
-        </ul>
-    </div>
-</div>
+{% for recipe in recipes %}
+    <a class="card-home rounded-4 border-0 shadow-sm" style="width: 20rem; height:19rem" href="">
+        <div class="position-relative">
+            <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-top-4" alt="...">
+            <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">{{ recipe.title }}</h5>
+        </div>
+        <div class="card-body px-4 pb-0">
+            <ul class="p-0">
+                <li class="d-flex gap-2">
+                    <i class="bi bi-stopwatch text-dark-green"></i>
+                    <p>{{ recipe.preparationTime }} heure</p>
+                </li>
+                <li class="d-flex gap-2">
+                    <i class="bi bi-person text-dark-green"></i>
+                    <p>{{ recipe.serving }} personnes</p>
+                </li>
+                <li class=" d-flex gap-2">
+                    <i class="bi bi-bookmark text-dark-green"></i>
+                    <p>Category</p>
+                </li>
+            </ul>
+        </div>
+    </a>
+{% endfor %}

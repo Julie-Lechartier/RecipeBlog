@@ -14,7 +14,7 @@ class RecipeController extends AbstractController{
     }
 
     #[Route('/{id}', name: 'app_recipe_view')]
-    public function view(int $id, RecipeRepository $recipeRepository) {
+    public function show(int $id, RecipeRepository $recipeRepository) {
         $recipe = $recipeRepository->find($id);
         if (!$recipe) {
             throw $this->createNotFoundException("Recette introuvable !");

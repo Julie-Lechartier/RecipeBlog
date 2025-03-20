@@ -16,108 +16,12 @@
         </div>
         <!-- Mobile Search bar End -->
     </div>
-
-{% include 'include/_recipeCard.html.twig' %}
-
-<!-- Scroll container sample for Recipe Card -->
-{#    <div class="container m-0 w-100 mw-100 p-0">#}
-{#        <h2 class="fw-bold">Recette du jour</h2>#}
-{#        <div class="scroll-container">#}
-{#            <!-- Card 1 -->#}
-{#            <div class="card rounded-4 shadow-sm" style="width: 18rem;">#}
-{#                <div class="position-relative">#}
-{#                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image" alt="...">#}
-{#                    <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">Card title</h5>#}
-{#                </div>#}
-{#                <div class="card-body">#}
-{#                    <ul class="p-0">#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-stopwatch text-dark-green"></i>#}
-{#                            <p>1 heure</p>#}
-{#                        </li>#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-person text-dark-green"></i>#}
-{#                            <p>4 personnes</p>#}
-{#                        </li>#}
-{#                        <li class=" d-flex gap-2">#}
-{#                            <i class="bi bi-bookmark text-dark-green"></i>#}
-{#                            <p>Dessert</p>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-
-{#            <!-- Card 2 -->#}
-{#            <div class="card rounded-4 shadow-sm" style="width: 18rem;">#}
-{#                <div class="position-relative">#}
-{#                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image" alt="...">#}
-{#                    <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">Card title</h5>#}
-{#                </div>#}
-{#                <div class="card-body">#}
-{#                    <ul class="p-0">#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-stopwatch text-dark-green"></i>#}
-{#                            <p>1 heure</p>#}
-{#                        </li>#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-person text-dark-green"></i>#}
-{#                            <p>4 personnes</p>#}
-{#                        </li>#}
-{#                        <li class=" d-flex gap-2">#}
-{#                            <i class="bi bi-bookmark text-dark-green"></i>#}
-{#                            <p>Dessert</p>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-
-{#            <!-- Card 3 -->#}
-{#            <div class="card rounded-4 shadow-sm" style="width: 18rem;">#}
-{#                <div class="position-relative">#}
-{#                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image" alt="...">#}
-{#                    <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">Card title</h5>#}
-{#                </div>#}
-{#                <div class="card-body">#}
-{#                    <ul class="p-0">#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-stopwatch text-dark-green"></i>#}
-{#                            <p>1 heure</p>#}
-{#                        </li>#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-person text-dark-green"></i>#}
-{#                            <p>4 personnes</p>#}
-{#                        </li>#}
-{#                        <li class=" d-flex gap-2">#}
-{#                            <i class="bi bi-bookmark text-dark-green"></i>#}
-{#                            <p>Dessert</p>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-
-{#            <!-- Card 4 -->#}
-{#            <div class="card rounded-4 shadow-sm" style="width: 18rem;">#}
-{#                <div class="position-relative">#}
-{#                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image" alt="...">#}
-{#                    <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">Card title</h5>#}
-{#                </div>#}
-{#                <div class="card-body">#}
-{#                    <ul class="p-0">#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-stopwatch text-dark-green"></i>#}
-{#                            <p>1 heure</p>#}
-{#                        </li>#}
-{#                        <li class="d-flex gap-2">#}
-{#                            <i class="bi bi-person text-dark-green"></i>#}
-{#                            <p>4 personnes</p>#}
-{#                        </li>#}
-{#                        <li class=" d-flex gap-2">#}
-{#                            <i class="bi bi-bookmark text-dark-green"></i>#}
-{#                            <p>Dessert</p>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    <!-- Scroll container sample for Recipe Card -->
+    <div class="container m-0 w-100 mw-100 p-0">
+        <h2 class="fw-bold">Recette du jour</h2>
+        <div class="scroll-container">
+            <!-- Card -->
+            {{ render(path('app_include_recipe', {limit: 10})) }}
+        </div>
+    </div>
 {% endblock %}

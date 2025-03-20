@@ -148,6 +148,7 @@
       <path value="$PROJECT_DIR$/vendor/omines/datatables-bundle" />
       <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/vendor/bluemmb/faker-picsum-photos-provider" />
+      <path value="$PROJECT_DIR$/vendor/smknstd/fakerphp-picsum-images" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

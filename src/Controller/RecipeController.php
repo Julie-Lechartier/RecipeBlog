@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,17 +14,11 @@ class RecipeController extends AbstractController{
         return $this->render('recipe/index.html.twig');
     }
 
-    #[Route('/{id}', name: 'app_recipe_view')]
-    public function show(int $id, RecipeRepository $recipeRepository) {
-        $recipe = $recipeRepository->find($id);
-        if (!$recipe) {
-            throw $this->createNotFoundException("Recette introuvable !");
-        }
-        $steps = $recipe->getStep();
+    #[Route('/{slug}', name: 'app_recipe_view')]
+    public function show(Recipe $recipe) {
 
         return $this->render('recipe/view.html.twig', [
             'recipe' => $recipe,
-            'steps' => $steps,
         ]);
     }
 }

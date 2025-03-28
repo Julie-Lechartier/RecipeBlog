@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-5">
+            <h1 class="fw-bold text-uppercase fs-4">Nos {{ category }}</h1>
+            <div class="container">
+                {{ render(path('app_include_recipe_category', { 'category' : currentCategory.name })) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

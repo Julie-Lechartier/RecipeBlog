@@ -16,6 +16,14 @@ class RecipeCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeCategory::class);
     }
 
+    /**
+     * Find a category by its slug
+     */
+    public function findOneBySlug(string $slug): ?RecipeCategory
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
     //    /**
     //     * @return RecipeCategory[] Returns an array of RecipeCategory objects
     //     */

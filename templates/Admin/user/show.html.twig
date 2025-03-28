@@ -1,0 +1,51 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid bg-white mt-2">
+        <div class="row pt-5 ps-4">
+            <div class="col-12 border-bottom">
+                <div class="d-flex justify-content-evenly">
+                    <div>
+                        <p class="fw-bold">Pseudo</p>
+                        <p>{{ user.username }}</p>
+                    </div>
+                    <div>
+                        <p class="fw-bold">Prénom</p>
+                        <p>{{ user.firstname }}</p>
+                    </div>
+                    <div>
+                        <p class="fw-bold">Nom</p>
+                        <p>{{ user.lastname }}</p>
+                    </div>
+                    <div>
+                        <p class="fw-bold">Email</p>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div>
+                        <p class="fw-bold">Date de naissance</p>
+                        <p>{{ user.birthDate|date("m/d/Y") }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Nombre de personnes</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    {% for user in users %}
+                    <tbody>
+                    <tr>
+                        <th>{{ user.recipes.title }}</th>
+                    </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -28,16 +28,17 @@
                 </div>
                 <!-- Nav body -->
                 <div class="offcanvas-body overflow-lg-hidden">
-                    <ul class="navbar-nav gap-2 justify-content-end flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
+                    <ul class="navbar-nav gap-2 justify-content-end align-items-center flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
+                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'apero'}) }}" class="text-white text-decoration-none">Apéro</a></li>
+                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'entrees'}) }}" class="text-white text-decoration-none">Entrées</a></li>
+                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'plats'}) }}" class="text-white text-decoration-none">Plats</a></li>
+                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'desserts'}) }}" class="text-white text-decoration-none">Desserts</a></li>
                         <li class="nav-item dropdown ">
                             <button class="btn dropdown-toggle text-white text-uppercase tw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Recettes
+                                Autres
                             </button>
                             <ul class="dropdown-menu bg-white">
-                                <li><a class="dropdown-item" href="#">Apéro</a></li>
-                                <li><a class="dropdown-item" href="#">Entrée</a></li>
-                                <li><a class="dropdown-item" href="#">Plat</a></li>
-                                <li><a class="dropdown-item" href="#">Dessert</a></li>
+
                             </ul>
                         </li>
                     </ul>

@@ -1,37 +1,75 @@
 {{ form_start(form) }}
-<div class="container ">
+<div class="container-fluid">
     <div class="row">
         <div class="mb-3">
-            <label for="inputTitle" class="form-label">{{ form_label(form.authorId) }}</label>
-            {{ form_widget(form.authorId) }}
+            <label for="InputCategory" class="form-label">{{ form_label((form.category)) }}</label>
+            {{ form_widget(form.category) }}
         </div>
-        <div class="mb-3">
+        <div class="mb-3 col-7">
             <label for="inputTitle" class="form-label">{{ form_label(form.title) }}</label>
             {{ form_widget(form.title) }}
+        </div>
+        <div class="mb-3 col-3">
+            <label for="inputPreparationTime" class="form-label ">{{ form_label(form.preparationTime) }}</label>
+            {{ form_widget(form.preparationTime) }}
+        </div>
+        <div class="mb-3 col-2">
+            <label for="InputServing" class="form-label">{{ form_label((form.serving)) }}</label>
+            {{ form_widget(form.serving) }}
         </div>
         <div class="mb-3">
             <label for="inputDescription" class="form-label">{{ form_label(form.description) }}</label>
             {{ form_widget(form.description) }}
         </div>
-        <div class="mb-3">
-            <label for="inputPreparationTime" class="form-label">{{ form_label(form.preparationTime) }}</label>
-            {{ form_widget(form.preparationTime) }}
 
-        </div>
         <div class="mb-3">
             <label for="inputImage" class="form-label">{{ form_label(form.image) }}</label>
             {{ form_widget(form.image) }}
 
+            {% if recipe.media | length > 0 %}
+                <p>image Actuelle :</p>
+                <img src="{{ asset('uploads/recipesImages' ~ recipe.media.first.fileName) }}" alt="">
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="InputServing" class="form-label">{{ form_label((form.serving)) }}</label>
-            {{ form_widget(form.serving) }}
+            <label for="inputStep" class="form-label">{{ form_label(form.steps) }}</label>
+            <div id="step-collection">
+                {% for step in form.steps %}
+                    <div class="step">
+                        {{ form_row(etape.description) }}
+                        <button type="button" class="remove-step">Supprimer</button>
+                    </div>
+                {% endfor %}
+                <button type="button" id="add-step">Ajouter une étape</button>
+            </div>
+            {{ form_widget(form.steps) }}
         </div>
-        <div class="mb-3">
-            <label for="InputCategory" class="form-label">{{ form_label((form.category)) }}</label>
-            {{ form_widget(form.category) }}
-        </div>
-        <button type="submit" class="btn btn-primary" href="{{ path('app_admin_recipe_index') }}">Submit</button>
+        <button type="submit" class="btn btn-primary w-50" href="{{ path('app_admin_recipe_index') }}">Submit</button>
     </div>
 </div>
 {{ form_end(form) }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const StepsCollection = document.querySelector('#step-collection');
+        const addStepButton = document.querySelector('#add-step');
+
+        addStepButton.addEventListener('click', () => {
+            const prototype = stepsCollection.dataset.prototype.replace(/__name__/g, stepsCollection.children.length);
+            const div = document.createElement('div');
+            div.classList.add('step');
+            div.innerHTML = prototype + '<button type="button" class="remove-step">Supprimer</button>';
+            stepsCollection.appendChild(div);
+
+            div.querySelector('.remove-step').addEventListener('click', () => {
+                div.remove();
+            });
+        });
+
+        document.querySelectorAll('.remove-step').forEach(button => {
+            button.addEventListener('click', () => {
+                button.parentElement.remove();
+            });
+        });
+    });
+</script>

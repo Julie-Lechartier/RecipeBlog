@@ -7,10 +7,17 @@ use App\Entity\RecipeCategory;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Time;
 
 class RecipeType extends AbstractType
 {
@@ -22,20 +29,32 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('authorId', TextType::class, [
-                'label' => 'Auteur',
-                'disabled' => true,
-                'required' => $options['author_username']
+            ->add('image', FileType::class, [
+                'label' => 'Image (JPG, PNG)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image JPG ou PNG',
+                    ])
+                ],
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('description', TextType::class, [
+            ->add('authorId', HiddenType::class, [
+                'mapped' => false,
+                'data' => $options['author_username']
+            ])
+            ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('preparationTime', IntegerType::class, [
+            ->add('preparationTime', TimeType::class, [
                 'label' => 'Temps de préparation',
                 'required' => false,
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'custom-time-input']
             ])
             ->add('serving', IntegerType::class, [
                 'label' => 'Nombres de personnes',
@@ -44,9 +63,16 @@ class RecipeType extends AbstractType
             ->add('category', EntityType::class, [
                 'label' => 'Type de préparation',
                 'class' => RecipeCategory::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
-                'attr' => ['class' => 'form-control']
+                'expanded' => true,
+                'attr' => ['class' => 'category-checkboxes']
+            ])
+            ->add('steps', CollectionType::class, [
+                'entry_type' => StepType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
         ;
     }

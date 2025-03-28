@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Recipe>
      */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'author', orphanRemoval: true)]
-    private Collection $recipeId;
+    private Collection $recipes;
 
     /**
      * @var Collection<int, Comment>
@@ -58,20 +58,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $role = null;
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $roles = [];
 
     /**
      * @var Collection<int, Media>
      */
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'avatar_id')]
-    private Collection $avatarId;
+    private Collection $avatars;
 
     public function __construct()
     {
-        $this->recipeId = new ArrayCollection();
+        // Initialize with ROLE_USER by default
+        // To make a user an admin, add ROLE_ADMIN to the roles array
+        $this->roles = ['ROLE_USER'];
+        $this->recipes = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->avatarId = new ArrayCollection();
+        $this->avatars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,10 +90,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
+
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -162,6 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -177,27 +183,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Recipe>
      */
-    public function getRecipeId(): Collection
+    public function getRecipes(): Collection
     {
-        return $this->recipeId;
+        return $this->recipes;
     }
 
-    public function addRecipeId(Recipe $recipeId): static
+    public function addRecipe(Recipe $recipe): static
     {
-        if (!$this->recipeId->contains($recipeId)) {
-            $this->recipeId->add($recipeId);
-            $recipeId->setAuthor($this);
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+            $recipe->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeRecipeId(Recipe $recipeId): static
+    public function removeRecipe(Recipe $recipe): static
     {
-        if ($this->recipeId->removeElement($recipeId)) {
+        if ($this->recipes->removeElement($recipe)) {
             // set the owning side to null (unless already changed)
-            if ($recipeId->getAuthor() === $this) {
-                $recipeId->setAuthor(null);
+            if ($recipe->getAuthor() === $this) {
+                $recipe->setAuthor(null);
             }
         }
 
@@ -234,11 +240,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): array
-    {
-        // TODO: Implement getRoles() method.
-    }
-
     public function getUsername(): ?string
     {
         return $this->username;
@@ -251,42 +252,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        // Ensure ROLE_USER is always present
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 
-    public function setRole(?string $role): static
+    public function setRoles(array $roles): static
     {
-        $this->role = $role;
-
+        $this->roles = $roles;
         return $this;
     }
 
     /**
      * @return Collection<int, Media>
      */
-    public function getAvatarId(): Collection
+    public function getAvatars(): Collection
     {
-        return $this->avatarId;
+        return $this->avatars;
     }
 
-    public function addAvatarId(Media $avatarId): static
+    public function addAvatar(Media $avatar): static
     {
-        if (!$this->avatarId->contains($avatarId)) {
-            $this->avatarId->add($avatarId);
-            $avatarId->setAvatarId($this);
+        if (!$this->avatars->contains($avatar)) {
+            $this->avatars->add($avatar);
+            $avatar->setAvatarId($this);
         }
 
         return $this;
     }
 
-    public function removeAvatarId(Media $avatarId): static
+    public function removeAvatar(Media $avatar): static
     {
-        if ($this->avatarId->removeElement($avatarId)) {
+        if ($this->avatars->removeElement($avatar)) {
             // set the owning side to null (unless already changed)
-            if ($avatarId->getAvatarId() === $this) {
-                $avatarId->setAvatarId(null);
+            if ($avatar->getAvatarId() === $this) {
+                $avatar->setAvatarId(null);
             }
         }
 

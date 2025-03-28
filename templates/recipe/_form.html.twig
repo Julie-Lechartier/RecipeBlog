@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+<div class="container ">
+    <div class="row">
+        <div class="mb-3">
+            <label for="inputTitle" class="form-label">{{ form_label(form.title) }}</label>
+            {{ form_widget(form.title) }}
+        </div>
+        <div class="mb-3">
+            <label for="inputDescription" class="form-label">{{ form_label(form.description) }}</label>
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="mb-3">
+            <label for="inputPreparationTime" class="form-label">{{ form_label(form.preparationTime) }}</label>
+            {{ form_widget(form.preparationTime) }}
+
+        </div>
+        <div class="mb-3">
+            <label for="inputImage" class="form-label">{{ form_label(form.image) }}</label>
+            {{ form_widget(form.image) }}
+
+            {% if recipe.media | length > 0 %}
+                <p>image Actuelle :</p>
+                <img src="{{ asset('uploads/recipesImages' ~ recipe.media.first.fileName) }}" alt="">
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="InputServing" class="form-label">{{ form_label((form.serving)) }}</label>
+            {{ form_widget(form.serving) }}
+        </div>
+        <div class="mb-3">
+            <label for="InputCategory" class="form-label">{{ form_label((form.category)) }}</label>
+            {{ form_widget(form.category) }}
+        </div>
+        <button type="submit" class="btn btn-primary" href="{{ path('app_admin_recipe_index') }}">Submit</button>
+    </div>
+</div>
+{{ form_end(form) }}

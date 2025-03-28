@@ -22,11 +22,12 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne]
-    private ?Recipe $recipeId = null;
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Recipe $recipe = null;
 
     #[ORM\ManyToOne(inversedBy: 'avatarId')]
-    private ?User $avatar_id = null;
+    private ?User $avatar = null;
 
 
     public function getId(): ?int
@@ -82,26 +83,14 @@ class Media
         return $this;
     }
 
-    public function getRecipeId(): ?Recipe
+    public function getAvatar(): ?User
     {
-        return $this->recipeId;
+        return $this->avatar;
     }
 
-    public function setRecipeId(?Recipe $recipeId): static
+    public function setAvatar(?User $avatar): static
     {
-        $this->recipeId = $recipeId;
-
-        return $this;
-    }
-
-    public function getAvatarId(): ?User
-    {
-        return $this->avatar_id;
-    }
-
-    public function setAvatarId(?User $avatar_id): static
-    {
-        $this->avatar_id = $avatar_id;
+        $this->avatar = $avatar;
 
         return $this;
     }

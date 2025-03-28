@@ -19,6 +19,9 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -35,27 +38,33 @@ class Recipe
     /**
      * @var Collection<int, RecipeCategory>
      */
-    #[ORM\ManyToMany(targetEntity: RecipeCategory::class)]
+    #[ORM\ManyToMany(targetEntity: RecipeCategory::class, inversedBy: 'recipes')]
     private Collection $category;
 
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipeId', orphanRemoval: true)]
-    private Collection $commentId;
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', orphanRemoval: true)]
+    private Collection $comments;
 
     /**
      * @var Collection<int, Media>
      */
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
+    private Collection $media;
 
+    /**
+     * @var Collection<int, Step>
+     */
     #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
-    private ?Collection $step;
+    private Collection $steps;
 
     public function __construct()
     {
         $this->category = new ArrayCollection();
-        $this->commentId = new ArrayCollection();
-        $this->step = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->steps = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +81,17 @@ class Recipe
     {
         $this->title = $title;
 
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
         return $this;
     }
 
@@ -132,6 +152,11 @@ class Recipe
         return $this->category;
     }
 
+    public function setCategory(): Collection
+    {
+        return $this->category;
+    }
+
     public function addCategory(RecipeCategory $category): static
     {
         if (!$this->category->contains($category)) {
@@ -151,27 +176,27 @@ class Recipe
     /**
      * @return Collection<int, Comment>
      */
-    public function getCommentId(): Collection
+    public function getComments(): Collection
     {
-        return $this->commentId;
+        return $this->comments;
     }
 
-    public function addCommentId(Comment $commentId): static
+    public function addComment(Comment $comment): static
     {
-        if (!$this->commentId->contains($commentId)) {
-            $this->commentId->add($commentId);
-            $commentId->setRecipeId($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setRecipe($this);
         }
 
         return $this;
     }
 
-    public function removeCommentId(Comment $commentId): static
+    public function removeComment(Comment $comment): static
     {
-        if ($this->commentId->removeElement($commentId)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($commentId->getRecipeId() === $this) {
-                $commentId->setRecipeId(null);
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
             }
         }
 
@@ -181,10 +206,60 @@ class Recipe
     /**
      * @return Collection<int, Media>
      */
-
-    public function getStep(): Collection
+    public function getMedia(): Collection
     {
-        return $this->step;
+        return $this->media;
+    }
+
+    public function addMedia(Media $media): static
+    {
+        if (!$this->media->contains($media)) {
+            $this->media->add($media);
+            $media->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): static
+    {
+        if ($this->media->removeElement($media)) {
+            if ($media->getRecipe() === $this) {
+                $media->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Step>
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(Step $step): static
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps->add($step);
+            $step->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(Step $step): static
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getRecipe() === $this) {
+                $step->setRecipe(null);
+            }
+        }
+
+        return $this;
     }
 
 }

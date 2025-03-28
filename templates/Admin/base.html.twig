@@ -13,18 +13,15 @@
 
 </head>
 <body class="bg-light-subtle">
-<div class="sidebar vh-100 position-fixed pt-3 overflow-y-auto bg-dark">
+<div class="sidebar vh-100 position-fixed pt-3 overflow-y-auto shadow-sm">
     {% include 'admin/components/sidebar.html.twig' %}
 </div>
 <main class="main-content min-vh-100">
-    {% include 'admin/header.html.twig' %}
-    <div class="p-5">
-    {% block body %}{% endblock %}
+    {% include 'admin/components/header.html.twig' %}
+    <div class="p-5 pe-0 bg-body-tertiary">
+        {% block body %}{% endblock %}
     </div>
 </main>
-
-
-
 
 
 {% block javascripts %}

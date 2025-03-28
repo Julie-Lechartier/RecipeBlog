@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class LoginController extends AbstractController
 {
@@ -14,13 +16,28 @@ class LoginController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
+        
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->redirectToRoute('app_admin_index');
+        // Debug information
+        if ($error instanceof AuthenticationException) {
+            dump([
+                'error_message' => $error->getMessage(),
+                'error_code' => $error->getCode(),
+                'error_data' => $error->getMessageData(),
+            ]);
+        }
 
-        return $this->render('login/login.html.twig', [
+        // Check if the user is already logged in
+        if ($this->getUser()) {
+            dump([
+                'user' => $this->getUser()->getUserIdentifier(),
+                'roles' => $this->getUser()->getRoles(),
+            ]);
+        }
+
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

@@ -20,7 +20,7 @@ class Step
     #[ORM\Column]
     private ?int $stepNumber = null;
 
-    #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: 'step')]
+    #[ORM\ManyToOne(inversedBy: 'steps')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
 
@@ -53,12 +53,12 @@ class Step
         return $this;
     }
 
-    public function getRecipe(): ?recipe
+    public function getRecipe(): ?Recipe
     {
         return $this->recipe;
     }
 
-    public function setRecipe(?recipe $recipe): static
+    public function setRecipe(?Recipe $recipe): static
     {
         $this->recipe = $recipe;
 

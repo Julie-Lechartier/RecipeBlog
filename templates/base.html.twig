@@ -9,7 +9,16 @@
 </head>
 <body>
 {% include 'components/header.html.twig' %}
-    {% block body %}{% endblock %}
+{% block body %}
+
+    <div class="position-relative">
+        <div class="position-sticky btn-full-green top-50 z-3">
+            <a href="{{ path('app_new_recipe') }}" class="btn btn-primary">
+                <i class="bi bi-plus text-white"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
 
 
 {% block javascripts %}

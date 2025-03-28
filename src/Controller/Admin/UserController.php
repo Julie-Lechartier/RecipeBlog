@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -20,44 +21,30 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 final class UserController extends AbstractController
 {
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher,
-                                private readonly SluggerInterface $slugger,
-                                private readonly EntityManagerInterface $entityManager)
+                                private readonly SluggerInterface            $slugger,
+                                private readonly EntityManagerInterface      $entityManager)
     {
     }
 
     #[Route('/', name: 'app_admin_user_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, DataTableFactory $dataTableFactory): Response
+    public function index(UserRepository $userRepository): Response
     {
-        $table = $dataTableFactory->create()
-        ->add('firstname', TextColumn::class, [
-            'label' => 'Prénom'
-        ])
-        ->add('lastname', TextColumn::class, [
-            'label' => 'Nom'
-        ])
-            ->add('username', TextColumn::class, [
-                'label' => 'Pseudo'
-            ])
-        ->add('email', TextColumn::class, [
-            'label' => 'Email'
-    ])
-        ->add('newsletter', BoolColumn::class, [
-            'trueValue' => 'Yes',
-            'falseValue' => 'No',
-            'label' => 'Newsletter'
-        ])
-            ->createAdapter(ORMAdapter::class, [
-                'entity' => User::class,
-            ])
-        ->handleRequest($request);
-        if ($table->isCallback()) {
-            return $table->getResponse();
-        }
+        $users = $userRepository->findAll();
         return $this->render('admin/user/index.html.twig', [
-            'datatable' => $table,
+            'users' => $users,
 
         ]);
     }
+    #[Route('/{slug}', name: 'app_admin_user_show', methods: ['GET', 'POST'])]
+    public function show(User $user,UserRepository $userRepository ): Response
+    {
+        $users = $userRepository->findAll();
+        return $this->render('admin/user/show.html.twig', [
+            'user' => $user,
+            'users' => $users,
+        ]);
+    }
+
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -74,10 +61,10 @@ final class UserController extends AbstractController
         return $this->render('admin/user/new.html.twig', [
             "form" => $form->createView()
         ]);
-        
+
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'] ) ]
+    #[Route('/edit/{slug}', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -92,5 +79,15 @@ final class UserController extends AbstractController
             "form" => $form->createView(),
             "user" => $user
         ]);
+    }
+
+    #[Route('/delete/{slug}', name: 'app_admin_user_delete', methods: ['POST', 'DELETE'])]
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))){
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_admin_user_index');
     }
 }

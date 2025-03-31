@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +40,7 @@ class UserType extends AbstractType
                     'class' => 'form-control'
                 ],
             ])
-            ->add('birthDate', null, [
+            ->add('birthDate', DateType::class, [
                 'widget' => 'single_text',
                 'required' => true,
                 'attr' => ['class' => 'form-control']
@@ -54,10 +54,14 @@ class UserType extends AbstractType
             ->add('newsletter', ChoiceType::class, [
                 'label' => 'S\'inscrire à la newsletter',
                 'choices' => [
-                    'oui' => true,
-                    'non' => false
+                    'Oui' => true,
+                    'Non' => false
                 ],
-                'attr' => ['class' => 'form-check-input']
+                'expanded' => true,
+                'choice_attr' => [
+                    'Oui' => ['class' => 'form-check-input'],
+                    'Non' => ['class' => 'form-check-input']
+                ]
             ])
         ;
     }

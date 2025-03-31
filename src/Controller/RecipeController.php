@@ -29,7 +29,7 @@ class RecipeController extends AbstractController
     #[Route('/{slug}', name: 'app_recipe_view')]
     public function show(Recipe $recipe): Response
     {
-        return $this->render('recipe/view.html.twig', [
+        return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);
     }

@@ -15,7 +15,7 @@ class Comment
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Recipe $recipe = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
@@ -27,6 +27,9 @@ class Comment
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -78,6 +81,16 @@ class Comment
     {
         $this->createdAt = $createdAt;
 
+        return $this;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
         return $this;
     }
 }

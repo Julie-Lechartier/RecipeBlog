@@ -1,9 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid bg-white mt-2">
+    <div class="container-fluid bg-white mt-2 min-vh-100">
         <div class="row pt-5 ps-4">
-            <div class="col-12 border-bottom">
+            <div class="col-12">
                 <div class="d-flex justify-content-evenly">
                     <div>
                         <p class="fw-bold">Pseudo</p>
@@ -27,19 +27,41 @@
                     </div>
                 </div>
             </div>
+            <div class="pt-5 pb-3">
+                <h3>Recette associée à l'utilisateur {{ user.username }}</h3>
+            </div>
             <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Titre</th>
-                        <th>Nombre de personnes</th>
-                        <th></th>
+                        <th>Type</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
-                    {% for user in users %}
+                    {% for recipe in recipes %}
                     <tbody>
                     <tr>
-                        <th>{{ user.recipes.title }}</th>
+                        <td>{{ recipe.title }}</td>
+                        <td>{% for category in recipe.category %}
+                                <span class="">
+                                        {{ category.name }}
+                                    </span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="row gap-2">
+                                <a href="{{ path('app_admin_recipe_edit', {'slug': user.slug}) }}"
+                                   class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1 btn-table-size">
+                                    <i class="bi bi-pencil-fill text-white"></i>
+                                </a>
+                                <a href="{{ path('app_admin_recipe_delete', {'slug': user.slug}) }}"
+                                   class="text-decoration-none  col-5 btn-full-cherry rounded-3 text-center py-1 btn-table-size"
+                                   type="submit">
+                                    <i class="bi bi-trash3-fill text-white"></i>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                     {% endfor %}

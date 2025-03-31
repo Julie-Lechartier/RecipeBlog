@@ -1,33 +1,37 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Tableau de bord</h1>
+    <div class="container-fluid bg-white mt-2 min-vh-100">
+        <div class="row pt-5 ps-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Tableau de bord</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card text-bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Utilisateurs</h5>
+                            <p class="card-text">Nombre total: 150</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-bg-success mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Ventes</h5>
+                            <p class="card-text">Total: 12 300 €</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-bg-warning mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Commandes</h5>
+                            <p class="card-text">En attente: 8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card text-bg-primary mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Utilisateurs</h5>
-                        <p class="card-text">Nombre total: 150</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-bg-success mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Ventes</h5>
-                        <p class="card-text">Total: 12 300 €</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-bg-warning mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Commandes</h5>
-                        <p class="card-text">En attente: 8</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
 {% endblock body %}

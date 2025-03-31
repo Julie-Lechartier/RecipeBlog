@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,9 +32,13 @@ class AppFixtures extends Fixture
         $categoryFixtures = new RecipeCategoryFixtures($this->slugger);
         $categoryFixtures->load($manager);
 
-        // Load recipes with their steps and media last
+        // Load recipes with their steps and media third
         $recipeFixtures = new RecipeFixtures($this->slugger);
         $recipeFixtures->load($manager);
+
+        //load comments last
+        $commentsFixtures = new CommentFixtures($this->slugger);
+        $commentsFixtures->load($manager);
 
         self::$loaded = true;
     }

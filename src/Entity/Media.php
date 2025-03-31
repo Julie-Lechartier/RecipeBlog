@@ -26,7 +26,8 @@ class Media
     #[ORM\JoinColumn(nullable: true)]
     private ?Recipe $recipe = null;
 
-    #[ORM\ManyToOne(inversedBy: 'avatarId')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "avatars")]
+    #[ORM\JoinColumn(name: "avatar_id", referencedColumnName: "id", nullable: true)]
     private ?User $avatar = null;
 
 

@@ -15,11 +15,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RecipeFixtures extends Fixture
 {
-    private SluggerInterface $slugger;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(
+        private readonly SluggerInterface $slugger
+    )
     {
-        $this->slugger = $slugger;
     }
 
     public function load(ObjectManager $manager): void
@@ -40,8 +40,6 @@ class RecipeFixtures extends Fixture
         foreach ($categories as $category) {
             $categoryMap[$category->getName()] = $category;
         }
-
-        // Define recipes with their specific categories
         $recipes = [
             // Apéro recipes
             [
@@ -154,11 +152,19 @@ class RecipeFixtures extends Fixture
             $recipe->setTitle($recipeData['title']);
             $recipe->setSlug($this->slugger->slug($recipeData['title'])->lower());
             $recipe->setDescription($faker->paragraph(3));
-            $recipe->setPreparationTime($recipeData['prepTime']);
+            
+            // Convert minutes to TIME format (HH:MM:00)
+            $minutes = $recipeData['prepTime'];
+            $hours = floor($minutes / 60);
+            $remainingMinutes = $minutes % 60;
+            
+            $prepTime = new \DateTime();
+            $prepTime->setTime($hours, $remainingMinutes, 0);
+            $recipe->setPreparationTime($prepTime);
+            
             $recipe->setServing($recipeData['serving']);
             $recipe->setAuthor($faker->randomElement($users));
 
-            // Add specific categories
             foreach ($recipeData['categories'] as $categoryName) {
                 if (isset($categoryMap[$categoryName])) {
                     $recipe->addCategory($categoryMap[$categoryName]);

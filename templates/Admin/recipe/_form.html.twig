@@ -1,28 +1,32 @@
 {{ form_start(form) }}
 <div class="container-fluid">
     <div class="row">
-        <div class="mb-3">
-            <label for="InputCategory" class="form-label">{{ form_label((form.category)) }}</label>
-            {{ form_widget(form.category) }}
-        </div>
-        <div class="mb-3 col-7">
+        <h2>Création de la recette : <span id="recipeTitlePreview"></span></h2>
+    </div>
+    <div class="row justify-content-center">
+        <div class="mb-3 col-12">
             <label for="inputTitle" class="form-label">{{ form_label(form.title) }}</label>
             {{ form_widget(form.title) }}
         </div>
-        <div class="mb-3 col-3">
+        <div class="mb-3 col-12">
+            <label for="InputCategory" class="form-label">{{ form_label((form.category)) }}</label>
+            {{ form_widget(form.category) }}
+        </div>
+
+        <div class="mb-3 col-6">
             <label for="inputPreparationTime" class="form-label ">{{ form_label(form.preparationTime) }}</label>
             {{ form_widget(form.preparationTime) }}
         </div>
-        <div class="mb-3 col-2">
-            <label for="InputServing" class="form-label">{{ form_label((form.serving)) }}</label>
+        <div class="mb-3 col-6">
+            <label for="InputServing" class="form-label text-nowrap">{{ form_label((form.serving)) }}</label>
             {{ form_widget(form.serving) }}
         </div>
-        <div class="mb-3">
+        <div class="mb-3 col-12">
             <label for="inputDescription" class="form-label">{{ form_label(form.description) }}</label>
             {{ form_widget(form.description) }}
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-12">
             <label for="inputImage" class="form-label">{{ form_label(form.image) }}</label>
             {{ form_widget(form.image) }}
 
@@ -33,43 +37,85 @@
         </div>
         <div class="mb-3">
             <label for="inputStep" class="form-label">{{ form_label(form.steps) }}</label>
-            <div id="step-collection">
+            <div id="step-collection" data-prototype="{{ form_widget(form.steps.vars.prototype)|e('html_attr') }}">
                 {% for step in form.steps %}
                     <div class="step">
-                        {{ form_row(etape.description) }}
-                        <button type="button" class="remove-step">Supprimer</button>
+                        <div class="step-header">
+                            <h4 class="step-number">Étape {{ loop.index }}</h4>
+                            <button type="button" class="remove-step">Supprimer</button>
+                        </div>
+                        {{ form_row(step.content) }}
                     </div>
                 {% endfor %}
-                <button type="button" id="add-step">Ajouter une étape</button>
+                <button type="button" id="add-step" class="btn btn-primary">Ajouter une étape</button>
             </div>
-            {{ form_widget(form.steps) }}
         </div>
-        <button type="submit" class="btn btn-primary w-50" href="{{ path('app_admin_recipe_index') }}">Submit</button>
+        <button type="submit" class="btn w-25 btn-full-brown" href="{{ path('app_admin_recipe_index') }}">Enregistrer</button>
     </div>
 </div>
 {{ form_end(form) }}
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const StepsCollection = document.querySelector('#step-collection');
+        const stepCollection = document.querySelector('#step-collection');
         const addStepButton = document.querySelector('#add-step');
 
         addStepButton.addEventListener('click', () => {
-            const prototype = stepsCollection.dataset.prototype.replace(/__name__/g, stepsCollection.children.length);
+            const prototype = stepCollection.dataset.prototype.replace(/__name__/g, stepCollection.children.length - 1);
             const div = document.createElement('div');
             div.classList.add('step');
-            div.innerHTML = prototype + '<button type="button" class="remove-step">Supprimer</button>';
-            stepsCollection.appendChild(div);
+            const stepHeader = document.createElement('div');
+            stepHeader.classList.add('step-header');
+            const stepNumber = document.createElement('h4');
+            stepNumber.classList.add('step-number');
+            stepNumber.textContent = `Étape ${stepCollection.children.length}`;
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('remove-step');
+            removeButton.textContent = 'Supprimer';
+            
+            stepHeader.appendChild(stepNumber);
+            stepHeader.appendChild(removeButton);
+            div.appendChild(stepHeader);
+            div.innerHTML += prototype;
+            
+            stepCollection.insertBefore(div, addStepButton);
 
-            div.querySelector('.remove-step').addEventListener('click', () => {
+            removeButton.addEventListener('click', () => {
                 div.remove();
+                updateStepNumbers();
             });
         });
 
+        // Gérer la suppression des étapes existantes
         document.querySelectorAll('.remove-step').forEach(button => {
             button.addEventListener('click', () => {
-                button.parentElement.remove();
+                button.closest('.step').remove();
+                // Mettre à jour les numéros d'étapes
+                updateStepNumbers();
             });
+        });
+
+        // Fonction pour mettre à jour les numéros d'étapes
+        function updateStepNumbers() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                const stepNumber = step.querySelector('.step-number');
+                if (stepNumber) {
+                    stepNumber.textContent = `Étape ${index + 1}`;
+                }
+            });
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        let input = document.getElementById("recipe_title");
+        let preview = document.getElementById("recipeTitlePreview");
+        if (!input) {
+            console.error("⚠️ L'élément #recipeTitleInput n'a pas été trouvé !");
+            return
+        }
+        input.addEventListener("input", function() {
+            preview.textContent = input.value;
         });
     });
 </script>

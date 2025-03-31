@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
@@ -25,13 +26,14 @@ class Recipe
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $preparationTime = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $preparationTime = null;
 
+    #[Assert\Positive(message: "Le nombre de personnes doit être supérieur à 0.")]
     #[ORM\Column]
     private ?int $serving = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recipeId')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "recipes")]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
@@ -44,7 +46,7 @@ class Recipe
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', cascade: ["remove"], orphanRemoval: true)]
     private Collection $comments;
 
     /**
@@ -107,18 +109,17 @@ class Recipe
         return $this;
     }
 
-    public function getPreparationTime(): ?int
+    public function getPreparationTime(): ?\DateTimeInterface
     {
         return $this->preparationTime;
     }
 
-    public function setPreparationTime(?int $preparationTime): static
+    public function setPreparationTime(?\DateTimeInterface $preparationTime): static
     {
         $this->preparationTime = $preparationTime;
 
         return $this;
     }
-
 
     public function getServing(): ?int
     {

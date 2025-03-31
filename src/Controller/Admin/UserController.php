@@ -22,7 +22,7 @@ final class UserController extends AbstractController
 {
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher,
                                 private readonly SluggerInterface            $slugger,
-                                private readonly EntityManagerInterface      $entityManager)
+    )
     {
     }
 
@@ -35,20 +35,11 @@ final class UserController extends AbstractController
 
         ]);
     }
-    #[Route('/{slug}', name: 'app_admin_user_show', methods: ['GET', 'POST'])]
-    public function show(User $user,UserRepository $userRepository ): Response
-    {
-        $users = $userRepository->findAll();
-        return $this->render('admin/user/show.html.twig', [
-            'user' => $user,
-            'users' => $users,
-        ]);
-    }
-
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class);
+        $user = new User(); // Create a new User instance
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -62,6 +53,17 @@ final class UserController extends AbstractController
             "form" => $form->createView()
         ]);
 
+    }
+    #[Route('/{slug}', name: 'app_admin_user_show', methods: ['GET', 'POST'])]
+    public function show(User $user,UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+        $recipes = $user->getRecipes();
+        return $this->render('admin/user/show.html.twig', [
+            'user' => $user,
+            'users' => $users,
+            'recipes' => $recipes,
+        ]);
     }
 
     #[Route('/edit/{slug}', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]

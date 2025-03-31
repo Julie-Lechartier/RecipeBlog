@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\Time;
 
 class RecipeType extends AbstractType
@@ -27,7 +28,9 @@ class RecipeType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre',
                 'required' => true,
-                'attr' => ['class' => 'form-control']
+                'attr' => [
+                    'class' => 'form-control',
+        ]
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image (JPG, PNG)',
@@ -54,11 +57,23 @@ class RecipeType extends AbstractType
             ->add('preparationTime', TimeType::class, [
                 'label' => 'Temps de préparation',
                 'required' => false,
-                'attr' => ['class' => 'custom-time-input']
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'HH:MM'
+                ],
+                'widget' => 'single_text',
             ])
             ->add('serving', IntegerType::class, [
                 'label' => 'Nombres de personnes',
-                'attr' => ['class' => 'form-control']
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => "1"
+                ],
+                'constraints' => [
+                    new Positive([
+                        'message' => 'Le nombre de personnes doit être supérieur à 0.',
+                    ]),
+                ],
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Type de préparation',
@@ -69,12 +84,12 @@ class RecipeType extends AbstractType
                 'attr' => ['class' => 'category-checkboxes']
             ])
             ->add('steps', CollectionType::class, [
+                'label' => 'Liste des étapes de la recette',
                 'entry_type' => StepType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -4,10 +4,10 @@
     <div class="container-fluid bg-white mt-2">
         <div class="row pt-5 ps-4">
             <div class="col-4 pb-3">
-                <a href="{{ path('app_admin_user_new') }}" type="button"
+                <a href="{{ path('app_admin_comment_new') }}" type="button"
                    class="btn-border-green rounded-2 py-1 px-3 text-decoration-none">
                     <i class="bi bi-person-plus-fill text-green"></i>
-                    Ajouter un utilisateur
+                    Ajouter un commentaire
                 </a>
             </div>
             <div class="col-12">
@@ -15,14 +15,14 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th scope="col">Prénom</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Pseudo</th>
-                        <th scope="col">Recette</th>
+                        <th scope="col">Auteur</th>
+                        <th scope="col">Recette associée</th>
+                        <th scope="col">Commentaire</th>
+                        <th scope="col">Date de création</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
-                    {% for user in users %}
+                    {% for comment in comments %}
                         <tbody>
                         <tr>
                             <td><a href="{{ path('app_admin_user_show', {'slug': user.slug}) }}"><i
@@ -33,10 +33,6 @@
                             <td>{{ user.recipes|length }}</td>
                             <td>
                                 <div class="row gap-2">
-                                    <a href="{{ path('app_admin_user_edit', {'slug': user.slug}) }}"
-                                       class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1 btn-table-size">
-                                        <i class="bi bi-pencil-fill text-white"></i>
-                                    </a>
                                     <a href="{{ path('app_admin_user_delete', {'slug': user.slug}) }}"
                                        class="text-decoration-none  col-5 btn-full-cherry rounded-3 text-center py-1 btn-table-size"
                                        type="submit">

@@ -30,15 +30,16 @@
                             </td>
                             <td>{{ recipe.author.username }}</td>
                             <td>
-                                < class="row gap-2">
-                                <a href="{{ path('app_admin_recipe_edit', {'slug': recipe.slug}) }}"
-                                   class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1">
-                                    <i class="bi bi-pencil-fill text-white"></i>
-                                </a>
-                                <a href="{{ path('app_admin_recipe_delete', {'slug': recipe.slug}) }}"
-                                   class="text-decoration-none col-5 btn-full-cherry rounded-3 text-center py-1">
-                                    <i class="bi bi-trash3-fill text-white"></i>
-                                </a>
+                                <div class="d-flex">
+                                    <a href="{{ path('app_admin_recipe_edit', {'slug': recipe.slug}) }}"
+                                       class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1">
+                                        <i class="bi bi-pencil-fill text-white"></i>
+                                    </a>
+                                    <a href="{{ path('app_admin_recipe_delete', {'slug': recipe.slug}) }}"
+                                       class="text-decoration-none col-5 btn-full-cherry rounded-3 text-center py-1">
+                                        <i class="bi bi-trash3-fill text-white"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         </tbody>

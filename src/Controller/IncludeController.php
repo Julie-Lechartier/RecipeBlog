@@ -26,10 +26,8 @@ final class IncludeController extends AbstractController
     #[Route('/recipe/category/{category}', name: 'app_include_recipe_category', methods: ['GET'])]
     public function recipeCategory(RecipeRepository $recipeRepository, RecipeCategoryRepository $categoryRepository, $category): Response
     {
-        // Fetch the category entity from the repository by its name
         $categoryEntity = $categoryRepository->findOneBy(['name' => $category]);
 
-        // Only get recipes that belong to the current category
         $recipes = $categoryEntity ? $recipeRepository->findByCategory($categoryEntity) : [];
 
         return $this->render('include/_recipeCard.html.twig', [

@@ -1,34 +1,90 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
-    <div class="container-fluid bg-white mt-2 min-vh-100">
+    <div class="container-fluid mt-2 min-vh-100">
         <div class="row pt-5 ps-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Tableau de bord</h1>
+            <div class="col-4 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Nombre d'utilisateur</p>
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h5 class="card-text">{{ users | length }}</h5>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card text-bg-primary mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Utilisateurs</h5>
-                            <p class="card-text">Nombre total: 150</p>
+            <div class="col-4 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Nombre de recette</p>
+                            <i class="bi bi-journal-arrow-up"></i>
                         </div>
+                        <h5 class="card-text">{{ recipes | length }}</h5>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-bg-success mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Ventes</h5>
-                            <p class="card-text">Total: 12 300 €</p>
+            </div>
+            <div class="col-4 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Nombre de Categorie</p>
+                            <i class="bi bi-bookmark-plus-fill"></i>
                         </div>
+                        <h5 class="card-text">{{ recipeCategories | length }}</h5>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-bg-warning mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Commandes</h5>
-                            <p class="card-text">En attente: 8</p>
+            </div>
+        </div>
+        <div class="row bg-white border border-1 rounded-3 me-2 mt-3 p-3">
+            <div><p>Derniers Utilisateurs inscrit</p></div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">email</th>
+                    <th scope="col">Newsletter</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users|slice(0, 5) %}
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#userModal"
+                                data-url="{{ path('app_admin_user_show', {'slug': user.slug}) }}">
+                            <i class="bi bi-eye text-secondary"></i>
+                        </button>
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.newsletter|replace({'1':"Oui",'0':"Non"}) }}</td>
+                </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="userModalLabel">Détails de l'utilisateur</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-content">
+                            <p>Chargement...</p>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     </div>
                 </div>
             </div>

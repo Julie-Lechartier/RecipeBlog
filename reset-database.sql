@@ -1,0 +1,12 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE recipe_ingredient;
+TRUNCATE TABLE recipe_recipe_category;
+TRUNCATE TABLE comment;
+TRUNCATE TABLE recipe;
+TRUNCATE TABLE ingredient;
+TRUNCATE TABLE unit;
+TRUNCATE TABLE recipe_category;
+TRUNCATE TABLE user;
+
+SET FOREIGN_KEY_CHECKS = 1;

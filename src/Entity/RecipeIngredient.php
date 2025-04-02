@@ -13,16 +13,19 @@ class RecipeIngredient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Recipe::class, cascade: ['remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Ingredient::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ingredient $ingredient = null;
+    private ?Ingredient $ingredient = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $quantity = null;
+
+    #[ORM\ManyToOne(targetEntity: Unit::class, inversedBy: 'recipeIngredients')]
+    private ?Unit $unit = null;
 
     public function getId(): ?int
     {
@@ -41,12 +44,12 @@ class RecipeIngredient
         return $this;
     }
 
-    public function getIngredient(): ?ingredient
+    public function getIngredient(): ?Ingredient
     {
         return $this->ingredient;
     }
 
-    public function setIngredient(?ingredient $ingredient): static
+    public function setIngredient(?Ingredient $ingredient): static
     {
         $this->ingredient = $ingredient;
 
@@ -61,6 +64,18 @@ class RecipeIngredient
     public function setQuantity(?string $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getUnit(): ?Unit
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?Unit $unit): static
+    {
+        $this->unit = $unit;
 
         return $this;
     }

@@ -9,43 +9,51 @@
                     Ajouter une recette
                 </a>
             </div>
-            <div class="col-12">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Titre</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Auteur</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    {% for recipe in recipes %}
-                        <tbody>
-                        <tr>
-                            <th scope="row">{{ recipe.title }}</th>
-                            <td>
-                                {% for category in recipe.category %}
-                                    <span class="">{{ category.name }}</span>
-                                {% endfor %}
-                            </td>
-                            <td>{{ recipe.author.username }}</td>
-                            <td>
-                                <div class="d-flex">
-                                    <a href="{{ path('app_admin_recipe_edit', {'slug': recipe.slug}) }}"
-                                       class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1">
-                                        <i class="bi bi-pencil-fill text-white"></i>
-                                    </a>
-                                    <a href="{{ path('app_admin_recipe_delete', {'slug': recipe.slug}) }}"
-                                       class="text-decoration-none col-5 btn-full-cherry rounded-3 text-center py-1">
-                                        <i class="bi bi-trash3-fill text-white"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
+            <div>
+                <!-- Champs de filtre -->
+                <input type="text" name="search" placeholder="Rechercher..."
+                       hx-post="{{ path('table_filter') }}"
+                       hx-target="#table-container"
+                       hx-trigger="keyup changed delay:500ms"
+                       hx-indicator=".htmx-indicator"
+                       hx-include="[name='page']">
+
+                <select name="category"
+                        hx-post="{{ path('table_filter') }}"
+                        hx-target="#table-container"
+                        hx-trigger="change"
+                        hx-include="[name='page']">
+                    <option value="">Toutes</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
                     {% endfor %}
-                </table>
+                </select>
+
+                <!-- Champ caché pour la page -->
+                <input type="hidden" name="page" value="{{ pagination.currentPageNumber|default(1) }}">
+
+                <span class="htmx-indicator">Chargement...</span>
+            </div>
+
+            <div class="col-12" id="table-container">
+                {% include 'admin/recipe/_table.html.twig' with {'pagination': pagination} %}
             </div>
         </div>
     </div>
+
+    <!-- Script pour synchroniser la page avec la pagination -->
+    <script>
+        document.addEventListener('htmx:afterSwap', function(event) {
+            // Mettre à jour le champ page après chaque changement de table
+            const paginationLinks = document.querySelectorAll('.pagination a');
+            paginationLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = new URLSearchParams(this.getAttribute('href')).get('page') || 1;
+                    document.querySelector('input[name="page"]').value = page;
+                    htmx.trigger('input[name="search"]', 'change'); // Relancer la requête HTMX
+                });
+            });
+        });
+    </script>
 {% endblock %}

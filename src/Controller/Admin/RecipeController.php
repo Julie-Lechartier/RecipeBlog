@@ -4,9 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Media;
 use App\Entity\Recipe;
+use App\Entity\RecipeCategory;
 use App\Entity\User;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +25,20 @@ class RecipeController extends AbstractController
     {
     }
     #[Route('/', name: 'app_admin_recipe_index')]
-    public function index(RecipeRepository $recipeRepository)
+    public function index(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator, EntityManagerInterface $entityManager): Response
     {
-        $recipes = $recipeRepository->findAll();
+        $queryBuilder = $recipeRepository->createQueryBuilder('r')->getQuery();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        $categories = $entityManager->getRepository(RecipeCategory::class)->findAll();
+
         return $this->render('admin/recipe/index.html.twig', [
-            'recipes' => $recipes,
+            'pagination' => $pagination,
+            'categories' => $categories,
         ]);
     }
 
@@ -160,6 +171,25 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('app_admin_recipe_index');
     }
+    #[Route('/table/filter', name: 'table_filter', methods: ['POST'])]
+    public function filter(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
+    {
+        $search = $request->request->get('search', '');
+        $category = $request->request->get('category', '');
 
+        // On récupère le QueryBuilder déjà filtré depuis le repository
+        $queryBuilder = $recipeRepository->createFilteredQueryBuilder($search, $category);
 
+        // Appliquer la pagination
+        $pagination = $paginator->paginate(
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1), // Récupère la page depuis les paramètres GET
+            10
+        );
+
+        // Rendre le partial de la table avec la pagination
+        return $this->render('admin/recipe/_table.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,6 +31,25 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // src/Repository/RecipeRepository.php
+    public function createFilteredQueryBuilder(string $search = '', string $category = ''): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->leftJoin('r.category', 'c')
+            ->addSelect('c');
+
+        if ($search) {
+            $qb->andWhere('r.title LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        if ($category) {
+            $qb->andWhere('c.id = :category')
+                ->setParameter('category', $category);
+        }
+
+        return $qb;
+    }
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */

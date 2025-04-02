@@ -1,10 +1,9 @@
 <div class="container-fluid p-0 m-0 vh-10">
     <div class="row">
         <div class="col-12 justify-items-center">
-            <img src="{{ asset('images/HomeCheft_logo_black.png') }}" alt="Logo Du site " class="align-items-center"
-                 style="width:100px; height:100px">
+           <!-- Add logo site -->
         </div>
-        <div>
+        <div class="mt-5">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link text-black" href="{{ path('app_admin_index') }}">
@@ -31,9 +30,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="#">
+                    <a class="nav-link text-black" href="{{ path('app_admin_comment_index') }}">
                         <i class="bi bi-chat pe-2 text-secondary"></i>
                         Commentaires
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" href="{{ path('app_admin_ingredient_index') }}">
+                        <i class="bi bi-cart4 pe-2 text-secondary"></i>
+                        Ingredients
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" href="#">
+                        <i class="bi bi-cup pe-2 text-secondary"></i>
+                        Unités
                     </a>
                 </li>
                 <li class="nav-item">

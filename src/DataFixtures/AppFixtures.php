@@ -18,27 +18,37 @@ class AppFixtures extends Fixture
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager): void
     {
         if (self::$loaded) {
             return;
         }
 
-        // Load users first (needed for recipe authors)
         $userFixtures = new UserFixtures($this->passwordHasher, $this->slugger);
         $userFixtures->load($manager);
 
-        // Load categories second
         $categoryFixtures = new RecipeCategoryFixtures($this->slugger);
         $categoryFixtures->load($manager);
 
-        // Load recipes with their steps and media third
         $recipeFixtures = new RecipeFixtures($this->slugger);
         $recipeFixtures->load($manager);
 
-        //load comments last
         $commentsFixtures = new CommentFixtures($this->slugger);
         $commentsFixtures->load($manager);
+
+        $ingredientsFixtures = new IngredientFixtures($this->slugger);
+        $ingredientsFixtures->load($manager);
+
+        $unitFixtures = new UnitFixtures();
+        $unitFixtures->load($manager);
+
+        $recipeIngredientFixtures = new RecipeIngredientFixtures();
+        $recipeIngredientFixtures->load($manager);
+
+        $manager->flush();
 
         self::$loaded = true;
     }

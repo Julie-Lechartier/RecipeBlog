@@ -36,6 +36,8 @@ class LoginController extends AbstractController
                 'roles' => $this->getUser()->getRoles(),
             ]);
         }
+        //activer le debug avec
+
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

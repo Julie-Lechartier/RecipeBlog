@@ -38,6 +38,9 @@
             "migrations/.gitignore"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.7.0"
+    },
     "nzo/url-encryptor-bundle": {
         "version": "6.4",
         "recipe": {

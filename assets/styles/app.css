@@ -247,3 +247,8 @@ input[type=checkbox]:checked{
 .remove-step:hover {
     background-color: var(--dark-cherry);
 }
+
+/* Actions table */
+.actions-table-custom {
+    width : 55px!important;
+}

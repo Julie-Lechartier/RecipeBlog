@@ -1,0 +1,42 @@
+{% if pageCount > 1 %}
+<nav>
+    <ul class="pagination {{ options.page_class|default('') }}">
+        {# Bouton Précédent #}
+        {% if previous is defined %}
+        <li class="page-item">
+            <a class="page-link" href="{{ path(route_name, route_params|merge({'page': previous})) }}">
+                {{ options.previous_message|default('Previous') }}
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">{{ options.previous_message|default('Previous') }}</span>
+        </li>
+        {% endif %}
+        {% for page in pagesInRange %}
+            {% if page == current %}
+                <li class="page-item {{ options.current_class|default('active') }}">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route_name, route_params|merge({'page': page})) }}">
+                        {{ page }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if next is defined %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route_name, route_params|merge({'page': next})) }}">
+                    {{ options.next_message|default('Next') }}
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">{{ options.next_message|default('Next') }}</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

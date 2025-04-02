@@ -9,13 +9,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class NavigationController extends AbstractController
 {
-    #[Route('/{slug}', name: 'app_navigation')]
+    #[Route('/nav', name: 'app_navigation')]
     public function header(RecipeCategoryRepository $recipeCategoryRepository): Response
     {
-        $categories = $recipeCategoryRepository->findAll();
 
+        $category = $recipeCategoryRepository->findAll();
         return $this->render('components/header.html.twig', [
-            'categories' => $categories,
+            'category' => $category,
         ]);
     }
 }

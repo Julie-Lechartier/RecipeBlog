@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-{% include 'components/header.html.twig' %}
+{{ render(path('app_navigation')) }}
 {% block body %}
 
     <div class="position-relative">

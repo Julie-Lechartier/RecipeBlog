@@ -1,4 +1,5 @@
-<header class="navbar navbar-expand-lg bg-dark-green p-0 position-fixed w-100 z-3" aria-label="Offcanvas navbar large" style="height: 55px;">
+<header class="navbar navbar-expand-lg bg-dark-green p-0 position-fixed w-100 z-3" aria-label="Offcanvas navbar large"
+        style="height: 55px;">
     <div class="container-flex  w-100">
         <div class="row gap-lg-4 px-2 mx-0 no-wrap align-items-center">
             <!-- Modal nav button Start -->
@@ -10,11 +11,11 @@
                 </span>
             </button>
             <!-- Modal nav button End -->
-{#            <div class="col-lg-3 col-8 d-flex justify-content-center">#}
-{#                <a href="{{ path('home') }}">#}
-{#                    <img src="{{ asset('images/logo-white.png') }}" alt="logo" class="w-100">#}
-{#                </a>#}
-{#            </div>#}
+            {#            <div class="col-lg-3 col-8 d-flex justify-content-center"> #}
+            {#                <a href="{{ path('home') }}"> #}
+            {#                    <img src="{{ asset('images/logo-white.png') }}" alt="logo" class="w-100"> #}
+            {#                </a> #}
+            {#            </div> #}
             <!-- Nav Start -->
             <div class=" col-7 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
                  tabindex="-1" id="offcanvasNavbar"
@@ -22,25 +23,53 @@
                 <!-- Nav Mobile header-->
                 <div class="offcanvas-header justify-content-between border-bottom">
                     <button type="button" class="bg-transparent border-1 icon border-0"
-                            data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-chevron-left icon-2-size"></i>
+                            data-bs-dismiss="offcanvas" aria-label="Close"><i
+                                class="bi bi-chevron-left icon-2-size"></i>
                     </button>
                     <h5 class="offcanvas-title text-custom-black" id="offcanvasNavbarLabel">Menu</h5>
                 </div>
                 <!-- Nav body -->
                 <div class="offcanvas-body overflow-lg-hidden">
                     <ul class="navbar-nav gap-2 justify-content-end align-items-center flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
-                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'apero'}) }}" class="text-white text-decoration-none">Apéro</a></li>
-                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'entrees'}) }}" class="text-white text-decoration-none">Entrées</a></li>
-                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'plats'}) }}" class="text-white text-decoration-none">Plats</a></li>
-                        <li class="nav-item"><a href="{{ path('app_recipe_category_view', {'category' : 'desserts'}) }}" class="text-white text-decoration-none">Desserts</a></li>
-                        <li class="nav-item dropdown ">
-                            <button class="btn dropdown-toggle text-white text-uppercase tw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'apero'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                                Apéro
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'entrees'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                                Entrées
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                                Plats
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                                Desserts
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown position-static">
+                            <a class="nav-link-hover dropdown-toggle text-white text-uppercase fw-bold position-relative text-decoration-none"
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Autres
-                            </button>
-                            <ul class="dropdown-menu bg-white">
-                                {% for cat in category %}
-                                    <li>{{ cat.name }}</li>
-                                {% endfor %}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow-sm rounded-3 py-3 px-3 mt-1 column-gap-2 w-100 start-0"
+                                style="width: 500px; min-width: auto;">
+                                <div class="row">
+                                    {% for cat in category %}
+                                        <div class="col-6 col-md-4 mb-2">
+                                            <li>
+                                                <a href="{{ path('app_recipe_category_show', {'category': cat.slug}) }}"
+                                                   class="dropdown-item px-2 py-1 text-decoration-none fw-normal text-black text-capitalize category-link">
+                                                    <span class="category-text">{{ cat.name }}</span>
+                                                </a>
+                                            </li>
+                                        </div>
+                                    {% endfor %}
+                                </div>
                             </ul>
                         </li>
                     </ul>
@@ -52,7 +81,8 @@
                     <div class="input-group ">
                         <input type="text" class="form-control bg-secondary-subtle" placeholder="Rechercher"
                                aria-label="Search" aria-describedby="search-addon">
-                        <button class="btn btn-outline-secondary bg-secondary-subtle border-0" type="button" id="search-addon">
+                        <button class="btn btn-outline-secondary bg-secondary-subtle border-0" type="button"
+                                id="search-addon">
                             <i class="bi bi-search text-secondary"></i>
                         </button>
                     </div>
@@ -60,35 +90,36 @@
             </div>
             <!-- Desktop Search bar End -->
             <!-- Nav End -->
-{#            <!-- Mobile Search bar Start if page single recipe -->#}
-{#            <div class="d-lg-none d-flex col-2 align-items-center justify-content-center ">#}
-{#                <!-- Button trigger modal -->#}
-{#                <button class="btn btn-outline-secondary bg-custom-red rounded-circle border border-0 icon icon-2 p-0"#}
-{#                        type="button" id="search-addon" data-bs-toggle="modal" data-bs-target="#Modal">#}
-{#                    <i class="bi bi-search text-light icon-2-size"></i>#}
-{#                </button>#}
+            {% if currentPageRoute is defined and currentPageRoute == 'app_recipe_show' %}                <!-- Mobile Search bar Start if page single recipe -->
+                <div class="d-lg-none d-flex col-2 align-items-center justify-content-center ">
+                    <!-- Button trigger modal -->
+                    <button class="btn btn-outline-secondary bg-custom-red rounded-circle border border-0 icon icon-2 p-0"
+                            type="button" id="search-addon" data-bs-toggle="modal" data-bs-target="#Modal">
+                        <i class="bi bi-search text-light icon-2-size"></i>
+                    </button>
 
-{#                <!-- Modal search Start -->#}
-{#                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">#}
-{#                    <div class="modal-dialog">#}
-{#                        <div class="modal-content">#}
-{#                            <div class="modal-body">#}
-{#                                <form class="d-flex" role="search">#}
-{#                                    <input class="form-control me-2 focus-ring-success" type="search"#}
-{#                                           placeholder="Search" aria-label="Search">#}
-{#                                    <button class="btn bg-custom-green" type="submit"><i#}
-{#                                                class="bi bi-search text-light"></i></button>#}
-{#                                </form>#}
-{#                            </div>#}
-
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <!-- Modal search End -->#}
-{#            </div>#}
-{#            <!-- Mobile Search bar End -->#}
+                    <!-- Modal search Start -->
+                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <form class="d-flex" role="search">
+                                        <input class="form-control me-2 focus-ring-success" type="search"
+                                               placeholder="Search" aria-label="Search">
+                                        <button class="btn bg-custom-green" type="submit"><i
+                                                    class="bi bi-search text-light"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal search End -->
+                </div>
+            {% endif %}
+            <!-- Mobile Search bar End -->
             <div class="col-6 d-flex col-lg-1 justify-content-end">
-                <a class="btn align-content-center text-white" href="#" role="button"><i class="bi bi-person-circle icon-1-size"></i></a>
+                <a class="btn align-content-center text-white" href="#" role="button"><i
+                            class="bi bi-person-circle icon-1-size"></i></a>
             </div>
         </div>
     </div>

@@ -139,13 +139,14 @@ input[type="color"]:focus,
 }
 
 /* Custom icon end */
+/* Admin sidebar */
 .sidebar {
     top: 0;
     bottom: 0;
     left: 0;
     width: 250px;
 }
-
+/* Admin main content */
 .main-content {
     margin-left: 250px;
 }
@@ -270,3 +271,89 @@ input[type="search"]:focus,
     outline:0;
     box-shadow:0 0 0 0  transparent!important;
 }
+
+/* Delete border on dropdown */
+.dropdown-toggle:focus,
+.dropdown-toggle:active {
+    outline: 0 !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+/* dropdown menu element */
+.category-link {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding-left: 12px !important;
+}
+
+.category-link:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--green);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.category-text {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.category-link:hover {
+    background-color: var(--light-green);
+    padding-left: 20px !important;
+}
+
+.category-link:hover:before {
+    transform: scaleY(1);
+}
+
+.category-link:hover .category-text {
+    transform: translateX(5px);
+}
+
+/* Animation on header nav element Start */
+.nav-link-hover {
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link-hover::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.nav-link-hover:hover {
+    transform: translateY(-3px);
+}
+.dropdown-toggle.nav-link-hover:hover {
+    transform: none !important;
+}
+.dropdown-toggle.nav-link-hover::after {
+    left: 45%;
+    height: 2px!important;
+    border: transparent!important;
+}
+.nav-link-hover:hover::after {
+    width: 70%;
+    opacity: 1;
+}
+/* Animation on header nav element End */
+
+
+
+
+

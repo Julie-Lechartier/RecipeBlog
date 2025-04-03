@@ -1,56 +1,93 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container py-0 py-md-5 px-0">
+    <div class="container-fluid py-0 py-lg-5 px-0 px-lg-4 ">
         <!-- Recipe header -->
-        <div class="row g-0 g-md-4 mb-5">
+        <div class="row g-0 g-lg-4 mb-5">
             <!-- Images -->
             <div class="col-lg-5">
                 <div class="position-relative">
-                    <img src="https://picsum.photos/800/600" class="img-fluid rounded-0 rounded-md-3 shadow-sm" alt="Image de {{ recipes.title }}">
-                    <div class="position-absolute top-0 start-0 m-3">
-                           {% for category in  recipes.category %}
-                               <span class="badge rounded-pill bg-cherry px-3 py-2">
+                    <img src="https://picsum.photos/800/600" class="img-fluid rounded-0 d-block d-lg-none shadow-sm "
+                         alt="Image de {{ recipes.title }}">
+                    <img src="https://picsum.photos/800/600" class="img-fluid rounded-3 d-none d-lg-block shadow-sm "
+                         alt="Image de {{ recipes.title }}">
+                    <div class="position-absolute d-none d-md-block top-0 start-0 m-3">
+                        {% for category in  recipes.category %}
+                            <span class="badge rounded-pill bg-cherry px-3 py-2">
                                         {{ category.name }}
                                     </span>
-                           {% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <!-- Information -->
-            <div class="col-lg-7 px-2 bg-white rounded-top-3">
-                <h1 class="display-5 fw-bold mb-3 text-center text-md-start">{{ recipes.title }}</h1>
-                <div class="d-flex flex-wrap gap-4 mb-4 justify-content-center justify-content-md-start">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-clock me-2 text-dark-green"></i>
-                        <span>
-                            {% if preparationHours > 0 %}
-                                {{ preparationHours }} heure{% if preparationHours > 1 %}s{% endif %}
-                                {% if preparationMinutes > 0 %}
-                                    {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
-                                {% endif %}
-                            {% else %}
+            <div class="col-lg-7 px-2 position-relative">
+                <!-- mobile recipe header -->
+                <div class="d-lg-none position-absolute bg-white rounded-top-5 start-0 end-0 pt-2" style="top: -3rem;">
+                    <h1 class="display-5 fw-bold mb-3 text-center text-lg-start px-2 pt-2">{{ recipes.title }}</h1>
+                    <div class="d-flex justify-content-center">
+                        {% for category in  recipes.category %}
+                            <span class="py-2">{{ category.name }}</span><span class="px-1 py-2 align-items-center">{% if not loop.last %}/{% endif %}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex flex-wrap gap-4 mb-4 justify-content-center justify-content-lg-start px-2">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock me-2 text-dark-green"></i>
+                            <span>
+                        {% if preparationHours > 0 %}
+                            {{ preparationHours }} heure{% if preparationHours > 1 %}s{% endif %}
+                            {% if preparationMinutes > 0 %}
                                 {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
                             {% endif %}
-                        </span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-people-fill me-2 text-dark-green"></i>
-                        <span>{{ recipes.serving }} personne{% if recipes.serving > 1 %}s{% endif %}</span>
+                        {% else %}
+                            {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
+                        {% endif %}
+                    </span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-people-fill me-2 text-dark-green"></i>
+                            <span>{{ recipes.serving }} personne{% if recipes.serving > 1 %}s{% endif %}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-light-green rounded-3 mb-4">
-                    <p class="lead mb-0 text-center text-md-start">{{ recipes.description }}</p>
+                <!-- desktop recipe header  -->
+                <div class="d-none d-lg-block">
+                    <h1 class="display-5 fw-bold mb-3 text-center text-md-start">{{ recipes.title }}</h1>
+                    <div class="d-flex flex-wrap gap-4 mb-4 justify-content-center justify-content-md-start">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock me-2 text-dark-green"></i>
+                            <span>
+                        {% if preparationHours > 0 %}
+                            {{ preparationHours }} heure{% if preparationHours > 1 %}s{% endif %}
+                            {% if preparationMinutes > 0 %}
+                                {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
+                            {% endif %}
+                        {% else %}
+                            {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
+                        {% endif %}
+                    </span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-people-fill me-2 text-dark-green"></i>
+                            <span>{{ recipes.serving }} personne{% if recipes.serving > 1 %}s{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-lg-none" style="margin-top: 8rem;"></div>
+
+                <div class="bg-light-green rounded-3 mt-lg-5">
+                    <p class="lead mb-0 text-center text-lg-start">{{ recipes.description }}</p>
                 </div>
             </div>
+
         </div>
 
         <!-- content principal -->
-        <div class="row g-0 g-md-5 px-2">
+        <div class="row g-0 g-lg-5 px-3">
             <!-- Ingredients -->
             <div class="col-lg-5">
-                <div class="border-start border-4 border-green ps-4 mb-4">
+                <div class="mb-4">
                     <h2 class="h3 mb-4 text-dark-brown">
                         <i class="bi bi-list-ul me-2 text-dark-green"></i>Ingrédients
                     </h2>
@@ -71,10 +108,11 @@
             </div>
 
             <!-- Instructions -->
-            <div class="col-lg-7">
-                <div class="border-start border-4 border-green ps-4 mb-4">
+            <div class="col-lg-7 mt-4 mt-lg-0">
+                <div class="mb-4">
                     <h2 class="h3 mb-4 text-dark-brown">
-                        <i class="bi bi-journal-text me-2 text-dark-green"></i>Instructions
+                        <i class="bi bi-journal-text me-2 text-dark-green"></i>
+                        Instructions
                     </h2>
                 </div>
 
@@ -82,7 +120,8 @@
                     {% for step in recipes.steps %}
                         <div class="step-item mb-5">
                             <div class="d-flex">
-                                <div class="bg-dark-green text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                                <div class="bg-dark-green text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                     style="width: 40px; height: 40px;">
                                     <span class="fw-bold">{{ step.stepNumber }}</span>
                                 </div>
                                 <div class="ms-4">

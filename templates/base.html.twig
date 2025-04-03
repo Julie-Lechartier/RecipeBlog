@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-{{ render(path('app_navigation')) }}
+{{ render(path('app_navigation', { 'currentPageRoute': app.request.attributes.get('_route') })) }}
 {% block body %}
 
             {% include 'components/hero.html.twig' %}

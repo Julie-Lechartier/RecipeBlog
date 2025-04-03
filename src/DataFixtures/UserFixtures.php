@@ -93,7 +93,6 @@ class UserFixtures extends Fixture
             $manager->persist($avatar);
             $manager->persist($newUser);
         }
-
         $manager->flush();
     }
 }

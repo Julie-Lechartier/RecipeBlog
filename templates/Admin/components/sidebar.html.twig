@@ -1,59 +1,65 @@
-<div class="container-fluid p-0 m-0 vh-10">
-    <div class="row">
-        <div class="col-12 justify-items-center">
-           <!-- Add logo site -->
+<div class="container-fluid p-0 m-0 ">
+    <div class="d-flex flex-column justify-content-between vh-100 pb-4">
+        <div class=" justify-items-center">
+            <!-- Add logo site -->
         </div>
-        <div class="mt-5">
+        <div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_index') }}">
-                        <i class="bi bi-house pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_index' %} active {% endif %}" href="{{ path('app_admin_index') }}">
+                        <i class="bi bi-house pe-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_user_index') }}">
-                        <i class="bi bi-people pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_user_index' %} active {% endif %}" href="{{ path('app_admin_user_index') }}">
+                        <i class="bi bi-people pe-2"></i>
                         Utilisateurs
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_recipe_index') }}">
-                        <i class="bi bi-journal pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_recipe_index' %} active {% endif %}" href="{{ path('app_admin_recipe_index') }}">
+                        <i class="bi bi-journal pe-2"></i>
                         Recettes
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_recipe_category_index') }}">
-                        <i class="bi bi-tag pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_recipe_category_index' %} active {% endif %}" href="{{ path('app_admin_recipe_category_index') }}">
+                        <i class="bi bi-tag pe-2"></i>
                         Catégories
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_comment_index') }}">
-                        <i class="bi bi-chat pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_comment_index' %} active {% endif %}" href="{{ path('app_admin_comment_index') }}">
+                        <i class="bi bi-chat pe-2"></i>
                         Commentaires
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ path('app_admin_ingredient_index') }}">
-                        <i class="bi bi-cart4 pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_ingredient_index' %} active {% endif %}" href="{{ path('app_admin_ingredient_index') }}">
+                        <i class="bi bi-cart4 pe-2"></i>
                         Ingredients
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="#">
-                        <i class="bi bi-cup pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_unit_index' %} active {% endif %}" href="{{ path('app_admin_unit_index') }}">
+                        <i class="bi bi-cup pe-2"></i>
                         Unités
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="#">
-                        <i class="bi bi-house-gear pe-2 text-secondary"></i>
+                    <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_index' %} active {% endif %}" href="#">
+                        <i class="bi bi-house-gear pe-2"></i>
                         Paramètre acceuil
                     </a>
                 </li>
             </ul>
+        </div>
+        <div>
+            <a href="" class="text-decoration-none text-black px-3">
+                <i class="bi bi-box-arrow-left pe-2"></i>
+                Se déconnecter
+            </a>
         </div>
     </div>
 </div>

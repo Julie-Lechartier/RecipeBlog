@@ -11,6 +11,8 @@
 {{ render(path('app_navigation')) }}
 {% block body %}
 
+            {% include 'components/hero.html.twig' %}
+
     <div class="position-relative">
         <div class="position-sticky btn-full-green top-50 z-3">
             <a href="{{ path('app_new_recipe') }}" class="btn btn-primary">

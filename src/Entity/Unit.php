@@ -23,6 +23,8 @@ class Unit
      */
     #[ORM\OneToMany(targetEntity: RecipeIngredient::class, mappedBy: 'unit')]
     private Collection $recipeIngredients;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -43,6 +45,16 @@ class Unit
     {
         $this->name = $name;
 
+        return $this;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
         return $this;
     }
 

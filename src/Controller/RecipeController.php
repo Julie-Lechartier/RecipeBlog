@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Recipe;
+use App\Entity\RecipeCategory;
 use App\Form\RecipeType;
+use App\Repository\RecipeIgredientRepository;
+use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\RecipeCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,11 +29,23 @@ class RecipeController extends AbstractController
             'recipes' => $recipes,
         ]);
     }
-    #[Route('/{slug}', name: 'app_recipe_view')]
-    public function show(Recipe $recipe): Response
+    #[Route('/show/{slug}', name: 'app_recipe_show')]
+    public function show(Recipe $recipe, RecipeCategoryRepository $recipeCategoryRepository, RecipeIngredientRepository $recipeIngredientRepository): Response
     {
+        $recipeIngredient = $recipeIngredientRepository->findBy(['recipe' => $recipe]);
+        $recipeCategories = $recipeCategoryRepository->findAll();
+
+        //condition preparation time format
+        $preparationTime = $recipe->getPreparationTime();
+        $hours = (int)$preparationTime?->format('H');
+        $minutes = (int)$preparationTime?->format('i');
+
         return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
+            'recipes' => $recipe,
+            'recipeCategories' => $recipeCategories,
+            'recipeIngredients' => $recipeIngredient,
+            'preparationHours' => $hours,
+            'preparationMinutes' => $minutes,
         ]);
     }
     #[Route('/category/{category}', name: 'app_recipe_category_view')]
@@ -98,5 +113,4 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
         ]);
     }
-
 }

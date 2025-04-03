@@ -11,7 +11,7 @@ use Faker\Factory;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CommentFixtures extends Fixture
+class CommentFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly SluggerInterface $slugger
@@ -25,6 +25,7 @@ class CommentFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $users = $manager->getRepository(User::class)->findAll();
         $recipes = $manager->getRepository(Recipe::class)->findAll();
+
 
         if (empty($users) || empty($recipes)) {
             throw new \Exception('No users or recipes found.');
@@ -40,5 +41,12 @@ class CommentFixtures extends Fixture
             $manager->persist($newComment);
         }
         $manager->flush();
+    }
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+            RecipeFixtures::class
+        ];
     }
 }

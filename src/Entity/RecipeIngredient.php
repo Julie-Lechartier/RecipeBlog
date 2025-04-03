@@ -25,6 +25,7 @@ class RecipeIngredient
     private ?string $quantity = null;
 
     #[ORM\ManyToOne(targetEntity: Unit::class, inversedBy: 'recipeIngredients')]
+    #[ORM\JoinColumn(name: "unit_id", referencedColumnName: "id", onDelete: "SET NULL")]
     private ?Unit $unit = null;
 
     public function getId(): ?int

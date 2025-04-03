@@ -7,18 +7,18 @@
             <th scope="col">Actions</th>
         </tr>
         </thead>
-        {% for ingredient in pagination.items %}
+        {% for unit in pagination.items %}
             <tbody>
             <tr>
-                <td>{{ ingredient.name }}</td>
+                <td>{{ unit.name }}</td>
                 <td></td>
                 <td>
                     <div class="row gap-2">
-                        <a href="{{ path('app_admin_ingredient_edit', {'slug': ingredient.slug}) }}"
+                        <a href="{{ path('app_admin_unit_edit', {'slug': unit.slug}) }}"
                            class="text-decoration-none  btn-full-green rounded-3 text-center py-1 actions-table-custom">
                             <i class="bi bi-pencil-fill text-white"></i>
                         </a>
-                        <a href="{{ path('app_admin_ingredient_delete', {'slug' : ingredient.slug}) }}"
+                        <a href="{{ path('app_admin_unit_delete', {'slug' : unit.slug}) }}"
                            class="text-decoration-none  col-5 btn-full-cherry rounded-3 text-center py-1 btn-table-size"
                            type="submit">
                             <i class="bi bi-trash3-fill text-white"></i>
@@ -36,3 +36,5 @@
 {% else %}
     <p>Aucun ingredient disponible.</p>
 {% endif %}
+
+

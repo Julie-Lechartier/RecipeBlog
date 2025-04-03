@@ -40,18 +40,15 @@
             </div>
         </div>
     </div>
-
-    <!-- Script pour synchroniser la page avec la pagination -->
     <script>
         document.addEventListener('htmx:afterSwap', function(event) {
-            // Mettre à jour le champ page après chaque changement de table
             const paginationLinks = document.querySelectorAll('.pagination a');
             paginationLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const page = new URLSearchParams(this.getAttribute('href')).get('page') || 1;
                     document.querySelector('input[name="page"]').value = page;
-                    htmx.trigger('input[name="search"]', 'change'); // Relancer la requête HTMX
+                    htmx.trigger('input[name="search"]', 'change');
                 });
             });
         });

@@ -24,7 +24,7 @@ class RecipeController extends AbstractController
     public function __construct(private readonly SluggerInterface $slugger)
     {
     }
-    #[Route('/', name: 'app_admin_recipe_index')]
+    #[Route('/', name: 'app_admin_recipe_index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator, EntityManagerInterface $entityManager): Response
     {
         $queryBuilder = $recipeRepository->createQueryBuilder('r')->getQuery();
@@ -42,7 +42,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_recipe_new')]
+    #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         //add user to a recipe

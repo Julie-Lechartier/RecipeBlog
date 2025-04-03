@@ -6,28 +6,45 @@
                 <img src="https://picsum.photos/400/200" class="rounded-2" alt="image de la recette">
             </div>
             <div class="col-7">
-                <h1>{{ recipe.title }}</h1>
+                <h1>{{ recipes.title }}</h1>
                 <div class="d-flex justify-content-between">
                     <p>Dessert</p>
-                    <p>Temps de préparation: min.</p>
+                    <p>Temps de préparation:
+                        {% if preparationHours > 0 %}
+                            {{ preparationHours }} heure{% if preparationHours > 1 %}s{% endif %}
+                            {% if preparationMinutes > 0 %}
+                                {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
+                            {% endif %}
+                        {% else %}
+                            {{ preparationMinutes }} minute{% if preparationMinutes > 1 %}s{% endif %}
+                        {% endif %}
+                    </p>
                 </div>
-                <p class="text-end">Nombres de services: {{ recipe.serving }} personnes</p>
+                <p class="text-end">Nombres de services: {{ recipes.serving }} personnes</p>
                 <p>
-                    {{ recipe.description }}
+                    {{ recipes.description }}
                 </p>
 
             </div>
         </div>
         <div class="row mt-4">
             <div class="col-5">
-                <h2>Ingrédient</h2>
-                <div class="d-flex justify-content-between w-50">
-                    <p>100g</p>
-                    <p>Pépite de chocolat</p>
-                </div>
+                <h2>Ingrédients</h2>
+                {% for recipeIngredient in recipeIngredients %}
+                    <div class="d-flex justify-content-between w-50">
+                        <div class="d-flex gap-1">
+                            <p>{{ recipeIngredient.quantity }} {{ recipeIngredient.unit.name }}</p>
+                        </div>
+                        <p>{{ recipeIngredient.ingredient.name }}</p>
+                    </div>
+                {% endfor %}
             </div>
             <div class="col-7">
                 <h2>Instructions</h2>
+                {% for step in recipes.steps %}
+                    <h5>Etape {{ step.stepNumber }}</h5>
+                     <p>{{ step.content }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -8,12 +8,13 @@ use App\Entity\RecipeCategory;
 use App\Entity\Step;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Smknstd\FakerPicsumImages\FakerPicsumImagesProvider;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class RecipeFixtures extends Fixture
+class RecipeFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public function __construct(
@@ -24,18 +25,16 @@ class RecipeFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Clear existing recipes and related entities
-        $manager->createQuery('DELETE FROM App\Entity\Media m')->execute();
-        $manager->createQuery('DELETE FROM App\Entity\Step s')->execute();
-        $manager->createQuery('DELETE FROM App\Entity\Recipe r')->execute();
-
         $faker = Factory::create('fr_FR');
         $faker->addProvider(new FakerPicsumImagesProvider($faker));
 
         $users = $manager->getRepository(User::class)->findAll();
         $categories = $manager->getRepository(RecipeCategory::class)->findAll();
 
-        // Create a map of category names to their entities
+        if (empty($users)) {
+            throw new \Exception('No users found! Cannot assign authors to recipes.');
+        }
+
         $categoryMap = [];
         foreach ($categories as $category) {
             $categoryMap[$category->getName()] = $category;
@@ -170,8 +169,6 @@ class RecipeFixtures extends Fixture
                     $recipe->addCategory($categoryMap[$categoryName]);
                 }
             }
-
-            // Add 3-8 steps
             $numberOfSteps = $faker->numberBetween(3, 8);
             for ($j = 1; $j <= $numberOfSteps; $j++) {
                 $step = new Step();
@@ -181,8 +178,6 @@ class RecipeFixtures extends Fixture
                 $recipe->addStep($step);
                 $manager->persist($step);
             }
-
-            // Add one image
             $media = new Media();
             $media->setFilename($faker->slug);
             $media->setUrl($faker->imageUrl(800, 600));
@@ -191,7 +186,13 @@ class RecipeFixtures extends Fixture
             $manager->persist($media);
             $manager->persist($recipe);
         }
-
         $manager->flush();
+    }
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+            RecipeCategoryFixtures::class
+        ];
     }
 }

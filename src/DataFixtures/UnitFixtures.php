@@ -35,9 +35,9 @@ class UnitFixtures extends Fixture
         foreach ($units as $unitName) {
             $units = new Unit();
             $units->setName($unitName);
+            $units->setSlug($unitName);
             $manager->persist($units);
         }
-
         $manager->flush();
     }
 }

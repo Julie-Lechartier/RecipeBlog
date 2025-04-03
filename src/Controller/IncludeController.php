@@ -18,6 +18,7 @@ final class IncludeController extends AbstractController
     {
         $limit = $request->query->get('limit', 10);
         $recipes = $recipeRepository->findBy([], null, $limit);
+
         return $this->render('include/_recipeScrollCard.html.twig', [
             'recipes' => $recipes,
         ]);

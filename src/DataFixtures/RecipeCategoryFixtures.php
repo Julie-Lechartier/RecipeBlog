@@ -18,9 +18,6 @@ class RecipeCategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Clear existing categories
-        $manager->createQuery('DELETE FROM App\Entity\RecipeCategory')->execute();
-
         $categories = [
             'Apéro',
             'Entrées',
@@ -46,7 +43,7 @@ class RecipeCategoryFixtures extends Fixture
             $category->setSlug($this->slugger->slug($categoryName)->lower());
             $manager->persist($category);
         }
-
         $manager->flush();
     }
+
 } 

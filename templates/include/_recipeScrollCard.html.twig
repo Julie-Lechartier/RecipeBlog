@@ -1,7 +1,8 @@
 <div class="scroll-container">
     {% for recipe in recipes %}
         <div class="col-3 ">
-            <a class="card-home rounded-4 border-0 shadow-sm text-decoration-none text-black" style="width: 20rem; height:19rem" href="{{ path('app_recipe_view', {'slug': recipe.slug}) }}">
+            <a class="card-home rounded-4 border-0 shadow-sm text-decoration-none text-black"
+               style="width: 20rem; height:19rem" href="{{ path('app_recipe_show', {'slug': recipe.slug}) }}">
                 <div class="position-relative">
                     <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-top-4" alt="...">
                     <h5 class="card-title position-absolute bottom-0 text-white px-3 py-2 fs-3">{{ recipe.title }}</h5>
@@ -11,7 +12,24 @@
                     <ul class="p-0">
                         <li class="d-flex gap-2">
                             <i class="bi bi-stopwatch text-dark-green"></i>
-                            <p> heure</p>
+                            <p>
+                                {% if recipe.preparationTime %}
+                                    {% set hours = recipe.preparationTime.format('H')|number_format(0) %}
+                                    {% set minutes = recipe.preparationTime.format('i')|number_format(0) %}
+
+                                    {% if hours > 0 %}
+                                        {{ hours }} heure
+                                        {% if hours > 1 %}
+                                            {{ hours }} heures
+                                        {% endif %}
+                                        {% if minutes > 0 %}
+                                            {{ minutes }} minute
+                                        {% endif %}
+                                    {% else %}
+                                        {{ minutes }} minute
+                                    {% endif %}
+                                {% endif %}
+                            </p>
                         </li>
                         <li class="d-flex gap-2">
                             <i class="bi bi-person text-dark-green"></i>

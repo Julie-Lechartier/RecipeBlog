@@ -10,11 +10,10 @@
 <body>
 {% block body %}
     <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="">
+        <div class="row justify-content-center">
+            <div class="col-md-6 card py-4 shadow-sm z-3">
                 <div class="">
-                    <h1 class="h3 mb-0">Se Connecter</h1>
+                    <h1 class="h3 mb-0 fw-bold">Se Connecter</h1>
                 </div>
                 <div class="">
                     <form method="post">
@@ -24,18 +23,21 @@
 
                         {% if app.user %}
                             <div class="mb-3">
-                                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                You are logged in as {{ app.user.userIdentifier }}, <a
+                                        href="{{ path('app_logout') }}">Logout</a>
                             </div>
                         {% endif %}
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" value="{{ last_username }}" name="_username" id="email" class="form-control" autocomplete="email" required autofocus>
+                            <input type="email" value="{{ last_username }}" name="_username" id="email"
+                                   class="form-control" autocomplete="email" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                            <input type="password" name="_password" id="password" class="form-control"
+                                   autocomplete="current-password" required>
                         </div>
 
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -58,8 +60,10 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 position-absolute bottom-0">
+                <img src="{{ asset('images/eating a variety of foods-bro (1).svg') }}" alt="" style="width: 35%">
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 {% block javascripts %}

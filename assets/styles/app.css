@@ -2,12 +2,14 @@
 :root {
     --dark-green: #8DAA91;
     --green: #A7C4A0;
+    --light-green: #ebf0eb;
     --green-rgba:167, 196, 160;
     --brown: #A67B5B;
     --dark-brown: #8B5E3C;
     --brown-rgba: 166, 123, 91;
     --cherry: #D83F4D;
     --dark-cherry:#B5303D;
+    --light-cherry: #F4A1A8;
 }
 .bg-dark-green{
     background-color: var(--dark-green)!important;
@@ -15,14 +17,17 @@
 .bg-green{
     background-color: var(--green)!important;
 }
+.bg-dark-brown{
+    background-color: var(--dark-brown)!important;
+}
 .bg-brown{
     background-color: var(--brown)!important;
 }
 .bg-cherry{
     background-color: var(--cherry)!important;
 }
-.bg-card{
-    background-color: rgba(var(--brown-rgba), 0.1)!important;
+.bg-light-cherry{
+    background-color: var(--light-cherry)!important;
 }
 .text-dark-green{
     color: var(--dark-green)!important;
@@ -44,12 +49,17 @@
 }
 /* Custom button Start */
 .btn-full-green{
-    color: white!important;
     background-color: var(--green)!important;
 
 }
 .btn-full-green:hover{
     background-color: var(--dark-green)!important;
+}
+.btn-full-light-green{
+    background-color: var(--light-green)!important;
+}
+.btn-full-light-green:hover{
+    background-color: var(--green)!important; ;
 }
 
 .btn-full-cherry{
@@ -60,11 +70,11 @@
     background-color: var(--dark-cherry) ;
 }
 .btn-full-brown{
-    background-color: var(--brown);
-    color: white;
+    background-color: var(--brown)!important;
+    color: white!important;
 }
 .btn-full-brown:hover{
-    background-color: var(--dark-brown);
+    background-color: var(--dark-brown)!important;
 }
 .btn-border-green{
     background-color: transparent!important;
@@ -99,11 +109,6 @@ input[type="color"]:focus,
     border-color:var(--dark-green);
     outline:0;
     box-shadow:0 0 0 .25rem  rgba(var(--green-rgba), 0.5)!important;
-}
-input[type=checkbox]:checked{
-    border-color:red!important;
-    background-color: greenyellow!important;
-    background-image: none!important;
 }
 /* Custom button Start */
 
@@ -251,4 +256,17 @@ input[type=checkbox]:checked{
 /* Actions table */
 .actions-table-custom {
     width : 55px!important;
+}
+/* admin sidebar activ */
+.nav-link.active {
+    font-weight: bold;
+    background-color: var(--green);
+    border-radius: 10px;
+    margin: 0px 2px ;
+}
+input[type="search"]:focus,
+.admin-search-bar:focus{
+    border-color:transparent!important;
+    outline:0;
+    box-shadow:0 0 0 0  transparent!important;
 }

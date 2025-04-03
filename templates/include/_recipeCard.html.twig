@@ -1,17 +1,34 @@
 <div class="row g-4">
     {% for recipe in recipes %}
         <div class="col-md-4">
-            <a class="card-home rounded-4 border-0 shadow-sm text-decoration-none text-black" style="width: 100%; height:19rem" href="{{ path('app_recipe_view', {'slug': recipe.slug}) }}">
+            <a class="card-home rounded-4 shadow-sm text-decoration-none text-black" style="width: 100%;" href="{{ path('app_recipe_show', {'slug': recipe.slug}) }}">
                 <div class="position-relative">
-                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-4 shadow" alt="...">
+                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-4 shadow-sm" alt="...">
                     <h5 class="position-absolute bottom-0 text-white px-3 py-2 fs-3">{{ recipe.title }}</h5>
                 </div>
-                <div class="card-body px-4 pb-0 bg-card rounded-bottom-4">
+                <div class="card-body px-4 pb-0 rounded-bottom-4">
                     <p class="text-secondary fs-xs">Par {{ recipe.author.username }}</p>
                     <ul class="p-0">
                         <li class="d-flex gap-2">
                             <i class="bi bi-stopwatch text-dark-green"></i>
-                            <p>{{ recipe.preparationTime }} heure</p>
+                            <p>
+                                {% if recipe.preparationTime %}
+                                    {% set hours = recipe.preparationTime.format('H')|number_format(0) %}
+                                    {% set minutes = recipe.preparationTime.format('i')|number_format(0) %}
+
+                                    {% if hours > 0 %}
+                                        {{ hours }} heure
+                                        {% if hours > 1 %}
+                                            {{ hours }} heures
+                                        {% endif %}
+                                        {% if minutes > 0 %}
+                                            {{ minutes }} minute
+                                        {% endif %}
+                                    {% else %}
+                                        {{ minutes }} minute
+                                    {% endif %}
+                                {% endif %}
+                            </p>
                         </li>
                         <li class="d-flex gap-2">
                             <i class="bi bi-person text-dark-green"></i>
@@ -20,7 +37,7 @@
                         <li class="d-flex gap-2">
                             <p class="d-flex gap-2 flex-wrap">
                                 {% for category in recipe.category %}
-                                    <span class="badge rounded-pill {% if currentCategoryId is defined and currentCategoryId == category.id %}bg-cherry{% else %}bg-secondary{% endif %}">
+                                    <span class="badge rounded-2 {% if currentCategoryId is defined and currentCategoryId == category.id %}bg-dark-brown{% else %}bg-brown{% endif %}">
                                         {{ category.name }}
                                     </span>
                                 {% endfor %}

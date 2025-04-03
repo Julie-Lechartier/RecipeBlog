@@ -2,12 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\DataFixtures\IngredientFixtures;
 use App\Entity\Ingredient;
 use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Request;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,11 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class IngredientController extends AbstractController
 {
     #[Route('/', name: 'app_admin_ingredient_index', methods: ['GET'])]
-    public function index(IngredientRepository $ingredientRepository)
+    public function index(IngredientRepository $ingredientRepository, PaginatorInterface $paginator, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $ingredients = $ingredientRepository->findAll();
+        $queryBuilder = $ingredientRepository->createQueryBuilder('r')->getQuery();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+        $ingredients = $entityManager->getRepository(Ingredient::class)->findAll();
+
         return $this->render('admin/ingredient/index.html.twig', [
             'ingredient' => $ingredients,
+            'pagination' => $pagination,
         ]);
 
     }
@@ -48,6 +56,7 @@ class IngredientController extends AbstractController
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->flush();
             return $this->redirectToRoute('app_admin_ingredient_index');
         }
@@ -55,10 +64,13 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/delete/{slug}', name: 'app_admin_ingredient_delete', methods: ['DELETE'])]
-    public function delete(Ingredient $ingredient, EntityManagerInterface $entityManager): Response
+    public function delete(Ingredient $ingredient, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $entityManager->remove($ingredient);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $ingredient->getSlug(), $request->request->get('_token'))) {
+            $entityManager->remove($ingredient);
+            $entityManager->flush();
+        }
+
         return $this->redirectToRoute('app_admin_ingredient_index');
     }
 }

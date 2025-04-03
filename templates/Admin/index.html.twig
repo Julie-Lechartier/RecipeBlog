@@ -4,41 +4,40 @@
     <div class="container-fluid mt-2 min-vh-100">
         <div class="row pt-5 ps-4">
             <div class="col-4 mb-3 mb-sm-0">
-                <div class="card">
+                <div class="card bg-green">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Nombre d'utilisateur</p>
-                            <i class="bi bi-people-fill"></i>
                         </div>
-                        <h5 class="card-text">{{ users | length }}</h5>
+                        <h5 class="card-text fs-1">{{ users | length }}</h5>
                     </div>
                 </div>
             </div>
             <div class="col-4 mb-3 mb-sm-0">
-                <div class="card">
+                <div class="card bg-cherry">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Nombre de recette</p>
-                            <i class="bi bi-journal-arrow-up"></i>
                         </div>
-                        <h5 class="card-text">{{ recipes | length }}</h5>
+                        <h5 class="card-text fs-1">{{ recipes | length }}</h5>
                     </div>
                 </div>
             </div>
             <div class="col-4 mb-3 mb-sm-0">
-                <div class="card">
+                <div class="card bg-brown">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Nombre de Categorie</p>
-                            <i class="bi bi-bookmark-plus-fill"></i>
                         </div>
-                        <h5 class="card-text">{{ recipeCategories | length }}</h5>
+                        <h5 class="card-text fs-1">{{ recipeCategories | length }}</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row bg-white border border-1 rounded-3 me-2 mt-3 p-3">
-            <div><p>Derniers Utilisateurs inscrit</p></div>
+            <div>
+                <p class="fw-bold">Derniers Utilisateurs inscrit</p>
+            </div>
             <table class="table">
                 <thead>
                 <tr>

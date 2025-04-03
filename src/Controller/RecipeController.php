@@ -30,10 +30,9 @@ class RecipeController extends AbstractController
         ]);
     }
     #[Route('/show/{slug}', name: 'app_recipe_show')]
-    public function show(Recipe $recipe, RecipeCategoryRepository $recipeCategoryRepository, RecipeIngredientRepository $recipeIngredientRepository): Response
+    public function show(Recipe $recipe, RecipeIngredientRepository $recipeIngredientRepository): Response
     {
         $recipeIngredient = $recipeIngredientRepository->findBy(['recipe' => $recipe]);
-        $recipeCategories = $recipeCategoryRepository->findAll();
 
         //condition preparation time format
         $preparationTime = $recipe->getPreparationTime();
@@ -42,7 +41,6 @@ class RecipeController extends AbstractController
 
         return $this->render('recipe/show.html.twig', [
             'recipes' => $recipe,
-            'recipeCategories' => $recipeCategories,
             'recipeIngredients' => $recipeIngredient,
             'preparationHours' => $hours,
             'preparationMinutes' => $minutes,

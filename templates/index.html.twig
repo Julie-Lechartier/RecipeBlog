@@ -20,7 +20,10 @@
     </div>
     <!-- Scroll container sample for Recipe of the day -->
     <div class="container-fluid p-0">
-        <h2 class="fw-bold">Recette du jour</h2>
+        <div class="d-flex justify-content-between px-3 align-items-end">
+            <h2 class="fw-bold">Recette du jour</h2>
+            <a href="{{ path('app_recipe_index') }}" class="text-black">Tout voir</a>
+        </div>
         <div class="container-fluid pe-0">
             <!-- Card -->
             {{ render(path('app_include_recipe_scroll', {'limit': 10})) }}

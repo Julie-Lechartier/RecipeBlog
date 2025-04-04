@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-lg bg-dark-green p-0 position-fixed w-100 z-3" aria-label="Offcanvas navbar large"
+<header class="navbar bg-white navbar-expand-lg p-0 position-fixed w-100 z-3 shadow-sm" aria-label="Offcanvas navbar large"
         style="height: 55px;">
     <div class="container-flex  w-100">
         <div class="row gap-lg-4 px-2 mx-0 no-wrap align-items-center">
@@ -7,7 +7,7 @@
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                     aria-controls="offcanvasNavbar">
                 <span class=" border border-0 icon icon-2">
-                    <i class="bi bi-list icon-2-size text-white"></i>
+                    <i class="bi bi-list icon-2-size text-black"></i>
                 </span>
             </button>
             <!-- Modal nav button End -->
@@ -32,31 +32,35 @@
                 <div class="offcanvas-body overflow-lg-hidden">
                     <ul class="navbar-nav gap-2 justify-content-end align-items-center flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
                         <li class="nav-item">
-                            <a href="{{ path('app_recipe_category_show', {'category' : 'apero'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'apero'}) }}"
+                               class="text-decoration-none nav-link-hover position-relative text-black {{ app.request.get('_route') == 'app_recipe_category_show' and app.request.get('category') == 'apero' ? 'active' : '' }}">
                                 Apéro
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_recipe_category_show', {'category' : 'entrees'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'entrees'}) }}"
+                               class="text-decoration-none nav-link-hover position-relative text-black">
                                 Entrées
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}"
+                               class="text-decoration-none nav-link-hover position-relative text-black">
                                 Plats
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}" class="text-white text-decoration-none nav-link-hover position-relative">
+                            <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}"
+                               class="text-decoration-none nav-link-hover position-relative text-black">
                                 Desserts
                             </a>
                         </li>
                         <li class="nav-item dropdown position-static">
-                            <a class="nav-link-hover dropdown-toggle text-white text-uppercase fw-bold position-relative text-decoration-none"
+                            <a class="nav-link-hover dropdown-toggle text-uppercase fw-bold position-relative text-decoration-none text-black"
                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Autres
                             </a>
-                            <ul class="dropdown-menu border-0 shadow-sm rounded-3 py-3 px-3 mt-1 column-gap-2 w-100 start-0"
+                            <ul class="dropdown-menu border-0 shadow-sm rounded-0 py-3 px-3 mt-1 column-gap-2 w-100 start-0"
                                 style="width: 500px; min-width: auto;">
                                 <div class="row">
                                     {% for cat in category %}
@@ -118,8 +122,16 @@
             {% endif %}
             <!-- Mobile Search bar End -->
             <div class="col-6 d-flex col-lg-1 justify-content-end">
-                <a class="btn align-content-center text-white" href="#" role="button"><i
-                            class="bi bi-person-circle icon-1-size"></i></a>
+                <div class="dropdown">
+                    <button class="btn align-content-center text-black dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle icon-1-size"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_login') }}">Se Connecter</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">Mot de passe</label>
                             <input type="password" name="_password" id="password" class="form-control"
                                    autocomplete="current-password" required>
                         </div>
@@ -50,13 +50,14 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-full-green w-100" type="submit">
-                            Sign in
+                        <button class="btn btn-full-green fw-bold w-100" type="submit">
+                            Se connecter
                         </button>
                     </form>
 
-                    <div class="mt-3">
-                        <a href="{{ path('app_register') }}" class="text-cherry">Créer un compte</a>
+                    <div class="mt-3 d-flex gap-2">
+                        <p>Vous n'avez pas de compte ? </p>
+                        <a href="{{ path('app_register') }}" class="">S'inscrire</a>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,14 @@ final class IncludeController extends AbstractController
             'recipes' => $recipes,
         ]);
     }
+    #[Route('/recipe/all', name: 'app_include_recipe_all', methods: ['GET'])]
+    public function recipeAll(RecipeRepository $recipeRepository): Response
+    {
+        $recipes = $recipeRepository->findAll();
+        return $this->render('include/_recipeCard.html.twig', [
+            'recipes' => $recipes,
+        ]);
+    }
 
     #[Route('/recipe/category/{category}', name: 'app_include_recipe_category', methods: ['GET'])]
     public function recipeCategory(RecipeRepository $recipeRepository, RecipeCategoryRepository $categoryRepository, $category): Response

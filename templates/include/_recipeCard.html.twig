@@ -1,51 +1,58 @@
 <div class="row g-4">
     {% for recipe in recipes %}
-        <div class="col-md-4">
-            <a class="card-home rounded-4 shadow-sm text-decoration-none text-black" style="width: 100%;" href="{{ path('app_recipe_show', {'slug': recipe.slug}) }}">
-                <div class="position-relative">
-                    <img src="https://picsum.photos/400/200" class="card-img-top bg-image rounded-4 shadow-sm" alt="...">
-                    <h5 class="position-absolute bottom-0 text-white px-3 py-2 fs-3">{{ recipe.title }}</h5>
-                </div>
-                <div class="card-body px-4 pb-0 rounded-bottom-4">
-                    <p class="text-secondary fs-xs">Par {{ recipe.author.username }}</p>
-                    <ul class="p-0">
-                        <li class="d-flex gap-2">
-                            <i class="bi bi-stopwatch text-dark-green"></i>
-                            <p>
-                                {% if recipe.preparationTime %}
-                                    {% set hours = recipe.preparationTime.format('H')|number_format(0) %}
-                                    {% set minutes = recipe.preparationTime.format('i')|number_format(0) %}
+        <div class="col-5 col-md-4">
+            <div>
+                <a href="{{ path('app_recipe_show', {'slug': recipe.slug}) }}" class="text-decoration-none">
+                    <div class="card-container d-flex flex-column border border-1 shadow-sm rounded-4 position-relative overflow-hidden">
+                        <div class="image-container position-relative">
+                            <img src="https://picsum.photos/400/200" alt="{{ recipe.title }}" class="object-fit-cover h-100 w-100">
+                            <div class="position-absolute bottom-0 start-0 end-0 p-3 title-overlay">
+                                <h5 class="text-white">{{ recipe.title }}</h5>
+                            </div>
+                        </div>
 
-                                    {% if hours > 0 %}
-                                        {{ hours }} heure
-                                        {% if hours > 1 %}
-                                            {{ hours }} heures
+                        <div class="p-4 flex-grow-1 d-flex flex-column">
+                            <div class="author">
+                                <span class="text-secondary">Par {{ recipe.author.username }}</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="detail-item">
+                                    <i class="bi bi-stopwatch text-black"></i>
+                                    <span class="text-black">
+                                        {% if recipe.preparationTime %}
+                                            {% set hours = recipe.preparationTime.format('H')|number_format(0) %}
+                                            {% set minutes = recipe.preparationTime.format('i')|number_format(0) %}
+
+                                            {% if hours > 0 %}
+                                                {{ hours }} heure{% if hours > 1 %}s{% endif %}
+                                                {% if minutes > 0 %}
+                                                    {{ minutes }} minute{% if minutes > 1 %}s{% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {{ minutes }} minute{% if minutes > 1 %}s{% endif %}
+                                            {% endif %}
                                         {% endif %}
-                                        {% if minutes > 0 %}
-                                            {{ minutes }} minute
-                                        {% endif %}
-                                    {% else %}
-                                        {{ minutes }} minute
-                                    {% endif %}
-                                {% endif %}
-                            </p>
-                        </li>
-                        <li class="d-flex gap-2">
-                            <i class="bi bi-person text-dark-green"></i>
-                            <p>{{ recipe.serving }} personnes</p>
-                        </li>
-                        <li class="d-flex gap-2">
-                            <p class="d-flex gap-2 flex-wrap">
+                                    </span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <i class="bi bi-person text-black"></i>
+                                    <span class="text-black">{{ recipe.serving }} personne{% if recipe.serving > 1 %}s{% endif %}</span>
+                                </div>
+                            </div>
+
+                            <div class="categories d-flex flex-wrap gap-2 mt-1">
                                 {% for category in recipe.category %}
-                                    <span class="badge rounded-2 {% if currentCategoryId is defined and currentCategoryId == category.id %}bg-dark-brown{% else %}bg-brown{% endif %}">
+                                    <span class="category-tag d-inline-block rounded-pill fs-xs">
                                         {{ category.name }}
                                     </span>
                                 {% endfor %}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </a>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     {% endfor %}
 </div>

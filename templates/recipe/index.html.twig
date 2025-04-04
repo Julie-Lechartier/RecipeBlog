@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1>test</h1>
-
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="fw-bold">Tout les recettes</h1>
+        </div>
+    </div>
+    {{ render(path('app_include_recipe_all')) }}
 {% endblock %}

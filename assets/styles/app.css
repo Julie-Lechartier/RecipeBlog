@@ -1,12 +1,10 @@
 /* Custom Color Start */
 :root {
-    --dark-green: #8DAA91;
-    --green: #A7C4A0;
+    --dark-green: #2E7D32;
+    --green: #4CAF50;
     --light-green: #ebf0eb;
     --green-rgba:167, 196, 160;
-    --brown: #A67B5B;
-    --dark-brown: #8B5E3C;
-    --brown-rgba: 166, 123, 91;
+    --dark-grey: #CACBCD;
     --cherry: #D83F4D;
     --dark-cherry:#B5303D;
     --light-cherry: #F4A1A8;
@@ -16,12 +14,6 @@
 }
 .bg-green{
     background-color: var(--green)!important;
-}
-.bg-dark-brown{
-    background-color: var(--dark-brown)!important;
-}
-.bg-brown{
-    background-color: var(--brown)!important;
 }
 .bg-cherry{
     background-color: var(--cherry)!important;
@@ -34,9 +26,6 @@
 }
 .text-green{
     color: var(--green)!important;
-}
-.text-brown{
-    color: var(--brown)!important;
 }
 .text-cherry{
     color: var(--cherry)!important;
@@ -61,6 +50,13 @@
 .btn-full-light-green:hover{
     background-color: var(--green)!important; ;
 }
+.btn-grey{
+    background-color: var(--bs-secondary-bg-subtle);
+    color: var(--bs-black);
+}
+.btn-grey:hover{
+    background-color: var(--dark-grey);
+}
 
 .btn-full-cherry{
     background-color: var(--cherry);
@@ -68,13 +64,6 @@
 }
 .btn-full-cherry:hover{
     background-color: var(--dark-cherry) ;
-}
-.btn-full-brown{
-    background-color: var(--brown)!important;
-    color: white!important;
-}
-.btn-full-brown:hover{
-    background-color: var(--dark-brown)!important;
 }
 .btn-border-green{
     background-color: transparent!important;
@@ -160,8 +149,6 @@ input[type="color"]:focus,
     filter: grayscale(70%);
 }
 
-
-
 /* Recipe Card */
 .scroll-container {
     display: flex;
@@ -178,12 +165,14 @@ input[type="color"]:focus,
 .scroll-container::-webkit-scrollbar {
     height: 8px;
 }
-
-.scroll-container::-webkit-scrollbar-thumb {
-    background: #888;
+.container::-webkit-scrollbar-track {
+    background: #f1f1f1;
     border-radius: 10px;
 }
-
+.scroll-container::-webkit-scrollbar-thumb {
+    background:  #888;
+    border-radius: 10px;
+}
 .scroll-container::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
@@ -201,6 +190,34 @@ input[type="color"]:focus,
         width: 12rem;
     }
 }
+
+/* Simple card recipe Start */
+.card-container {
+    transition: all 0.3s ease;
+}
+
+.card-container:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15)!important;
+
+}
+.image-container img {
+    transition: transform 0.5s ease;
+}
+
+.card-container:hover .image-container img {
+    transform: scale(1.05);
+}
+.title-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+}
+.category-tag {
+    padding: 5px 12px;
+    background-color: #f0f0f0;
+    color: #666;
+}
+/* Simple card recipe End */
+
 
 /* Custom checkbox recipe form */
 .category-checkboxes label {
@@ -261,7 +278,7 @@ input[type="color"]:focus,
 /* admin sidebar activ */
 .nav-link.active {
     font-weight: bold;
-    background-color: var(--green);
+    background-color: var(--bs-secondary-bg-subtle);
     border-radius: 10px;
     margin: 0px 2px ;
 }
@@ -330,7 +347,7 @@ input[type="search"]:focus,
     height: 2px;
     bottom: 0;
     left: 50%;
-    background-color: white;
+    background-color: var(--bs-dark);
     transition: all 0.3s ease;
     transform: translateX(-50%);
     opacity: 0;
@@ -351,9 +368,9 @@ input[type="search"]:focus,
     width: 70%;
     opacity: 1;
 }
+.nav-link-hover.active::after {
+    width: 70%;
+    opacity: 1;
+}
 /* Animation on header nav element End */
-
-
-
-
 

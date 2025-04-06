@@ -7,13 +7,15 @@
             <!-- Images -->
             <div class="col-lg-5">
                 <div class="position-relative">
+                    <!-- Mobile image -->
                     <img src="https://picsum.photos/800/600" class="img-fluid rounded-0 d-block d-lg-none shadow-sm "
                          alt="Image de {{ recipes.title }}">
+                    <!-- Desktop image -->
                     <img src="https://picsum.photos/800/600" class="img-fluid rounded-3 d-none d-lg-block shadow-sm "
                          alt="Image de {{ recipes.title }}">
                     <div class="position-absolute d-none d-md-block top-0 start-0 m-3">
                         {% for category in  recipes.category %}
-                            <span class="badge rounded-pill bg-cherry px-3 py-2">
+                            <span class="badge rounded-pill bg-secondary-subtle px-3 py-2 text-black">
                                         {{ category.name }}
                                     </span>
                         {% endfor %}
@@ -138,6 +140,22 @@
                     {% endfor %}
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h2>Commentaires</h2>
+            </div>
+            <div>
+                {% for comment in comments %}
+                    <div class="col-12 card">
+                        <p>De {{ comment.user.username }}</p>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Add comment new, modify if comment og current author and delete-->
         </div>
     </div>
 {% endblock %}

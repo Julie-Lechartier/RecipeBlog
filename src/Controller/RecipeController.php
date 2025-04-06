@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Media;
 use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use App\Form\RecipeType;
+use App\Repository\CommentRepository;
 use App\Repository\RecipeIgredientRepository;
 use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeRepository;
@@ -30,9 +32,10 @@ class RecipeController extends AbstractController
         ]);
     }
     #[Route('/show/{slug}', name: 'app_recipe_show')]
-    public function show(Recipe $recipe, RecipeIngredientRepository $recipeIngredientRepository, Request $request): Response
+    public function show(Recipe $recipe, RecipeIngredientRepository $recipeIngredientRepository,CommentRepository $commentRepository ,Request $request): Response
     {
         $recipeIngredient = $recipeIngredientRepository->findBy(['recipe' => $recipe]);
+        $comments = $commentRepository->findBy(['recipe' => $recipe]);
 
         //condition preparation time format
         $preparationTime = $recipe->getPreparationTime();
@@ -46,6 +49,7 @@ class RecipeController extends AbstractController
             'preparationHours' => $hours,
             'preparationMinutes' => $minutes,
             'currentPageRoute' => $currentPageRoute,
+            'comments' => $comments,
         ]);
     }
     #[Route('/category/{category}', name: 'app_recipe_category_show')]

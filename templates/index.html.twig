@@ -1,48 +1,65 @@
 {% extends 'base.html.twig' %}
-{% block body %}
 
+{% block body %}
     {% include 'components/hero.html.twig' %}
-    <div class="container">
-        <!-- Mobile Search bar Start -->
-        <div class="d-lg-none d-block py-4 px-5">
-            <div class="search-bar">
-                <div class="input-group ">
-                    <input type="text" class="form-control bg-secondary-subtle" placeholder="Rechercher"
+
+    <div class="container py-4">
+        <!-- Mobile Search bar -->
+        <div class="d-lg-none mb-4">
+            <div class="search-bar rounded-pill overflow-hidden shadow-sm">
+                <div class="input-group">
+                    <input type="text" class="form-control border-0 py-2" placeholder="Rechercher une recette..."
                            aria-label="Search" aria-describedby="search-addon">
-                    <button class="btn btn-outline-secondary bg-secondary-subtle border-0" type="button"
-                            id="search-addon">
-                        <i class="bi bi-search text-secondary"></i>
+                    <button class="btn btn-primary px-3" type="button" id="search-addon">
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Search bar End -->
-    </div>
-    <!-- Scroll container sample for Recipe of the day -->
-    <div class="container-fluid p-0">
-        <div class="d-flex justify-content-between px-3 align-items-end">
-            <h2 class="fw-bold">Recette du jour</h2>
-            <a href="{{ path('app_recipe_index') }}" class="text-black">Tout voir</a>
-        </div>
-        <div class="container-fluid pe-0">
-            <!-- Card -->
-            {{ render(path('app_include_recipe_scroll', {'limit': 10})) }}
-        </div>
-    </div>
-    <!-- Scroll container sample for Recipe dish -->
-    <div class="container m-0 w-100 mw-100 p-0">
-        <h2 class="fw-bold">Plats</h2>
-        <div class="container-fluid pe-0">
-            <!-- Card -->
-            {{ render(path('app_include_recipe_scroll', {'category': 'Plats','limit': 10})) }}
-        </div>
-    </div>
-    <!-- Scroll container sample for Recipe dessert -->
-    <div class="container m-0 w-100 mw-100 p-0">
-        <h2 class="fw-bold">Dessert</h2>
-        <div class="container-fluid pe-0">
-            <!-- Card -->
-            {{ render(path('app_include_recipe_scroll', {'category': 'Dessert','limit': 10})) }}
-        </div>
+
+        <!-- Recette du jour Section -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-bold position-relative">
+                    Recette du jour
+                </h2>
+                <a href="{{ path('app_recipe_index') }}" class="text-decoration-none d-flex align-items-center text-black">
+                    Tout voir <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="recipe-scroll">
+                {{ render(path('app_include_recipe_scroll', {'limit': 10})) }}
+            </div>
+        </section>
+
+        <!-- Plats Section -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-bold position-relative">
+                    Plats
+                </h2>
+                <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                    Tout voir <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="recipe-scroll">
+                {{ render(path('app_include_recipe_scroll', {'category': 'Plats','limit': 10})) }}
+            </div>
+        </section>
+
+        <!-- Dessert Section -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-bold position-relative">
+                    Desserts
+                </h2>
+                <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                    Tout voir <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="recipe-scroll">
+                {{ render(path('app_include_recipe_scroll', {'category': 'Dessert','limit': 10})) }}
+            </div>
+        </section>
     </div>
 {% endblock %}

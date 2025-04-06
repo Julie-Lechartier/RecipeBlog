@@ -10,18 +10,15 @@
 <body>
 {{ render(path('app_navigation', { 'currentPageRoute': app.request.attributes.get('_route') })) }}
 {% block body %}
-
-            {% include 'components/hero.html.twig' %}
-
-    <div class="position-relative">
-        <div class="position-sticky btn-full-green top-50 z-3">
-            <a href="{{ path('app_new_recipe') }}" class="btn btn-primary">
-                <i class="bi bi-plus text-white"></i>
-            </a>
-        </div>
-    </div>
+    {% include 'components/hero.html.twig' %}
 {% endblock %}
-
+<!-- New recipe button -->
+<!-- TODO: add condition if authenticate -->
+<div class="position-fixed bottom-0 end-0 me-4 mb-4 z-3">
+    <a href="{{ path('app_new_recipe') }}" class="btn bg-green rounded-circle d-flex justify-content-center align-items-center" style="width: 56px; height: 56px;">
+        <i class="bi bi-plus fs-3 text-white"></i>
+    </a>
+</div>
 
 {% block javascripts %}
     {% block importmap %}{{ importmap('app') }}{% endblock %}

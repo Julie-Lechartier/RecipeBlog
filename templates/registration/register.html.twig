@@ -1,20 +1,124 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
 
-{% block title %}Register{% endblock %}
+        .form-card-body {
+            padding: 2rem;
+        }
 
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            color: #495057;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover {
+            background-color: var(--bs-secondary-bg-subtle);
+        }
+
+        .form-check {
+            padding-left: 2rem;
+        }
+
+    </style>
+</head>
+<body>
 {% block body %}
-    <div class="container mt-5">
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h1 class="h3 mb-0">Register</h1>
+            <div class="col-lg-8">
+                <a href="{{ path('app_home') }}" class="back-link">
+                    <i class="bi bi-chevron-left me-2"></i>
+                    Retour à l'accueil
+                </a>
+
+                <div class="form-card shadow  overflow-hidden mb-4 rounded-3">
+                    <div class="text-white p-4 bg-green">
+                        <h2 class="h4 mb-0">Création de compte</h2>
                     </div>
-                    <div class="card-body">
-                        <p>Registration is currently disabled. Please contact the administrator for access.</p>
+                    <div class="form-card-body">
+                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="InputFirstname" class="form-label">{{ form_label(form.firstname) }}</label>
+                                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Votre prénom'}}) }}
+                                    <div class="form-text text-danger">{{ form_errors(form.firstname) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputLastname" class="form-label">{{ form_label(form.lastname) }}</label>
+                                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom'}}) }}
+                                    <div class="form-text text-danger">{{ form_errors(form.lastname) }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputUsername" class="form-label">{{ form_label(form.username) }}</label>
+                            {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez un nom d\'utilisateur'}}) }}
+                            <div class="form-text text-danger">{{ form_errors(form.username) }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputEmail" class="form-label">{{ form_label(form.email) }}</label>
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
+                            <div class="form-text text-danger">{{ form_errors(form.email) }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputBirthDate" class="form-label">{{ form_label(form.birthDate) }}</label>
+                            {{ form_widget(form.birthDate, {'attr': {'class': 'form-control'}}) }}
+                            <div class="form-text text-danger">{{ form_errors(form.birthDate) }}</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="InputPassword1" class="form-label">{{ form_label(form.password) }}</label>
+                            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Votre mot de passe'}}) }}
+                            <div class="form-text text-danger">{{ form_errors(form.password) }}</div>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            {{ form_widget(form.newsletter, {'attr': {'class': 'form-check-input'}}) }}
+                            <label class="form-check-label" for="exampleCheck1">{{ form_label(form.newsletter) }}</label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn bg-green fw-bold text-white">S'inscrire</button>
+                        </div>
+
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %} 
+{% endblock %}
+
+{% block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+{% endblock %}
+</body>
+</html>

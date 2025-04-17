@@ -1,9 +1,10 @@
 <div class="container-fluid p-0 m-0 ">
-    <div class="d-flex flex-column justify-content-between vh-100 pb-4">
-        <div class=" justify-items-center">
+    <div class="d-flex flex-column vh-100 pb-4">
+        <div class=" ">
             <!-- Add logo site -->
+
         </div>
-        <div>
+        <div class="mt-5">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link text-black {% if app.request.attributes.get('_route') == 'app_admin_index' %} active {% endif %}" href="{{ path('app_admin_index') }}">

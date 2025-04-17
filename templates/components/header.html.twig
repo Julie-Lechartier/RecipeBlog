@@ -1,4 +1,5 @@
-<header class="navbar bg-white navbar-expand-lg p-0 position-fixed w-100 z-3 shadow-sm" aria-label="Offcanvas navbar large"
+<header class="navbar bg-white navbar-expand-lg p-0 position-fixed w-100 z-3 shadow-sm"
+        aria-label="Offcanvas navbar large"
         style="height: 55px;">
     <div class="container-flex  w-100">
         <div class="row gap-lg-4 px-2 mx-0 no-wrap align-items-center">
@@ -11,11 +12,11 @@
                 </span>
             </button>
             <!-- Modal nav button End -->
-            {#            <div class="col-lg-3 col-8 d-flex justify-content-center"> #}
-            {#                <a href="{{ path('home') }}"> #}
-            {#                    <img src="{{ asset('images/logo-white.png') }}" alt="logo" class="w-100"> #}
-            {#                </a> #}
-            {#            </div> #}
+{#                        <div class="col-lg-3 col-8 d-flex justify-content-center">#}
+{#                            <a href="{{ path('app_home') }}">#}
+{#                                <img src="{{ asset('images/HomeCheft_logo_black.png') }}" alt="logo">#}
+{#                            </a>#}
+{#                        </div>#}
             <!-- Nav Start -->
             <div class=" col-7 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
                  tabindex="-1" id="offcanvasNavbar"
@@ -123,27 +124,39 @@
             <!-- Mobile Search bar End -->
             <div class="col-6 d-flex col-lg-1 justify-content-end">
                 <div class="dropdown">
-                    <button class="btn align-content-center text-black dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn align-content-center text-black dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person-circle icon-1-size"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <!-- TODO: add condition if connected or not-->
                         <!-- if not connected -->
-                        <li>
-                            <a class="dropdown-item" href="{{ path('app_login') }}">Se Connecter</a>
-                        </li>
+                        {% if not app.user %}
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_login') }}">Se Connecter</a>
+                            </li>
+                        {% endif %}
                         <!-- If connected -->
-                        <li>
-                            <a class="dropdown-item" href="">Mon profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="">Mes recettes</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="">Paramètre</a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                        {% if app.user %}
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_user_profile') }}">Mon profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="">Mes recettes</a>
+                            </li>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_index') }}">Administration</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item" href="">Paramètre</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

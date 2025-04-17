@@ -177,7 +177,7 @@ class RecipeController extends AbstractController
         $search = $request->request->get('search', '');
         $category = $request->request->get('category', '');
 
-        // On récupère le QueryBuilder déjà filtré depuis le repository
+        //
         $queryBuilder = $recipeRepository->createFilteredQueryBuilder($search, $category);
 
         // Appliquer la pagination

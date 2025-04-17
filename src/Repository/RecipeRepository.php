@@ -31,7 +31,6 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // src/Repository/RecipeRepository.php
     public function createFilteredQueryBuilder(string $search = '', string $category = ''): QueryBuilder
     {
         $qb = $this->createQueryBuilder('r')

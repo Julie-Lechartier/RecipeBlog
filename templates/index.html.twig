@@ -16,7 +16,40 @@
                 </div>
             </div>
         </div>
-
+        <!-- Introduction -->
+        <section class="intro-section py-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="fw-bold mb-3">Une communauté de passionnés de cuisine</h2>
+                        <p class="lead mb-4">Partagez vos recettes préférées, découvrez les créations d'autres cuisiniers amateurs et échangez vos astuces culinaires.</p>
+                        <div class="row g-4 mt-3">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                    <i class="bi bi-upload fs-1 text-green"></i>
+                                </div>
+                                <h5 class="fw-bold">Partagez</h5>
+                                <p>Publiez facilement vos meilleures recettes et photos</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                    <i class="bi bi-search fs-1 text-green"></i>
+                                </div>
+                                <h5 class="fw-bold">Découvrez</h5>
+                                <p>Trouvez de l'inspiration parmi des centaines de recettes</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                    <i class="bi bi-chat-dots fs-1 text-green"></i>
+                                </div>
+                                <h5 class="fw-bold">Échangez</h5>
+                                <p>Commentez et partagez vos astuces culinaires</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Recette du jour Section -->
         <section class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -61,5 +94,6 @@
                 {{ render(path('app_include_recipe_scroll', {'category': 'Dessert','limit': 10})) }}
             </div>
         </section>
+        <!-- TODO: 'nos cuisinier les plus actifs, recettes populaire'-->
     </div>
 {% endblock %}

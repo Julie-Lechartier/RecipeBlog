@@ -1,0 +1,14 @@
+<div class="bg-secondary-subtle py-2 px-3 rounded-3">
+    {{ form_start(form, {'attr': {'hx-post': path('app_user_modify_presentation'), 'hx-target': '#bio-content', 'hx-swap': 'innerHTML'}}) }}
+    {{ form_widget(form.presentation) }}
+    <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="#"
+           hx-get="{{ path('app_user_profile_presentation') }}"
+           hx-target="#bio-content"
+           hx-swap="innerHTML"
+           class="btn btn-secondary">Annuler</a>
+    </div>
+    {{ form_end(form) }}
+</div>
+

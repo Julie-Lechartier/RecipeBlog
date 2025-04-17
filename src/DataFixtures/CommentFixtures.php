@@ -31,7 +31,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             throw new \Exception('No users or recipes found.');
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $newComment = new Comment();
             $newComment->setRecipe($recipes[array_rand($recipes)]);
             $newComment->setUser($users[array_rand($users)]);

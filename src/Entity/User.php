@@ -67,6 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: "avatar")]
     private Collection $avatars;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $presentation = null;
+
     public function __construct()
     {
         // Initialize with ROLE_USER by default
@@ -295,6 +298,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $avatar->setAvatarId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

@@ -23,20 +23,22 @@
                 </td>
                 <td>{{ recipe.author.username }}</td>
                 <td>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 pe-3">
                         <a href="{{ path('app_admin_recipe_edit', {'slug': recipe.slug}) }}"
-                           class="text-decoration-none  btn-full-green rounded-3 text-center py-1 actions-table-custom">
-                            <i class="bi bi-pencil-fill text-white"></i>
+                           class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">
+                            <i class="bi bi-pencil"></i>
                         </a>
                         <a href="{{ path('app_admin_comment_new') }}"
-                           class="text-decoration-none btn-full-brown rounded-3 text-center py-1 actions-table-custom">
-                            <i class="bi bi-chat-fill text-white"></i>
+                           class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">
+                            <i class="bi bi-chat"></i>
                         </a>
-                        <a href="{{ path('app_admin_recipe_delete', {'slug': recipe.slug}) }}"
-                           class="text-decoration-none  btn-full-cherry rounded-3 text-center py-1 actions-table-custom">
-                            <i class="bi bi-trash3-fill text-white"></i>
-                        </a>
+                        <button type="button"
+                                class="btn-border-cherry rounded-pill px-3 py-2"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ recipe.slug|replace({'-': ''}) }}">
+                            <i class="bi bi-trash3"></i>
+                        </button>
                     </div>
+
                 </td>
             </tr>
         {% endfor %}

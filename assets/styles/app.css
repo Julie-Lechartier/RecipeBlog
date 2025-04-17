@@ -65,6 +65,15 @@
 .btn-full-cherry:hover{
     background-color: var(--dark-cherry) ;
 }
+.btn-border-cherry{
+    background-color: transparent!important;
+    border: 1px solid var(--cherry);
+    color: var(--cherry);
+}
+.btn-border-cherry:hover{
+    background-color: var(--cherry)!important;
+    color:white;
+}
 .btn-border-green{
     background-color: transparent!important;
     border: 2px solid var(--green);

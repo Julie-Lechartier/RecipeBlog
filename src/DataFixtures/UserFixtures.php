@@ -60,6 +60,7 @@ class UserFixtures extends Fixture
             $user->setRoles(['ROLE_USER']);
             $user->setBirthDate($faker->dateTimeBetween('-70 years', '-18 years'));
             $user->setNewsletter(false);
+            $user->setPresentation($faker->text);
             $user->setSlug($this->slugger->slug($user->getFirstname() . ' ' . $user->getLastname())->lower());
             $user->setPassword($this->passwordHasher->hashPassword($user, 'user'));
             
@@ -82,6 +83,7 @@ class UserFixtures extends Fixture
             $newUser->setRoles(['ROLE_USER']);
             $newUser->setBirthDate($faker->dateTimeBetween('-70 years', '-18 years'));
             $newUser->setNewsletter($faker->boolean);
+            $newUser->setPresentation($faker->text);
             $newUser->setSlug($this->slugger->slug($newUser->getFirstname() . ' ' . $newUser->getLastname())->lower());
             $newUser->setPassword($this->passwordHasher->hashPassword($newUser, 'password'));
 

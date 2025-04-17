@@ -87,16 +87,16 @@
             });
         });
 
-        // Gérer la suppression des étapes existantes
+        // delete step
         document.querySelectorAll('.remove-step').forEach(button => {
             button.addEventListener('click', () => {
                 button.closest('.step').remove();
-                // Mettre à jour les numéros d'étapes
+                // update step num
                 updateStepNumbers();
             });
         });
 
-        // Fonction pour mettre à jour les numéros d'étapes
+        // Update step num
         function updateStepNumbers() {
             const steps = document.querySelectorAll('.step');
             steps.forEach((step, index) => {

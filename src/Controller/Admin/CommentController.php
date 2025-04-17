@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\AdminController;
 use App\Entity\Comment;
 use App\Entity\Recipe;
 use App\Form\CommentType;

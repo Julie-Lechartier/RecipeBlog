@@ -97,7 +97,7 @@ class RecipeController extends AbstractController
                     );
                 }
                 catch (FileException $e) {
-                    throw new \Exception("Impossible to upload image.");
+                    throw new \Exception("Impossible de télécharger l'image.");
                 }
                 $media = new Media();
                 $media->setFileName($newFileName);
@@ -111,6 +111,50 @@ class RecipeController extends AbstractController
             $entityManager->persist($recipe);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin_recipe_index');
+        }
+        return $this->render('recipe/new.html.twig', [
+            "form" => $form->createView(),
+            'recipe' => $recipe,
+        ]);
+    }
+    #[Route('/edit/{slug}', name: 'app_recipe_edit')]
+    public function edit(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipe = $form->getData();
+
+            // Gérer les numéros d'étapes
+            $stepNumber = 1;
+            foreach ($recipe->getSteps() as $step) {
+                $step->setStepNumber($stepNumber);
+                $stepNumber++;
+            }
+
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $newFileName = md5(uniqid(null, true)) . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('recipe_images_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    throw new \Exception("Impossible to upload image.");
+                }
+                $media = new Media();
+                $media->setFileName($newFileName);
+                $media->setRecipe($recipe);
+                $entityManager->persist($media);
+            }
+            $category = $form->get('category')->getData();
+            foreach ($category as $categoryItem) {
+                $recipe->addCategory($categoryItem);
+            }
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_recipe_index');
         }
         return $this->render('recipe/new.html.twig', [
             "form" => $form->createView(),

@@ -9,36 +9,7 @@
                             class="bi bi-person-plus-fill text-black pe-2"></i>Ajouter une catégorie</a>
             </div>
             <div class="col-12">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Nombre de recette associé</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    {% for category in categories %}
-                        <tbody>
-                        <tr>
-                            <td>{{ category.name }}</td>
-                            <td>{{ category.recipes|length }}</td>
-                            <td>
-                                <div class="row gap-2">
-                                    <a href="{{ path('app_admin_recipe_category_edit', {'slug': category.slug}) }}"
-                                       class="text-decoration-none col-5 btn-full-green rounded-3 text-center py-1 btn-table-size">
-                                        <i class="bi bi-pencil-fill text-white"></i>
-                                    </a>
-                                    <a href="{{ path('app_admin_recipe_category_delete', {'slug': category.slug}) }}"
-                                       class="text-decoration-none col-5 btn-full-cherry rounded-3 text-center py-1 btn-table-size"
-                                       type="submit">
-                                        <i class="bi bi-trash3-fill text-white"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    {% endfor %}
-                </table>
+                {% include 'Admin/category/_table.html.twig' %}
             </div>
         </div>
     </div>

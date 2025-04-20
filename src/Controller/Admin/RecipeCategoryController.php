@@ -5,6 +5,7 @@ use App\Entity\RecipeCategory;
 use App\Form\RecipeCategoryType;
 use App\Repository\RecipeCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,11 +21,18 @@ class RecipeCategoryController extends AbstractController
     }
 
     #[Route('/', name:'app_admin_recipe_category_index', methods: ['GET'])]
-    public function index(RecipeCategoryRepository $recipeCategoryRepository)
+    public function index(RecipeCategoryRepository $recipeCategoryRepository,  Request $request, PaginatorInterface $paginator)
     {
-        $categories = $recipeCategoryRepository->findAll();
+        $queryBuilder = $recipeCategoryRepository->createQueryBuilder('c')->getQuery();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('admin/category/index.html.twig', [
-            'categories' => $categories
+
+            'pagination' => $pagination,
         ]);
     }
     #[Route('/new', name: 'app_admin_recipe_category_new', methods: ['GET', 'POST'])]
@@ -63,13 +71,11 @@ class RecipeCategoryController extends AbstractController
     #[Route('/delete/{slug}', name: 'app_admin_recipe_category_delete', methods: ['POST'])]
     public function delete(Request $request, RecipeCategory $recipeCategory, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier si la catégorie est utilisée dans des recettes
+        // if category have recipe
         if ($recipeCategory->getRecipes()->count() > 0) {
             $this->addFlash('error', 'Impossible de supprimer cette catégorie car elle est utilisée dans des recettes.');
             return $this->redirectToRoute('app_admin_recipe_category_index');
         }
-
-        // Vérifier le token CSRF
         if ($this->isCsrfTokenValid('delete'.$recipeCategory->getId(), $request->request->get('_token'))) {
             $entityManager->remove($recipeCategory);
             $entityManager->flush();

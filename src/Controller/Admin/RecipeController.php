@@ -177,17 +177,13 @@ class RecipeController extends AbstractController
         $search = $request->request->get('search', '');
         $category = $request->request->get('category', '');
 
-        //
         $queryBuilder = $recipeRepository->createFilteredQueryBuilder($search, $category);
 
-        // Appliquer la pagination
         $pagination = $paginator->paginate(
             $queryBuilder->getQuery(),
-            $request->query->getInt('page', 1), // Récupère la page depuis les paramètres GET
+            $request->query->getInt('page', 1),
             10
         );
-
-        // Rendre le partial de la table avec la pagination
         return $this->render('admin/recipe/_table.html.twig', [
             'pagination' => $pagination,
         ]);

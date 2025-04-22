@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use App\Form\RecipeType;
+use App\Form\UserPresentationType;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class UserController extends AbstractController
     public function presentation( Request $request): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(RecipeType::class, $user);
+        $form = $this->createForm(UserPresentationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();

@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <h1 class="fw-bold">Tout les recettes</h1>
+    <div class="container mt-5 px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">Toutes les recettes</h1>
+            <p class="text-lg text-gray-600 mt-2">Découvrez une sélection de recettes délicieuses pour toutes les occasions</p>
         </div>
+        {{ render(path('app_include_recipe_all')) }}
     </div>
-    {{ render(path('app_include_recipe_all')) }}
 {% endblock %}

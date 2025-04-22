@@ -59,8 +59,8 @@
 }
 
 .btn-full-cherry{
-    background-color: var(--cherry);
-    color: white;
+    background-color: var(--cherry)!important;
+    color: white!important;
 }
 .btn-full-cherry:hover{
     background-color: var(--dark-cherry) ;
@@ -227,7 +227,6 @@ input[type="color"]:focus,
 }
 /* Simple card recipe End */
 
-
 /* Custom checkbox recipe form */
 .category-checkboxes label {
     display: inline-block;
@@ -279,7 +278,41 @@ input[type="color"]:focus,
 .remove-step:hover {
     background-color: var(--dark-cherry);
 }
+/* Recipe Ingredient form*/
+.ingredient-header, .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 10px;
+}
 
+.ingredient, .step {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.ingredient > div:not(.ingredient-header),
+.step > div:not(.step-header) {
+    padding: 0 10px;
+}
+
+.remove-ingredient, .remove-step {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#add-ingredient, #add-step {
+    margin-top: 10px;
+}
 /* Actions table */
 .actions-table-custom {
     width : 55px!important;
@@ -382,4 +415,9 @@ input[type="search"]:focus,
     opacity: 1;
 }
 /* Animation on header nav element End */
+
+/* Profile */
+.active-profil{
+    background-color: var(--bs-secondary-bg-subtle);
+}
 

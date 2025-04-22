@@ -1,9 +1,9 @@
 {{ form_start(form) }}
-<div class="container-fluid">
-    <div class="row">
+<div class="container my-5">
+    <div class="row mx-5 mt-4">
         <h2>Création de la recette : <span id="recipeTitlePreview"></span></h2>
     </div>
-    <div class="row justify-content-center">
+    <div class="row mx-5 justify-content-center">
         <div class="mb-3 col-12">
             <label for="inputTitle" class="form-label">{{ form_label(form.title) }}</label>
             {{ form_widget(form.title) }}
@@ -36,7 +36,26 @@
             {% endif %}
         </div>
         <div class="mb-3">
-            <label for="inputStep" class="form-label">{{ form_label(form.steps) }}</label>
+            <label for="inputIngredients" class="form-label">Ajouter un ingrédient: </label>
+            <div id="ingredients-collection" class="collection"
+                 data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
+                {% for ingredient in form.recipeIngredients %}
+                    <div class="ingredient">
+                        <div class="ingredient-header">
+                            <h4 class="ingredient-title">Ingrédient {{ loop.index }}</h4>
+                            <button type="button" class="remove-ingredient">Supprimer</button>
+                        </div>
+                        {{ form_row(ingredient) }}
+                    </div>
+                {% endfor %}
+                <button type="button" id="add-ingredient" class="btn btn-primary">Ajouter un ingrédient</button>
+            </div>
+        </div>
+
+        <!-- Le reste du code reste inchangé -->
+
+        <div class="mb-3">
+            <label for="inputStep" class="form-label">Ajouter les étapes de la recette : </label>
             <div id="step-collection" data-prototype="{{ form_widget(form.steps.vars.prototype)|e('html_attr') }}">
                 {% for step in form.steps %}
                     <div class="step">
@@ -50,25 +69,35 @@
                 <button type="button" id="add-step" class="btn btn-primary">Ajouter une étape</button>
             </div>
         </div>
-        <button type="submit" class="btn w-25 btn-full-green fw-bold" href="{{ path('app_home') }}">Enregistrer</button>
+
+        <button type="submit" class="btn w-25 btn-full-cherry">Enregistrer
+        </button>
     </div>
 </div>
 {{ form_end(form) }}
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        $( '#recipe_category' ).select2( {
+            theme: 'bootstrap-5',
+            placeholder: 'Sélectionnez une ou plusieurs catégories',
+            allowClear: true
+        } );
+        // Step
         const stepCollection = document.querySelector('#step-collection');
         const addStepButton = document.querySelector('#add-step');
 
+        // add step
         addStepButton.addEventListener('click', () => {
-            const prototype = stepCollection.dataset.prototype.replace(/__name__/g, stepCollection.children.length - 1);
+            const index = stepCollection.querySelectorAll('.step').length; // Utiliser querySelectorAll pour un index précis
+            const prototype = stepCollection.dataset.prototype.replace(/__name__/g, index);
             const div = document.createElement('div');
             div.classList.add('step');
             const stepHeader = document.createElement('div');
             stepHeader.classList.add('step-header');
             const stepNumber = document.createElement('h4');
             stepNumber.classList.add('step-number');
-            stepNumber.textContent = `Étape ${stepCollection.children.length}`;
+            stepNumber.textContent = `Étape ${index + 1}`;
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.classList.add('remove-step');
@@ -80,25 +109,20 @@
             div.innerHTML += prototype;
 
             stepCollection.insertBefore(div, addStepButton);
-
-            removeButton.addEventListener('click', () => {
-                div.remove();
-                updateStepNumbers();
-            });
+            updateStepNumbers();
         });
 
-        // delete step
-        document.querySelectorAll('.remove-step').forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.step').remove();
-                // update step num
+        // delete steps
+        stepCollection.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-step')) {
+                event.target.closest('.step').remove();
                 updateStepNumbers();
-            });
+            }
         });
 
-        // Update step num
+        // update step
         function updateStepNumbers() {
-            const steps = document.querySelectorAll('.step');
+            const steps = stepCollection.querySelectorAll('.step');
             steps.forEach((step, index) => {
                 const stepNumber = step.querySelector('.step-number');
                 if (stepNumber) {
@@ -106,15 +130,63 @@
                 }
             });
         }
+
+        // Ingredients
+        const ingredientsCollection = document.querySelector('#ingredients-collection');
+        const addIngredientButton = document.querySelector('#add-ingredient');
+
+        // add ingredient
+        addIngredientButton.addEventListener('click', () => {
+            const index = ingredientsCollection.querySelectorAll('.ingredient').length;
+            const prototype = ingredientsCollection.dataset.prototype.replace(/__name__/g, index);
+            const div = document.createElement('div');
+            div.classList.add('ingredient');
+            const ingredientHeader = document.createElement('div');
+            ingredientHeader.classList.add('ingredient-header');
+            const ingredientTitle = document.createElement('h4');
+            ingredientTitle.classList.add('ingredient-title');
+            ingredientTitle.textContent = `Ingrédient ${index + 1}`;
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('remove-ingredient');
+            removeButton.textContent = 'Supprimer';
+
+            ingredientHeader.appendChild(ingredientTitle);
+            ingredientHeader.appendChild(removeButton);
+            div.appendChild(ingredientHeader);
+            div.innerHTML += prototype;
+
+            ingredientsCollection.insertBefore(div, addIngredientButton);
+            updateIngredientNumbers();
+        });
+
+        // delete ingredients
+        ingredientsCollection.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-ingredient')) {
+                event.target.closest('.ingredient').remove();
+                updateIngredientNumbers();
+            }
+        });
+
+        // update ingredient num
+        function updateIngredientNumbers() {
+            const ingredients = ingredientsCollection.querySelectorAll('.ingredient');
+            ingredients.forEach((ingredient, index) => {
+                const ingredientTitle = ingredient.querySelector('.ingredient-title');
+                if (ingredientTitle) {
+                    ingredientTitle.textContent = `Ingrédient ${index + 1}`;
+                }
+            });
+        }
     });
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         let input = document.getElementById("recipe_title");
         let preview = document.getElementById("recipeTitlePreview");
         if (!input) {
             console.error("⚠️ L'élément #recipeTitleInput n'a pas été trouvé !");
-            return
+            return;
         }
-        input.addEventListener("input", function() {
+        input.addEventListener("input", function () {
             preview.textContent = input.value;
         });
     });

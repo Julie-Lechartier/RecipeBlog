@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
     <div class="container">
-        <!-- Profile nav -->
-        <div class="row mt-5 mx-5">
+        <div class="row mt-5">
             <!-- Sidebar - Profile navigation -->
-            <div class="col-3 position-fixed">
-                <div class="position-sticky" style="top: 2rem;">
-                    <div class="d-grid mb-4">
+            <div class="col-3">
+                <div class="sidebar-nav" style="height: calc(100vh - 4rem); overflow-y: auto; width: 100%; padding-right: 15px;">
+                    <div class="mb-4">
                         <a href="{{ path('app_new_recipe') }}" class="btn btn-success rounded-pill py-2 px-4 shadow-sm">
                             <i class="bi bi-plus-circle me-2"></i>
                             Ajouter une recette
@@ -18,30 +18,42 @@
                             <h5 class="mb-0 fw-bold"><i class="bi bi-person-circle me-2"></i>Mon profil</h5>
                         </div>
                         <div class="list-group list-group-flush">
-                            <a href="#bio" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#bio"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link active-profil"
+                               data-target="bio">
                                 <i class="bi bi-info-circle me-2"></i>Ma biographie
                             </a>
-                            <a href="#myRecipe" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#myRecipe"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="myRecipe">
                                 <i class="bi bi-journal-richtext me-2"></i>Mes recettes
                             </a>
-                            <a href="#otherComment" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#otherComment"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="otherComment">
                                 <i class="bi bi-chat-left-text me-2"></i>Les commentaires
                             </a>
-                            <a href="#myComment" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#myComment"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="myComment">
                                 <i class="bi bi-chat-right-quote me-2"></i>Mes commentaires
                             </a>
                         </div>
                     </div>
 
-                    <div class="card border-0 shadow-sm">
+                    <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-secondary text-white py-3">
                             <h5 class="mb-0 fw-bold"><i class="bi bi-gear me-2"></i>Mes paramètres</h5>
                         </div>
                         <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#security"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="security">
                                 <i class="bi bi-shield-lock me-2"></i>Sécurité
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action border-0 py-3">
+                            <a href="#personalInfo"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="personalInfo">
                                 <i class="bi bi-person-vcard me-2"></i>Informations personnelles
                             </a>
                         </div>
@@ -49,22 +61,21 @@
                 </div>
             </div>
 
-        </div>
-        <div class="row mt-5 mx-5 justify-content-end">
-            <!-- Informations -->
+            <!-- Contenu principal -->
             <div class="col-9">
                 <div class="row">
                     <!-- User presentation -->
-                    <div class="col-12 mb-5" id="bio">
+                    <div class="col-12 mb-5 profile-section" id="bio">
                         <h2>Ma biographie</h2>
                         {% include 'user/_presentation.html.twig' with {'user':user} %}
                     </div>
+
                     <!-- User recipes -->
-                    <div class="col-12" id="myRecipe">
+                    <div class="col-12 profile-section" id="myRecipe" style="display: none;">
                         <h2>Mes recettes</h2>
                         <table class="table">
                             <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>Image</th>
                                 <th>Titre</th>
                                 <th>Type</th>
@@ -76,7 +87,7 @@
                             </thead>
                             <tbody>
                             {% for recipe in recipes %}
-                                <tr>
+                                <tr class="text-center align-middle">
                                     <td><img src="https://picsum.photos/50/50" alt=""></td>
                                     <td>{{ recipe.title }}</td>
                                     <td>{{ recipe.category.name ?? 'Aucune catégorie' }}</td>
@@ -94,33 +105,34 @@
                                             {{ minutes }} minute{% if minutes > 1 %}s{% endif %}
                                         {% endif %}
                                     </td>
-                                    <td>
-                                        <a href="{{ path('app_recipe_edit', {'slug' : recipe.slug}) }}" type="button"
-                                           class="btn btn-full-green text-white rounded-pill py-2 px-4 shadow-sm text-nowrap">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
+                                    <td class="align-middle">
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <a href="{{ path('app_recipe_edit', {'slug' : recipe.slug}) }}"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{{ path('app_recipe_delete', {'slug' : recipe.slug}) }}"
+                                               class="btn-sm btn-border-cherry rounded-1"
+                                               style="padding: 0.25rem 0.5rem; font-size: 0.875rem; ">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                    <!-- User recipes -->
-                    <div class="col-12" id="otherComment">
+
+                    <!-- Comments on user recipes -->
+                    <div class="col-12 profile-section" id="otherComment" style="display: none;">
                         <h2>Les commentaires de mes recettes</h2>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>
-                                    Recette associé
-                                </th>
-                                <th>
-                                    Contenue
-                                </th>
+                                <th>Recette associée</th>
+                                <th>Contenu</th>
                                 <th>Auteur</th>
-                                <th>
-                                    Actions
-                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,29 +142,92 @@
                                         <td>{{ recipe.title }}</td>
                                         <td>{{ comment.content }}</td>
                                         <td>{{ comment.author.username ?? 'Anonyme' }}</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                        </td>
                                     </tr>
                                 {% endfor %}
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                    <div id="myComment">
+
+                    <!-- User comments -->
+                    <div class="col-12 profile-section" id="myComment" style="display: none;">
                         <h2>Mes commentaires</h2>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th>Recette</th>
+                                <th>Contenu</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <!-- Vos données de commentaires ici -->
+                            </tbody>
                         </table>
+                    </div>
+
+                    <!-- Security section -->
+                    <div class="col-12 profile-section" id="security" style="display: none;">
+                        <h2>Sécurité</h2>
+                        <!-- Contenu de la section sécurité -->
+                    </div>
+
+                    <!-- Personal info section -->
+                    <div class="col-12 profile-section" id="personalInfo" style="display: none;">
+                        <h2>Informations personnelles</h2>
+                        <!-- Contenu de la section informations personnelles -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Récupérer tous les liens de navigation
+            const navLinks = document.querySelectorAll('.profile-nav-link');
+
+            // Ajouter un gestionnaire d'événements à chaque lien
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Supprimer la classe active de tous les liens
+                    navLinks.forEach(function (navLink) {
+                        navLink.classList.remove('active-profil');
+                    });
+
+                    // Ajouter la classe active au lien cliqué
+                    this.classList.add('active-profil');
+
+                    // Récupérer l'ID de la section cible
+                    const targetId = this.getAttribute('data-target');
+
+                    // Masquer toutes les sections
+                    document.querySelectorAll('.profile-section').forEach(function (section) {
+                        section.style.display = 'none';
+                    });
+
+                    // Afficher la section cible
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+
+            // Afficher la première section par défaut (si pas de hash dans l'URL)
+            if (!window.location.hash) {
+                document.getElementById('bio').style.display = 'block';
+            } else {
+                // Si un hash est présent dans l'URL, activer l'onglet correspondant
+                const targetId = window.location.hash.substring(1);
+                const targetLink = document.querySelector(`[data-target="${targetId}"]`);
+                if (targetLink) {
+                    // Simuler un clic sur le lien correspondant
+                    targetLink.click();
+                }
+            }
+        });
+    </script>
 {% endblock %}

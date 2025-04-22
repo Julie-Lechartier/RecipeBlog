@@ -61,12 +61,19 @@ class Recipe
     #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
     private Collection $steps;
 
+    /**
+     * @var Collection<int, recipeIngredient>
+     */
+    #[ORM\OneToMany(targetEntity: RecipeIngredient::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
+    private Collection $recipeIngredients;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->steps = new ArrayCollection();
         $this->media = new ArrayCollection();
+        $this->recipeIngredients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,5 +269,33 @@ class Recipe
 
         return $this;
     }
+    /**
+     * @return Collection<int, RecipeIngredient>
+     */
+    public function getRecipeIngredients(): Collection
+    {
+        return $this->recipeIngredients;
+    }
 
+    public function addRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if (!$this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->add($recipeIngredient);
+            $recipeIngredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if ($this->recipeIngredients->removeElement($recipeIngredient)) {
+            // set the owning side to null (unless already changed)
+            if ($recipeIngredient->getRecipe() === $this) {
+                $recipeIngredient->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
 }

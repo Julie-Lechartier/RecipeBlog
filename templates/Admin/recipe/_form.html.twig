@@ -36,7 +36,26 @@
             {% endif %}
         </div>
         <div class="mb-3">
-            <label for="inputStep" class="form-label">{{ form_label(form.steps) }}</label>
+            <label for="inputIngredients" class="form-label">Ajouter un ingrédient: </label>
+            <div id="ingredients-collection" class="collection"
+                 data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
+                {% for ingredient in form.recipeIngredients %}
+                    <div class="ingredient">
+                        <div class="ingredient-header">
+                            <h4 class="ingredient-title">Ingrédient {{ loop.index }}</h4>
+                            <button type="button" class="remove-ingredient">Supprimer</button>
+                        </div>
+                        {{ form_row(ingredient) }}
+                    </div>
+                {% endfor %}
+                <button type="button" id="add-ingredient" class="btn btn-primary">Ajouter un ingrédient</button>
+            </div>
+        </div>
+
+        <!-- Le reste du code reste inchangé -->
+
+        <div class="mb-3">
+            <label for="inputStep" class="form-label">Ajouter les étapes de la recette : </label>
             <div id="step-collection" data-prototype="{{ form_widget(form.steps.vars.prototype)|e('html_attr') }}">
                 {% for step in form.steps %}
                     <div class="step">
@@ -50,13 +69,21 @@
                 <button type="button" id="add-step" class="btn btn-primary">Ajouter une étape</button>
             </div>
         </div>
-        <button type="submit" class="btn w-25 btn-full-brown" href="{{ path('app_admin_recipe_index') }}">Enregistrer</button>
+
+        <button type="submit" class="btn w-25 btn-full-cherry">Enregistrer
+        </button>
     </div>
 </div>
 {{ form_end(form) }}
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        $( '#recipe_category' ).select2( {
+            theme: 'bootstrap-5',
+            placeholder: 'Sélectionnez une ou plusieurs catégories',
+            allowClear: true
+        } );
+        // Code pour les étapes (inchangé)
         const stepCollection = document.querySelector('#step-collection');
         const addStepButton = document.querySelector('#add-step');
 
@@ -73,12 +100,12 @@
             removeButton.type = 'button';
             removeButton.classList.add('remove-step');
             removeButton.textContent = 'Supprimer';
-            
+
             stepHeader.appendChild(stepNumber);
             stepHeader.appendChild(removeButton);
             div.appendChild(stepHeader);
             div.innerHTML += prototype;
-            
+
             stepCollection.insertBefore(div, addStepButton);
 
             removeButton.addEventListener('click', () => {
@@ -87,16 +114,15 @@
             });
         });
 
-        // delete step
+        // Suppression d'étape
         document.querySelectorAll('.remove-step').forEach(button => {
             button.addEventListener('click', () => {
                 button.closest('.step').remove();
-                // update step num
                 updateStepNumbers();
             });
         });
 
-        // Update step num
+        // Mise à jour numéros d'étapes
         function updateStepNumbers() {
             const steps = document.querySelectorAll('.step');
             steps.forEach((step, index) => {
@@ -106,15 +132,67 @@
                 }
             });
         }
+
+        // Nouveau code pour les ingrédients (dans le même style que les étapes)
+        const ingredientsCollection = document.querySelector('#ingredients-collection');
+        const addIngredientButton = document.querySelector('#add-ingredient');
+
+        addIngredientButton.addEventListener('click', () => {
+            const prototype = ingredientsCollection.dataset.prototype.replace(/__name__/g, ingredientsCollection.querySelectorAll('.ingredient').length);
+            const div = document.createElement('div');
+            div.classList.add('ingredient');
+            const ingredientHeader = document.createElement('div');
+            ingredientHeader.classList.add('ingredient-header');
+            const ingredientTitle = document.createElement('h4');
+            ingredientTitle.classList.add('ingredient-title');
+            ingredientTitle.textContent = `Ingrédient ${ingredientsCollection.querySelectorAll('.ingredient').length + 1}`;
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('remove-ingredient');
+            removeButton.textContent = 'Supprimer';
+
+            ingredientHeader.appendChild(ingredientTitle);
+            ingredientHeader.appendChild(removeButton);
+            div.appendChild(ingredientHeader);
+            div.innerHTML += prototype;
+
+            ingredientsCollection.insertBefore(div, addIngredientButton);
+
+            removeButton.addEventListener('click', () => {
+                div.remove();
+                updateIngredientNumbers();
+            });
+        });
+
+        // Suppression d'ingrédient
+        document.querySelectorAll('.remove-ingredient').forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.ingredient').remove();
+                updateIngredientNumbers();
+            });
+        });
+
+        // Mise à jour numéros d'ingrédients
+        function updateIngredientNumbers() {
+            const ingredients = document.querySelectorAll('.ingredient');
+            ingredients.forEach((ingredient, index) => {
+                const ingredientTitle = ingredient.querySelector('.ingredient-title');
+                if (ingredientTitle) {
+                    ingredientTitle.textContent = `Ingrédient ${index + 1}`;
+                }
+            });
+        }
     });
-    document.addEventListener("DOMContentLoaded", function() {
+
+    // Code pour le titre (inchangé)
+    document.addEventListener("DOMContentLoaded", function () {
         let input = document.getElementById("recipe_title");
         let preview = document.getElementById("recipeTitlePreview");
         if (!input) {
             console.error("⚠️ L'élément #recipeTitleInput n'a pas été trouvé !");
             return
         }
-        input.addEventListener("input", function() {
+        input.addEventListener("input", function () {
             preview.textContent = input.value;
         });
     });

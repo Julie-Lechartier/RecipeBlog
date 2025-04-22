@@ -79,15 +79,25 @@ class RecipeType extends AbstractType
                 'class' => RecipeCategory::class,
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true,
-                'attr' => ['class' => 'category-checkboxes']
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control select2',
+                ],
             ])
             ->add('steps', CollectionType::class, [
-                'label' => 'Liste des étapes de la recette',
+                'label' => false,
                 'entry_type' => StepType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+            ])
+            ->add('recipeIngredients', CollectionType::class, [
+                'label' => false,
+                'entry_type' => RecipeIngredientType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'entry_options' => ['label' => false],
             ]);
     }
 

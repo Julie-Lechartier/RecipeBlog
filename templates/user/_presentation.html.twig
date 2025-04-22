@@ -1,12 +1,12 @@
 <div class="bg-secondary-subtle py-2 px-3 rounded-3">
-    <p>{{ user.presentation }}</p>
+    <p>{{ user.presentation ?: 'Aucune biographie définie.' }}</p>
     <div>
         <a href="#"
            hx-get="{{ path('app_user_profile_presentation') }}"
            hx-target="#bio-content"
-           hx-swap="innerHTML">
-            <i class="bi bi-pencil"></i>
+           hx-swap="innerHTML"
+           class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-pencil"></i> Modifier
         </a>
     </div>
 </div>
-

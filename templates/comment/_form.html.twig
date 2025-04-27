@@ -1,0 +1,11 @@
+{{ form_start(form, {'action': path('app_comment_new', {'recipeSlug': recipe.slug})}) }}
+<div class="mb-3">
+    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Partagez votre avis sur cette recette...'}}) }}
+    {{ form_errors(form.content) }}
+</div>
+<div class="text-end">
+    <button type="submit" class="btn btn-success">
+        <i class="bi bi-send me-1"></i>Publier
+    </button>
+</div>
+{{ form_end(form) }}

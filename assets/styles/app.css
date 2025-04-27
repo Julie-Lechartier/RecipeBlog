@@ -420,4 +420,33 @@ input[type="search"]:focus,
 .active-profil{
     background-color: var(--bs-secondary-bg-subtle);
 }
+/* Registration form */
+.form-card-body {
+    padding: 2rem;
+}
 
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    color: #495057;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.back-link:hover {
+    background-color: var(--bs-secondary-bg-subtle);
+}
+
+.form-check {
+    padding-left: 2rem;
+}

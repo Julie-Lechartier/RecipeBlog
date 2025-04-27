@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\UnicodeString;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -88,9 +89,9 @@ class Comment
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    public function setSlug(string|UnicodeString $slug): static
     {
-        $this->slug = $slug;
+        $this->slug = $slug instanceof UnicodeString ? $slug->toString() : $slug;
         return $this;
     }
 }

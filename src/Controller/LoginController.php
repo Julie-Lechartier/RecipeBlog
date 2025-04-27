@@ -14,13 +14,9 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
-        // Debug information
         if ($error instanceof AuthenticationException) {
             dump([
                 'error_message' => $error->getMessage(),
@@ -28,7 +24,6 @@ class LoginController extends AbstractController
                 'error_data' => $error->getMessageData(),
             ]);
         }
-
         // Check if the user is already logged in
         if ($this->getUser()) {
             dump([
@@ -36,9 +31,6 @@ class LoginController extends AbstractController
                 'roles' => $this->getUser()->getRoles(),
             ]);
         }
-        //activer le debug avec
-
-
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,

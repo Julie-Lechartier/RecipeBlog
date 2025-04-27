@@ -1,7 +1,7 @@
 {% if pageCount > 1 %}
 <nav>
     <ul class="pagination {{ options.page_class|default('') }}">
-        {# Bouton Précédent #}
+        <!-- button before -->
         {% if previous is defined %}
         <li class="page-item">
             <a class="page-link" href="{{ path(route_name, route_params|merge({'page': previous})) }}">

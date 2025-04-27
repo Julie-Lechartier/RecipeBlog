@@ -1,6 +1,7 @@
 {{ form_start(form) }}
-<div class="container my-5">
-    <div class="row mx-5 mt-4">
+<div class="container">
+    <div class="row mx-5 pt-5">
+        <div class="mt-5"></div>
         <h2>Création de la recette : <span id="recipeTitlePreview"></span></h2>
     </div>
     <div class="row mx-5 justify-content-center">
@@ -51,9 +52,6 @@
                 <button type="button" id="add-ingredient" class="btn btn-primary">Ajouter un ingrédient</button>
             </div>
         </div>
-
-        <!-- Le reste du code reste inchangé -->
-
         <div class="mb-3">
             <label for="inputStep" class="form-label">Ajouter les étapes de la recette : </label>
             <div id="step-collection" data-prototype="{{ form_widget(form.steps.vars.prototype)|e('html_attr') }}">

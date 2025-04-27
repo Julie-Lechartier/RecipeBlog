@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <div class="row mt-5">
-            <!-- Sidebar - Profile navigation -->
+            <!-- Sidebar - Profile navigation Start -->
             <div class="col-3">
                 <div class="sidebar-nav" style="height: calc(100vh - 4rem); overflow-y: auto; width: 100%; padding-right: 15px;">
                     <div class="mb-4">
@@ -60,8 +60,8 @@
                     </div>
                 </div>
             </div>
+            <!-- Sidebar - Profile navigation End -->
 
-            <!-- Contenu principal -->
             <div class="col-9">
                 <div class="row">
                     <!-- User presentation -->
@@ -161,7 +161,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- Vos données de commentaires ici -->
+                            <!-- TODO: Add comment -->
                             </tbody>
                         </table>
                     </div>
@@ -169,13 +169,13 @@
                     <!-- Security section -->
                     <div class="col-12 profile-section" id="security" style="display: none;">
                         <h2>Sécurité</h2>
-                        <!-- Contenu de la section sécurité -->
+                        <!-- Add here -->
                     </div>
 
                     <!-- Personal info section -->
                     <div class="col-12 profile-section" id="personalInfo" style="display: none;">
                         <h2>Informations personnelles</h2>
-                        <!-- Contenu de la section informations personnelles -->
+                        <!-- Add here -->
                     </div>
                 </div>
             </div>
@@ -187,44 +187,28 @@
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Récupérer tous les liens de navigation
             const navLinks = document.querySelectorAll('.profile-nav-link');
 
-            // Ajouter un gestionnaire d'événements à chaque lien
             navLinks.forEach(function (link) {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
-
-                    // Supprimer la classe active de tous les liens
                     navLinks.forEach(function (navLink) {
                         navLink.classList.remove('active-profil');
                     });
-
-                    // Ajouter la classe active au lien cliqué
                     this.classList.add('active-profil');
-
-                    // Récupérer l'ID de la section cible
                     const targetId = this.getAttribute('data-target');
-
-                    // Masquer toutes les sections
                     document.querySelectorAll('.profile-section').forEach(function (section) {
                         section.style.display = 'none';
                     });
-
-                    // Afficher la section cible
                     document.getElementById(targetId).style.display = 'block';
                 });
             });
-
-            // Afficher la première section par défaut (si pas de hash dans l'URL)
             if (!window.location.hash) {
                 document.getElementById('bio').style.display = 'block';
             } else {
-                // Si un hash est présent dans l'URL, activer l'onglet correspondant
                 const targetId = window.location.hash.substring(1);
                 const targetLink = document.querySelector(`[data-target="${targetId}"]`);
                 if (targetLink) {
-                    // Simuler un clic sur le lien correspondant
                     targetLink.click();
                 }
             }

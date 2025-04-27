@@ -24,10 +24,9 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $faker->addProvider(new FakerPicsumImagesProvider($faker));
 
-        // Check if admin user already exists
+        // Admin User
         $existingAdmin = $manager->getRepository(User::class)->findOneBy(['email' => 'julie@admin.com']);
         if (!$existingAdmin) {
-            // Create admin user
             $admin = new User();
             $admin->setFirstname('Julie');
             $admin->setLastname('LCH');
@@ -48,10 +47,9 @@ class UserFixtures extends Fixture
             $manager->persist($admin);
         }
 
-        // Check if regular user already exists
+        // Regular User
         $existingUser = $manager->getRepository(User::class)->findOneBy(['email' => 'user@user.com']);
         if (!$existingUser) {
-            // Create regular user
             $user = new User();
             $user->setFirstname('User');
             $user->setLastname('User');
@@ -63,14 +61,6 @@ class UserFixtures extends Fixture
             $user->setPresentation($faker->text);
             $user->setSlug($this->slugger->slug($user->getFirstname() . ' ' . $user->getLastname())->lower());
             $user->setPassword($this->passwordHasher->hashPassword($user, 'user'));
-            
-            // Create user avatar
-            $userAvatar = new Media();
-            $userAvatar->setFilename('user-avatar');
-            $userAvatar->setUrl($faker->imageUrl(100, 100));
-            $userAvatar->setAvatar($user);
-            $manager->persist($userAvatar);
-            $manager->persist($user);
         }
 
         // Create random users
@@ -86,14 +76,6 @@ class UserFixtures extends Fixture
             $newUser->setPresentation($faker->text);
             $newUser->setSlug($this->slugger->slug($newUser->getFirstname() . ' ' . $newUser->getLastname())->lower());
             $newUser->setPassword($this->passwordHasher->hashPassword($newUser, 'password'));
-
-            // Create user avatar
-            $avatar = new Media();
-            $avatar->setFilename($faker->slug);
-            $avatar->setUrl($faker->imageUrl(100, 100));
-            $avatar->setAvatar($newUser);
-            $manager->persist($avatar);
-            $manager->persist($newUser);
         }
         $manager->flush();
     }

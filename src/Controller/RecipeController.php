@@ -37,8 +37,9 @@ class RecipeController extends AbstractController
         ]);
     }
     #[Route('/show/{slug}', name: 'app_recipe_show')]
-    public function show(Recipe $recipe, RecipeIngredientRepository $recipeIngredientRepository,CommentRepository $commentRepository ,Request $request): Response
+    public function show(Request $request, RecipeRepository $recipeRepository, RecipeIngredientRepository $recipeIngredientRepository,CommentRepository $commentRepository, string $slug): Response
     {
+        $recipe = $recipeRepository->findOneBy(['slug' => $slug]);
         $recipeIngredient = $recipeIngredientRepository->findBy(['recipe' => $recipe]);
         $comments = $commentRepository->findBy(['recipe' => $recipe]);
 
@@ -88,7 +89,6 @@ class RecipeController extends AbstractController
 
         $recipe->setAuthor($currentUser);
 
-        // Création du formulaire
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -102,44 +102,31 @@ class RecipeController extends AbstractController
             }
 
             $slug = $this->slugger->slug($recipe->getTitle())->lower();
-
-            // Vérification supplémentaire pour s'assurer que le slug n'est pas vide
+            // Slug not null
             if (empty($slug)) {
                 $slug = $this->slugger->slug('recette-' . uniqid())->lower();
             }
 
             $recipe->setSlug($slug);
-
-            // Vérification Debug - à retirer après résolution du problème
-            dump('Slug généré: ' . $recipe->getSlug());
-
-            // Le reste du code...
             $stepNumber = 1;
             foreach ($recipe->getSteps() as $step) {
                 $step->setStepNumber($stepNumber);
                 $stepNumber++;
             }
 
-            // Traitement de l'image...
+            // Image
             $imageFile = $form->get('image')->getData();
-            if ($imageFile) {
-                // Le reste du code pour l'image...
-            }
 
-            // Traitement des catégories
+            // Categories
             $category = $form->get('category')->getData();
             foreach ($category as $categoryItem) {
                 $recipe->addCategory($categoryItem);
             }
-
-            // S'assurer une dernière fois que le slug est défini avant la persistance
+            // Slug
             if (empty($recipe->getSlug())) {
                 $recipe->setSlug($this->slugger->slug('recette-' . uniqid())->lower());
             }
-
-            // Enregistrement en base de données
             $entityManager->persist($recipe);
-
             try {
                 $entityManager->flush();
                 $this->addFlash('success', 'Recette créée avec succès');
@@ -162,7 +149,7 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
 
-            // Gérer les numéros d'étapes
+            // Steps num
             $stepNumber = 1;
             foreach ($recipe->getSteps() as $step) {
                 $step->setStepNumber($stepNumber);

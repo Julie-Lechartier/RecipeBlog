@@ -35,4 +35,20 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'htmx' => [
+        'version' => '0.0.2',
+    ],
+    'htmx.org' => [
+        'version' => '1.9.12',
+    ],
+    'select2' => [
+        'version' => '4.1.0-rc.0',
+    ],
+    'select2/dist/css/select2.min.css' => [
+        'version' => '4.1.0-rc.0',
+        'type' => 'css',
+    ],
 ];

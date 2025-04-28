@@ -30,10 +30,14 @@ final class UserController extends AbstractController
     #[Route('/', name: 'app_admin_user_index', methods: ['GET', 'POST'])]
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $users = $userRepository->findAll();
+        $queryBuilder = $userRepository->createQueryBuilder('c')->getQuery();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('admin/user/index.html.twig', [
-            'users' => $users,
-
+            'pagination' => $pagination,
         ]);
     }
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]

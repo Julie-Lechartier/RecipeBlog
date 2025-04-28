@@ -2,37 +2,65 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Recette associée</th>
-            <th scope="col">Actions</th>
+            <th scope="col" class="col-5">Nom</th>
+            <th scope="col" class="col-3">Recettes associées</th>
+            <th scope="col" class="col-4">Actions</th>
         </tr>
         </thead>
+        <tbody>
         {% for ingredient in pagination.items %}
-            <tbody>
             <tr>
                 <td>{{ ingredient.name }}</td>
-                <td></td>
                 <td>
-                    <div class="row gap-2">
+                    {% if ingredient.recipeIngredients is defined %}
+                        {{ ingredient.recipeIngredients|length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="d-flex gap-2 pe-3">
                         <a href="{{ path('app_admin_ingredient_edit', {'slug': ingredient.slug}) }}"
-                           class="text-decoration-none  btn-full-green rounded-3 text-center py-1 actions-table-custom">
-                            <i class="bi bi-pencil-fill text-white"></i>
+                           class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">
+                            <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{{ path('app_admin_ingredient_delete', {'slug' : ingredient.slug}) }}"
-                           class="text-decoration-none  col-5 btn-full-cherry rounded-3 text-center py-1 btn-table-size"
-                           type="submit">
-                            <i class="bi bi-trash3-fill text-white"></i>
-                        </a>
-
+                        <button type="button"
+                                class="btn-border-cherry rounded-pill px-3 py-2"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ ingredient.slug|replace({'-': ''}) }}">
+                            <i class="bi bi-trash3"></i>
+                        </button>
                     </div>
                 </td>
             </tr>
-            </tbody>
+            <!-- Modal de confirmation de suppression -->
+            <div class="modal fade" id="deleteModal{{ ingredient.slug|replace({'-': ''}) }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir supprimer l'ingrédient "{{ ingredient.name }}" ?
+                            {% if ingredient.recipeIngredients is defined and ingredient.recipeIngredients|length > 0 %}
+                                <div class="alert alert-warning mt-2">
+                                    Attention : Cet ingrédient est utilisé dans {{ ingredient.recipeIngredients|length }} recette(s).
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <a href="{{ path('app_admin_ingredient_delete', {'slug': ingredient.slug}) }}" class="btn btn-danger">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
+        </tbody>
     </table>
     <div class="mt-3">
         {{ knp_pagination_render(pagination, '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig') }}
     </div>
 {% else %}
-    <p>Aucun ingredient disponible.</p>
+    <p>Aucun ingrédient disponible.</p>
 {% endif %}

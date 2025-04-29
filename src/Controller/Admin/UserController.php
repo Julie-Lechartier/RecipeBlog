@@ -97,4 +97,10 @@ final class UserController extends AbstractController
         }
         return $this->redirectToRoute('app_admin_user_index');
     }
+
+    #[Route('/table/filter', name: 'app_admin_user_table_filter', methods: ['GET', 'POST'])]
+    public function filterTable(Request $request): Response
+    {
+
+    }
 }

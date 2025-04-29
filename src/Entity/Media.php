@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
@@ -29,6 +31,17 @@ class Media
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "avatars")]
     #[ORM\JoinColumn(name: "avatar_id", referencedColumnName: "id", nullable: true)]
     private ?User $avatar = null;
+
+    /**
+     * @var Collection<int, Banner>
+     */
+    #[ORM\ManyToMany(targetEntity: Banner::class, mappedBy: 'image')]
+    private Collection $banners;
+
+    public function __construct()
+    {
+        $this->banners = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -92,6 +105,33 @@ class Media
     public function setAvatar(?User $avatar): static
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Banner>
+     */
+    public function getBanners(): Collection
+    {
+        return $this->banners;
+    }
+
+    public function addBanner(Banner $banner): static
+    {
+        if (!$this->banners->contains($banner)) {
+            $this->banners->add($banner);
+            $banner->addImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBanner(Banner $banner): static
+    {
+        if ($this->banners->removeElement($banner)) {
+            $banner->removeImage($this);
+        }
 
         return $this;
     }

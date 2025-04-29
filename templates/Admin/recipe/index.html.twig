@@ -25,7 +25,7 @@
                             </span>
                     <input type="text" id="search" name="search" class="form-control border-start-0"
                            placeholder="Nom, ingrédients, auteur..."
-                           hx-post="{{ path('table_filter') }}"
+                           hx-post="{{ path('app_recipe_table_filter') }}"
                            hx-target="#table-container"
                            hx-trigger="keyup changed delay:500ms"
                            hx-indicator=".htmx-indicator"
@@ -35,7 +35,7 @@
             <div class="col-md-2">
                 <label for="category" class="form-label small text-muted">Filtrer par catégorie</label>
                 <select id="category" name="category" class="form-select"
-                        hx-post="{{ path('table_filter') }}"
+                        hx-post="{{ path('app_recipe_table_filter') }}"
                         hx-target="#table-container"
                         hx-trigger="change"
                         hx-include="[name='page']">

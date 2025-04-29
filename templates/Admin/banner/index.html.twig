@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+    <div class="container-fluid bg-white mt-2 px-5 vh-100">
+        <div class="row mb-4 pt-4">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-0">Gestion de la bannière d'accueil</h2>
+                <p class="text-muted">Gérez tous les éléments de la bannière d'accueil</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ path('app_admin_banner_new') }}"
+                   class="btn btn-full-green text-white rounded-pill py-2 px-4 shadow-sm">
+                    {% include 'icons/home_plus.html.twig' %}
+                    Création d'une nouvelle bannière
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"><h3 class="fw-bold">Bannière actuelle</h3></div>
+            <div class="col-12 d-flex gap-3 align-items-center">
+                <p class="fw-bold fs-5">Titre :</p>
+                <p>{{ banner.title }}</p>
+            </div>
+            <div class="col-12  d-flex gap-3 align-items-center">
+                <p class="fw-bold fs-5">Description :</p>
+                <p>{{ banner.description }}</p>
+            </div>
+            <!-- TODO: image form add logique -->
+            <div class="col-12  d-flex gap-3 align-items-center">
+                <p class="fw-bold fs-5">Image actuelle :</p>
+                <img src="" alt="">
+            </div>
+            <div class="col-12  d-flex gap-3 align-items-center">
+                <p class="fw-bold fs-5">Button texte :</p>
+                <p>{{ banner.buttonText }}</p>
+            </div>
+            
+        </div>
+    </div>
+
+{% endblock %}

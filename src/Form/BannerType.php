@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Banner;
-use App\Entity\media;
+use App\Entity\Media;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +21,7 @@ class BannerType extends AbstractType
             ->add('buttonText')
             ->add('isActive')
             ->add('image', EntityType::class, [
-                'class' => media::class,
+                'class' => Media::class,
                 'choice_label' => 'id',
                 'multiple' => true,
             ])

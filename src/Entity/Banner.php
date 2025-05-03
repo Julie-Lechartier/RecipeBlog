@@ -22,9 +22,9 @@ class Banner
     private ?string $description = null;
 
     /**
-     * @var Collection<int, media>
+     * @var Collection<int, Media>
      */
-    #[ORM\ManyToMany(targetEntity: media::class, inversedBy: 'banners')]
+    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'banners')]
     private Collection $image;
 
     #[ORM\Column(length: 255, nullable: true)]

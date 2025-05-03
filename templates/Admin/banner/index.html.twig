@@ -15,7 +15,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12"><h3 class="fw-bold">Bannière actuelle</h3></div>
+            <div class="col-12 pb-2">
+                <h3 class="fw-bold">Bannière actuelle</h3>
+            </div>
             <div class="col-12 d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Titre :</p>
                 <p>{{ banner.title }}</p>
@@ -28,6 +30,10 @@
             <div class="col-12  d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Image actuelle :</p>
                 <img src="" alt="">
+            </div>
+            <div class="col-12  d-flex gap-3 align-items-center">
+                <p class="fw-bold fs-5">Affichage du bouton</p>
+                <p>{% if banner.isActive == true %}Oui{% else %}Non{% endif %}</p>
             </div>
             <div class="col-12  d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Button texte :</p>

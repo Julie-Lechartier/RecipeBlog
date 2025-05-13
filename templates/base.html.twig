@@ -10,7 +10,7 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-{{ render(path('app_navigation', { 'currentPageRoute': app.request.attributes.get('_route') })) }}
+{{ render(path('app_navigation_header', { 'currentPageRoute': app.request.attributes.get('_route') })) }}
 {% block body %}{% endblock %}
 
 <!-- New recipe button -->
@@ -24,7 +24,7 @@
         </a>
     </div>
 {% endif %}
-
+{{ render(path('app_navigation_footer'))}}
 {% block javascripts %}
     {{ importmap('app') }}
 {% endblock %}

@@ -2,7 +2,7 @@
 // Importer les styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'select2/dist/css/select2.min.css';
-import 'select2-bootstrap-5-theme';
+
 
 // Importer jQuery et le rendre global
 import $ from 'jquery';

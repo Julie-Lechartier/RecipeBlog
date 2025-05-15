@@ -39,14 +39,110 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $recipes = [
-            // Your existing recipe data...
+            // Apéro recipes
             [
                 'title' => 'Bruschetta aux tomates',
                 'categories' => ['Apéro'],
                 'prepTime' => 20,
                 'serving' => 4
             ],
-            // ... other recipes ...
+            [
+                'title' => 'Chips de légumes',
+                'categories' => ['Apéro', 'Snacks'],
+                'prepTime' => 30,
+                'serving' => 6
+            ],
+            // Entrées
+            [
+                'title' => 'Soupe à l\'oignon',
+                'categories' => ['Entrées', 'Soupes'],
+                'prepTime' => 60,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Salade César',
+                'categories' => ['Entrées', 'Salades'],
+                'prepTime' => 25,
+                'serving' => 4
+            ],
+            // Plats
+            [
+                'title' => 'Pâtes Carbonara',
+                'categories' => ['Plats', 'Pâtes'],
+                'prepTime' => 30,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Steak-frites',
+                'categories' => ['Plats', 'Viandes'],
+                'prepTime' => 45,
+                'serving' => 4
+            ],
+            // Desserts
+            [
+                'title' => 'Tarte aux pommes',
+                'categories' => ['Desserts', 'Pâtisseries'],
+                'prepTime' => 60,
+                'serving' => 6
+            ],
+            [
+                'title' => 'Crème brûlée',
+                'categories' => ['Desserts'],
+                'prepTime' => 40,
+                'serving' => 4
+            ],
+            // Végétarien
+            [
+                'title' => 'Risotto aux champignons',
+                'categories' => ['Plats', 'Végétarien'],
+                'prepTime' => 45,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Buddha Bowl',
+                'categories' => ['Plats', 'Végétarien', 'Salades'],
+                'prepTime' => 35,
+                'serving' => 2
+            ],
+            // Végétalien
+            [
+                'title' => 'Curry de légumes',
+                'categories' => ['Plats', 'Végétalien'],
+                'prepTime' => 40,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Burgers végans',
+                'categories' => ['Plats', 'Végétalien'],
+                'prepTime' => 45,
+                'serving' => 4
+            ],
+            // Petits-déjeuners
+            [
+                'title' => 'Pancakes',
+                'categories' => ['Petits-déjeuners'],
+                'prepTime' => 30,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Smoothie Bowl',
+                'categories' => ['Petits-déjeuners', 'Boissons'],
+                'prepTime' => 15,
+                'serving' => 2
+            ],
+            // Sauces
+            [
+                'title' => 'Sauce Béarnaise',
+                'categories' => ['Sauces'],
+                'prepTime' => 20,
+                'serving' => 4
+            ],
+            [
+                'title' => 'Sauce Hollandaise',
+                'categories' => ['Sauces'],
+                'prepTime' => 15,
+                'serving' => 4
+            ]
         ];
 
         foreach ($recipes as $recipeData) {
@@ -54,6 +150,11 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setTitle($recipeData['title']);
             $recipe->setSlug($this->slugger->slug($recipeData['title'])->lower());
             $recipe->setDescription($faker->paragraph(3));
+            //created at dateTimeImmutable
+            $date = new \DateTimeImmutable('now');
+            $dateAsDateTime = \DateTime::createFromImmutable($date);
+            $createdAt = \DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-10 days', $dateAsDateTime));
+            $recipe->setCreateAt($createdAt);
 
             // Convert minutes to TIME format (HH:MM:00)
             $minutes = $recipeData['prepTime'];

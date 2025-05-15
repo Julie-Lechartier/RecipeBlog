@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if banner.isActive %}
+    {% if banner and banner.isActive %}
         {% include 'components/hero.html.twig' %}
     {% endif %}
     <div class="container py-4">
@@ -79,7 +79,7 @@
                 </a>
             </div>
             <div class="recipe-scroll">
-                {{ render(path('app_include_recipe_scroll', {'category': 'Plats','limit': 10})) }}
+                {{ render(path('app_include_recipe_scroll', {'category': 'plats','limit': 10})) }}
             </div>
         </section>
 
@@ -95,7 +95,7 @@
                 </a>
             </div>
             <div class="recipe-scroll">
-                {{ render(path('app_include_recipe_scroll', {'category': 'Dessert','limit': 10})) }}
+                {{ render(path('app_include_recipe_scroll', {'category': 'dessert','limit': 10})) }}
             </div>
         </section>
         <!-- TODO: 'nos cuisinier les plus actifs, recettes populaires'-->

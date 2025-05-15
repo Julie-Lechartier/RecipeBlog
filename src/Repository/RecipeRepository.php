@@ -21,16 +21,36 @@ class RecipeRepository extends ServiceEntityRepository
     /**
      * Find recipes by category
      */
-    public function findByCategory(RecipeCategory $category): array
+    public function findByCategory(?RecipeCategory $category = null, ?int $limit = null): array
     {
-        return $this->createQueryBuilder('r')
-            ->join('r.category', 'c')
-            ->andWhere('c.id = :categoryId')
-            ->setParameter('categoryId', $category->getId())
-            ->getQuery()
-            ->getResult();
+        $qb = $this->createQueryBuilder('r')
+            ->join('r.category', 'c');
+
+        if ($category !== null) {
+            $qb->andWhere('c.id = :categoryId')
+                ->setParameter('categoryId', $category->getId());
+        }
+
+        $qb->orderBy('r.id', 'DESC'); // ou 'r.createdAt' si tu ajoutes cette propriété
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
+    public function findLatest(?int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'DESC');
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
     public function findByNameAndCategory(string $search, string $category): QueryBuilder
     {
         $qb = $this->createQueryBuilder('r')

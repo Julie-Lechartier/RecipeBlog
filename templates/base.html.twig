@@ -17,6 +17,7 @@
 {% block body %}
 
 {% endblock %}
+{{ render(path('app_navigation_footer')) }}
 
 <!-- New recipe button -->
 {% if app.user and app.request.get('_route') not in ['app_user_profile', 'app_new_recipe', 'app_recipe_edit'] %}

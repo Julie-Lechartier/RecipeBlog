@@ -67,6 +67,9 @@ class Recipe
     #[ORM\OneToMany(targetEntity: RecipeIngredient::class, mappedBy: 'recipe', cascade: ['persist', 'remove'])]
     private Collection $recipeIngredients;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createAt = null;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -295,6 +298,18 @@ class Recipe
                 $recipeIngredient->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTimeImmutable $createAt): static
+    {
+        $this->createAt = $createAt;
 
         return $this;
     }

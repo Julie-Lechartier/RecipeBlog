@@ -14,15 +14,28 @@ final class IncludeController extends AbstractController
 {
 
     #[Route('/recipe/scroll', name: 'app_include_recipe_scroll', methods: ['GET'])]
-    public function recipeScroll(RecipeRepository $recipeRepository, Request $request): Response
+    public function recipeScroll(RecipeRepository $recipeRepository, Request $request, RecipeCategoryRepository $categoryRepository): Response
     {
-        $limit = $request->query->get('limit', 10);
-        $recipes = $recipeRepository->findBy([], null, $limit);
+        $limit = (int) $request->query->get('limit', 10);
+        $categoryId = $request->query->get('category');
+        $categoryEntity = null;
+
+        if ($categoryId) {
+            $categoryEntity = $categoryRepository->find($categoryId);
+        }
+
+        if ($categoryEntity) {
+            $recipes = $recipeRepository->findByCategory($categoryEntity, $limit);
+        } else {
+            $recipes = $recipeRepository->findLatest($limit);
+        }
 
         return $this->render('include/_recipeScrollCard.html.twig', [
             'recipes' => $recipes,
         ]);
     }
+
+
     #[Route('/recipe/all', name: 'app_include_recipe_all', methods: ['GET'])]
     public function recipeAll(RecipeRepository $recipeRepository): Response
     {

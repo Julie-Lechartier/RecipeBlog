@@ -13,6 +13,10 @@ import "select2/dist/css/select2.min.css";
 select2($);
 
 document.addEventListener('DOMContentLoaded', function() {
+    if (!window.htmx) {
+        console.warn('htmx is not loaded yet!');
+        return;
+    }
     const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
     dropdownElementList.forEach(function(element) {
         new bootstrap.Dropdown(element);

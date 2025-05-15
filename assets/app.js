@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $(function() {
         $('.select2-element').select2({
+            theme: 'bootstrap-5'
         });
     });
 });

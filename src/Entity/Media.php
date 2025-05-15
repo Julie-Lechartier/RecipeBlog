@@ -22,14 +22,9 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'media')]
+    #[ORM\ManyToOne(targetEntity: Banner::class, inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?Recipe $recipe = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "avatars")]
-    #[ORM\JoinColumn(name: "avatar_id", referencedColumnName: "id", nullable: true)]
-    private ?User $avatar = null;
-
+    private ?Banner $banner = null;
 
     public function getId(): ?int
     {
@@ -44,7 +39,6 @@ class Media
     public function setFileName(?string $fileName): static
     {
         $this->fileName = $fileName;
-
         return $this;
     }
 
@@ -56,7 +50,6 @@ class Media
     public function setPath(?string $path): static
     {
         $this->path = $path;
-
         return $this;
     }
 
@@ -68,31 +61,17 @@ class Media
     public function setUrl(?string $url): static
     {
         $this->url = $url;
-
         return $this;
     }
 
-    public function getRecipe(): ?Recipe
+    public function getBanner(): ?Banner
     {
-        return $this->recipe;
+        return $this->banner;
     }
 
-    public function setRecipe(?Recipe $recipe): static
+    public function setBanner(?Banner $banner): static
     {
-        $this->recipe = $recipe;
-
-        return $this;
-    }
-
-    public function getAvatar(): ?User
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?User $avatar): static
-    {
-        $this->avatar = $avatar;
-
+        $this->banner = $banner;
         return $this;
     }
 }

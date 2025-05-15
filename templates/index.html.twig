@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% include 'components/hero.html.twig' %}
-
+    {% if banner.isActive %}
+        {% include 'components/hero.html.twig' %}
+    {% endif %}
     <div class="container py-4">
         <!-- Mobile Search bar -->
         <div class="d-lg-none mb-4">
@@ -22,7 +23,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 text-center">
                         <h2 class="fw-bold mb-3">Une communauté de passionnés de cuisine</h2>
-                        <p class="lead mb-4">Partagez vos recettes préférées, découvrez les créations d'autres cuisiniers amateurs et échangez vos astuces culinaires.</p>
+                        <p class="lead mb-4">Partagez vos recettes préférées, découvrez les créations d'autres
+                            cuisiniers amateurs et échangez vos astuces culinaires.</p>
                         <div class="row g-4 mt-3">
                             <div class="col-md-4">
                                 <div class="d-flex align-items-center justify-content-center mb-2">
@@ -56,7 +58,8 @@
                 <h2 class="fw-bold position-relative">
                     Recette du jour
                 </h2>
-                <a href="{{ path('app_recipe_index') }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_index') }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -71,7 +74,8 @@
                 <h2 class="fw-bold position-relative">
                     Plats
                 </h2>
-                <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -86,7 +90,8 @@
                 <h2 class="fw-bold position-relative">
                     Desserts
                 </h2>
-                <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>

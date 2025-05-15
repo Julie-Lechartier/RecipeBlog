@@ -52,7 +52,6 @@
                 </thead>
                 <tbody>
                 {% for user in users|slice(0, 5) %}
-                <tbody>
                 <tr>
                     <td>
                         <button type="button" class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#userModal"
@@ -66,8 +65,9 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.newsletter|replace({'1':"Oui",'0':"Non"}) }}</td>
                 </tr>
-                </tbody>
+
                 {% endfor %}
+                </tbody>
             </table>
         </div>
         <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">

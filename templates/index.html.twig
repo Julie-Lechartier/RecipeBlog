@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    {% if banner %}
+    {% if banner.isActive %}
         {% include 'components/hero.html.twig' %}
     {% endif %}
     <div class="container py-4">

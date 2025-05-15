@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
@@ -24,25 +22,9 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'media')]
+    #[ORM\ManyToOne(targetEntity: Banner::class, inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?Recipe $recipe = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "avatars")]
-    #[ORM\JoinColumn(name: "avatar_id", referencedColumnName: "id", nullable: true)]
-    private ?User $avatar = null;
-
-    /**
-     * @var Collection<int, Banner>
-     */
-    #[ORM\ManyToMany(targetEntity: Banner::class, mappedBy: 'image')]
-    private Collection $banners;
-
-    public function __construct()
-    {
-        $this->banners = new ArrayCollection();
-    }
-
+    private ?Banner $banner = null;
 
     public function getId(): ?int
     {
@@ -57,7 +39,6 @@ class Media
     public function setFileName(?string $fileName): static
     {
         $this->fileName = $fileName;
-
         return $this;
     }
 
@@ -69,7 +50,6 @@ class Media
     public function setPath(?string $path): static
     {
         $this->path = $path;
-
         return $this;
     }
 
@@ -81,58 +61,17 @@ class Media
     public function setUrl(?string $url): static
     {
         $this->url = $url;
-
         return $this;
     }
 
-    public function getRecipe(): ?Recipe
+    public function getBanner(): ?Banner
     {
-        return $this->recipe;
+        return $this->banner;
     }
 
-    public function setRecipe(?Recipe $recipe): static
+    public function setBanner(?Banner $banner): static
     {
-        $this->recipe = $recipe;
-
-        return $this;
-    }
-
-    public function getAvatar(): ?User
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?User $avatar): static
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Banner>
-     */
-    public function getBanners(): Collection
-    {
-        return $this->banners;
-    }
-
-    public function addBanner(Banner $banner): static
-    {
-        if (!$this->banners->contains($banner)) {
-            $this->banners->add($banner);
-            $banner->addImage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBanner(Banner $banner): static
-    {
-        if ($this->banners->removeElement($banner)) {
-            $banner->removeImage($this);
-        }
-
+        $this->banner = $banner;
         return $this;
     }
 }

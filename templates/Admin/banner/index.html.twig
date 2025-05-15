@@ -14,9 +14,17 @@
                 </a>
             </div>
         </div>
+        {{ dump(banner) }}
+
+
+
         <div class="row">
-            <div class="col-12 pb-2">
+            <div class="col-12 pb-2 d-flex gap-3 align-items-center">
                 <h3 class="fw-bold">Bannière actuelle</h3>
+                <a href="{{ path('app_admin_banner_edit', {'slug' : banner.slug}) }}"
+                   class="text-decoration-none text-black">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
             </div>
             <div class="col-12 d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Titre :</p>
@@ -29,17 +37,25 @@
             <!-- TODO: image form add logique -->
             <div class="col-12  d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Image actuelle :</p>
-                <img src="" alt="">
+                {% for media in banner.media %}
+                    <img src="{{ asset('uploads/banners/' ~ media.fileName) }}" alt="Image">
+                {% endfor %}
             </div>
             <div class="col-12  d-flex gap-3 align-items-center">
                 <p class="fw-bold fs-5">Affichage du bouton</p>
                 <p>{% if banner.isActive == true %}Oui{% else %}Non{% endif %}</p>
             </div>
-            <div class="col-12  d-flex gap-3 align-items-center">
-                <p class="fw-bold fs-5">Button texte :</p>
-                <p>{{ banner.buttonText }}</p>
-            </div>
-            
+            {% if banner.isActive == true %}
+                <div class="col-12  d-flex gap-3 align-items-center">
+                    <p class="fw-bold fs-5">Lien du bouton</p>
+                    <p>{{ banner.link }}</p>
+                </div>
+                <div class="col-12  d-flex gap-3 align-items-center">
+                    <p class="fw-bold fs-5">Button texte :</p>
+                    <p>{{ banner.buttonText }}</p>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 

@@ -11,7 +11,7 @@ class HomeController extends AbstractController{
     #[Route('/', name: 'app_home')]
     public function index(BannerRepository $bannerRepository) : Response
     {
-        $banner  = $bannerRepository->findOneBy(['isActive' => true]);
+        $banner  = $bannerRepository->findOneBy([], ['id' => 'ASC']);
         return $this->render('index.html.twig', [
             'banner' => $banner
         ]);

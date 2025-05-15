@@ -6,6 +6,7 @@ use App\Repository\BannerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\UnicodeString;
 
 #[ORM\Entity(repositoryClass: BannerRepository::class)]
 class Banner
@@ -21,11 +22,8 @@ class Banner
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @var Collection<int, Media>
-     */
-    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'banners')]
-    private Collection $image;
+    #[ORM\OneToMany(mappedBy: 'banner', targetEntity: Media::class, cascade: ['persist', 'remove'])]
+    private Collection $media;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
@@ -39,9 +37,12 @@ class Banner
     #[ORM\Column]
     private ?bool $isActive = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
     public function __construct()
     {
-        $this->image = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,7 +58,6 @@ class Banner
     public function setTitle(?string $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -69,31 +69,6 @@ class Banner
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, media>
-     */
-    public function getImage(): Collection
-    {
-        return $this->image;
-    }
-
-    public function addImage(media $image): static
-    {
-        if (!$this->image->contains($image)) {
-            $this->image->add($image);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(media $image): static
-    {
-        $this->image->removeElement($image);
-
         return $this;
     }
 
@@ -105,7 +80,6 @@ class Banner
     public function setLink(?string $link): static
     {
         $this->link = $link;
-
         return $this;
     }
 
@@ -117,7 +91,6 @@ class Banner
     public function setButton(bool $button): static
     {
         $this->button = $button;
-
         return $this;
     }
 
@@ -129,7 +102,6 @@ class Banner
     public function setButtonText(?string $buttonText): static
     {
         $this->buttonText = $buttonText;
-
         return $this;
     }
 
@@ -141,6 +113,42 @@ class Banner
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string|UnicodeString $slug): static
+    {
+        $this->slug = $slug instanceof UnicodeString ? $slug->toString() : $slug;
+        return $this;
+    }
+
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedia(Media $media): static
+    {
+        if (!$this->media->contains($media)) {
+            $this->media[] = $media;
+            $media->setBanner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): static
+    {
+        if ($this->media->removeElement($media)) {
+            if ($media->getBanner() === $this) {
+                $media->setBanner(null);
+            }
+        }
 
         return $this;
     }

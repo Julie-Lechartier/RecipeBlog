@@ -42,7 +42,6 @@ class UserFixtures extends Fixture
             $adminAvatar = new Media();
             $adminAvatar->setFilename('admin-avatar');
             $adminAvatar->setUrl($faker->imageUrl(100, 100));
-            $adminAvatar->setAvatar($admin);
             $manager->persist($adminAvatar);
             $manager->persist($admin);
         }

@@ -1,17 +1,25 @@
-// assets/js/app.js
-// Importer les styles
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'select2/dist/css/select2.min.css';
-import 'select2-bootstrap-5-theme';
-
-// Importer jQuery et le rendre global
 import $ from 'jquery';
-window.jQuery = $;
 window.$ = $;
+window.jQuery = $;
 
-// Importer Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
+import htmx from "htmx.org";
+window.htmx = htmx;  // Define htmx globally
 
-// Importer Select2
-import 'select2';
+import select2 from 'select2';
+import "select2/dist/css/select2.min.css";
+select2($);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
+    dropdownElementList.forEach(function(element) {
+        new bootstrap.Dropdown(element);
+    });
+
+    $(function() {
+        $('.select2-element').select2({
+        });
+    });
+});

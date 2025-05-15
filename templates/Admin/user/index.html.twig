@@ -24,7 +24,7 @@
                     </span>
                     <input type="text" id="search" name="search" class="form-control border-start-0"
                            placeholder="Prénom, nom, pseudo..."
-                           hx-post="#"
+                           hx-post="{{ path('app_admin_user_table_filter') }}"
                            hx-target="#table-container"
                            hx-trigger="keyup changed delay:500ms"
                            hx-indicator=".htmx-indicator"

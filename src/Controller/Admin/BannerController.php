@@ -1,22 +1,26 @@
 <?php
-
-declare(strict_types=1);
-
 namespace App\Controller\Admin;
 
 use App\Entity\Banner;
 use App\Entity\Media;
 use App\Form\BannerType;
 use App\Repository\BannerRepository;
+use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 #[Route('/banner')]
 class BannerController extends AbstractController
 {
+    public function __construct(private SluggerInterface $slugger)
+    {
+
+    }
     #[Route('/', name: 'app_admin_banner_index', methods: ['GET'])]
     public function index(BannerRepository $bannerRepository): Response
     {
@@ -35,10 +39,10 @@ class BannerController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $banner = $form->getData();
+            $banner->setSlug($this->slugger->slug($banner->getTitle()));
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
-                // TODO: correction
-                $newFileName = md5(uniqid(null, true)) . '.' . $imageFile->guessExtension();
+                $newFileName = md5(uniqid('', true)) . '.' . $imageFile->guessExtension();
                 try {
                     $imageFile->move(
                         $this->getParameter('banner_images_directory'),

@@ -15,11 +15,9 @@
             </div>
         </div>
         {{ dump(banner) }}
-
-
-
         <div class="row">
             <div class="col-12 pb-2 d-flex gap-3 align-items-center">
+                {% if banner %}
                 <h3 class="fw-bold">Bannière actuelle</h3>
                 <a href="{{ path('app_admin_banner_edit', {'slug' : banner.slug}) }}"
                    class="text-decoration-none text-black">
@@ -54,6 +52,9 @@
                     <p class="fw-bold fs-5">Button texte :</p>
                     <p>{{ banner.buttonText }}</p>
                 </div>
+            {% endif %}
+            {% else %}
+                <p>Pas de bannière créé pour l'instant.</p>
             {% endif %}
 
         </div>

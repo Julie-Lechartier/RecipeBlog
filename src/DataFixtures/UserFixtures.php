@@ -60,6 +60,7 @@ class UserFixtures extends Fixture
             $user->setPresentation($faker->text);
             $user->setSlug($this->slugger->slug($user->getFirstname() . ' ' . $user->getLastname())->lower());
             $user->setPassword($this->passwordHasher->hashPassword($user, 'user'));
+            $manager->persist($user);
         }
 
         // Create random users
@@ -75,6 +76,7 @@ class UserFixtures extends Fixture
             $newUser->setPresentation($faker->text);
             $newUser->setSlug($this->slugger->slug($newUser->getFirstname() . ' ' . $newUser->getLastname())->lower());
             $newUser->setPassword($this->passwordHasher->hashPassword($newUser, 'password'));
+            $manager->persist($newUser);
         }
         $manager->flush();
     }

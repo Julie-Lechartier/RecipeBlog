@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,6 +17,23 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findByNameAndUsername(string $username, string $firstname, string $lastname): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+        if ($firstname) {
+            $qb->andWhere('u.firstname = :firstname')
+                ->setParameter('firstname', '%' . $firstname . '%');
+        }
+        if ($lastname) {
+            $qb->andWhere('u.lastname = :lastname')
+                ->setParameter('lastname', '%' . $lastname . '%');
+        }
+        if($username) {
+            $qb->andWhere('u.username = :username')
+                ->setParameter('username','%' . $username . '%');
+        }
+        return $qb;
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

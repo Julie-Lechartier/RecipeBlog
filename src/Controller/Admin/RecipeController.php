@@ -163,7 +163,7 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('app_admin_recipe_index');
     }
     #[Route('/table/filter', name: 'app_recipe_table_filter', methods: ['POST'])]
-    public function filter(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
+    public function TableFilter(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
     {
         $search = $request->request->get('search', '');
         $category = $request->request->get('category', '');

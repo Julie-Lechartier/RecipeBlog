@@ -14,7 +14,7 @@ class UnitFixtures extends Fixture
         // Clear existing categories
         $manager->createQuery('DELETE FROM App\Entity\Unit')->execute();
 
-        $units = [
+        $unit = [
             'g',
             'kg',
             'mg',
@@ -32,11 +32,11 @@ class UnitFixtures extends Fixture
             'goutte',
         ];
 
-        foreach ($units as $unitName) {
-            $units = new Unit();
-            $units->setName($unitName);
-            $units->setSlug($unitName);
-            $manager->persist($units);
+        foreach ($unit as $unitName) {
+            $unit = new Unit();
+            $unit->setName($unitName);
+            $unit->setSlug($unitName);
+            $manager->persist($unit);
         }
         $manager->flush();
     }

@@ -31,7 +31,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByNameAndCategory(string $search = '', string $category = ''): QueryBuilder
+    public function findByNameAndCategory(string $search, string $category): QueryBuilder
     {
         $qb = $this->createQueryBuilder('r')
             ->leftJoin('r.category', 'c')

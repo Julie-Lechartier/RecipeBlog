@@ -19,6 +19,15 @@ class CommentController extends AbstractController
     public function __construct(private readonly SluggerInterface $slugger)
     {
     }
+    #[Route('/show/{recipeSlug}', name: 'app_comment_show', methods: ['GET'])]
+    public function show(RecipeRepository $recipeRepository, string $recipeSlug): Response
+    {
+        $recipe = $recipeRepository->findOneBy(['slug' => $recipeSlug]);
+        return $this->render('comment/show.html.twig', [
+            'comments' => $recipe->getComments(),
+            'recipe' => $recipe,
+        ]);
+    }
     #[Route('/new/recipe/{recipeSlug}', name: 'app_comment_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Comment $comment, EntityManagerInterface $entityManager, string $recipeSlug, RecipeRepository $recipeRepository): Response
     {
@@ -71,7 +80,22 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_recipe_show', ['slug' => $comment->getRecipe()->getSlug()]);
+            if ($request->headers->has('HX-Request')) {
+                return $this->render('comment/_content.html.twig', [
+                    'comment' => $comment,
+                ]);
+            }
+
+            return $this->redirectToRoute('app_recipe_show', [
+                'slug' => $comment->getRecipe()->getSlug()
+            ]);
+        }
+
+        if ($request->headers->has('HX-Request') && $request->isMethod('GET')) {
+            return $this->render('comment/_form-edit.html.twig', [
+                'comment' => $comment,
+                'form' => $form->createView(),
+            ]);
         }
 
 
@@ -86,5 +110,12 @@ class CommentController extends AbstractController
     public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
     {
         return $this->render('comment/delete.html.twig');
+    }
+    #[Route('edit/{id}/content', name: 'app_comment_content', methods: ['GET'])]
+    public function content(Comment $comment): Response
+    {
+        return $this->render('comment/_content.html.twig', [
+            'comment' => $comment
+        ]);
     }
 }

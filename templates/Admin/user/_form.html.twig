@@ -28,11 +28,22 @@
             <label for="InputPassword1" class="form-label">{{ form_label(form.password) }}</label>
             {{ form_widget(form.password) }}
         </div>
-        <div class="mb-3 form-check">
-            <label class="form-check-label" for="exampleCheck1">{{ form_label(form.newsletter) }}</label>
-            {{ form_widget(form.newsletter) }}
+        <div class="mb-3 form-check ps-3">
+            <label for="">{{ form_label(form.newsletter) }}</label>
+            <div class="form-check">
+                <label class="form-check-label" for="exampleCheck1">{{ form_label(form.newsletter.1) }}</label>
+                {{ form_widget(form.newsletter.1) }}
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="exampleCheck1">{{ form_label(form.newsletter.0) }}</label>
+                {{ form_widget(form.newsletter.0) }}
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" href="{{ path('app_admin_user_index') }}">Submit</button>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-secondary w-50 " href="{{ path('app_admin_user_index') }}">Submit
+            </button>
+        </div>
     </div>
 </div>
 

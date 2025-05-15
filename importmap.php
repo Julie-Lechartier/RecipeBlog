@@ -13,36 +13,42 @@
  */
 return [
     'app' => [
-        'path' => 'assets/app.js',
+        'path' => './assets/app.js',
         'entrypoint' => true,
-    ],
-    'jquery' => [
-        'version' => '3.7.1',
-    ],
-    'bootstrap' => [
-        'version' => '5.3.6',
-    ],
-    'select2' => [
-        'version' => '4.1.0-rc.0',
-    ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.6',
-        'type' => 'css',
-    ],
-    'select2/dist/css/select2.min.css' => [
-        'version' => '4.1.0-rc.0',
-        'type' => 'css',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
     '@symfony/stimulus-bundle' => [
-        'path' => 'vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'bootstrap' => [
+        'version' => '5.3.3',
+    ],
     '@popperjs/core' => [
         'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.3',
+        'type' => 'css',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'htmx' => [
+        'version' => '0.0.2',
+    ],
+    'htmx.org' => [
+        'version' => '1.9.12',
+    ],
+    'select2' => [
+        'version' => '4.1.0-rc.0',
+    ],
+    'select2/dist/css/select2.min.css' => [
+        'version' => '4.1.0-rc.0',
+        'type' => 'css',
     ],
 ];

@@ -5,7 +5,11 @@
             <label for="InputCategory" class="form-label">{{ form_label((form.name)) }}</label>
             {{ form_widget(form.name) }}
         </div>
-        <button type="submit" class="btn btn-primary w-50" href="{{ path('app_admin_recipe_category_index') }}">Enregistrer</button>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-secondary w-25" href="{{ path('app_admin_recipe_category_index') }}">
+                Enregistrer
+            </button>
+        </div>
     </div>
 </div>
 {{ form_end(form) }}

@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% include 'components/hero.html.twig' %}
-
-    <div class="container-fluid py-4">
+    {% if banner.isActive %}
+        {% include 'components/hero.html.twig' %}
+    {% endif %}
+    <div class="container py-4">
         <!-- Mobile Search bar -->
         <div class="d-lg-none mb-4">
             <div class="search-bar rounded-pill overflow-hidden shadow-sm">
@@ -56,7 +57,8 @@
                 <h2 class="fw-bold position-relative">
                     Recette du jour
                 </h2>
-                <a href="{{ path('app_recipe_index') }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_index') }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -71,7 +73,8 @@
                 <h2 class="fw-bold position-relative">
                     Plats
                 </h2>
-                <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_category_show', {'category' : 'plats'}) }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>
@@ -86,7 +89,8 @@
                 <h2 class="fw-bold position-relative">
                     Desserts
                 </h2>
-                <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}" class="text-decoration-none d-flex align-items-center text-black">
+                <a href="{{ path('app_recipe_category_show', {'category' : 'desserts'}) }}"
+                   class="text-decoration-none d-flex align-items-center text-black">
                     Tout voir <i class="bi bi-arrow-right ms-1"></i>
                 </a>
             </div>

@@ -1,16 +1,57 @@
-{% extends 'admin/base.html.twig' %}
-
+{% extends "admin/base.html.twig" %}
 {% block body %}
-    <div class="container-fluid bg-white mt-2">
-        <div class="row pt-5 ps-4">
-            <div class="col-4 pb-3">
-                <a href="{{ path('app_admin_recipe_category_new') }}" type="button"
-                   class="btn-grey rounded-2 py-1 px-3 text-decoration-none"><i
-                            class="bi bi-person-plus-fill text-black pe-2"></i>Ajouter une catégorie</a>
+    <div class="container-fluid bg-white mt-2 px-5">
+        <div class="row mb-4 pt-4">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-0">Gestion des catégories</h2>
+                <p class="text-muted">Gérez toutes les catégories de recettes</p>
             </div>
-            <div class="col-12">
-                {% include 'Admin/category/_table.html.twig' %}
+            <div class="col-md-4 text-end">
+                <a href="{{ path('app_admin_recipe_category_new') }}" type="button"
+                   class="btn btn-full-green text-white rounded-pill py-2 px-4 shadow-sm">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Ajouter une catégorie
+                </a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label for="search" class="form-label small text-muted">Rechercher une catégorie</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" id="search" name="search" class="form-control border-start-0"
+                           placeholder="Nom de la catégorie..."
+                           hx-post="#"
+                           hx-target="#table-container"
+                           hx-trigger="keyup changed delay:500ms"
+                           hx-indicator=".htmx-indicator"
+                           hx-include="[name='page']">
+                </div>
+            </div>
+            <input type="hidden" name="page" value="{{ pagination.currentPageNumber|default(1) }}">
+
+            <span class="htmx-indicator">Chargement...</span>
+        </div>
+
+        <div class="col-12" id="table-container">
+            {% include 'Admin/category/_table.html.twig' %}
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('htmx:afterSwap', function (event) {
+            const paginationLinks = document.querySelectorAll('.pagination a');
+            paginationLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const page = new URLSearchParams(this.getAttribute('href')).get('page') || 1;
+                    document.querySelector('input[name="page"]').value = page;
+                    htmx.trigger('input[name="search"]', 'change');
+                });
+            });
+        });
+    </script>
 {% endblock %}

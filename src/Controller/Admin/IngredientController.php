@@ -60,11 +60,15 @@ class IngredientController extends AbstractController
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $ingredient->setSlug($this->slugger->slug($ingredient->getName()));
 
+            $entityManager->persist($ingredient);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin_ingredient_index');
         }
-        return $this->render('admin/ingredient/edit.html.twig', []);
+        return $this->render('admin/ingredient/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/delete/{slug}', name: 'app_admin_ingredient_delete', methods: ['DELETE'])]

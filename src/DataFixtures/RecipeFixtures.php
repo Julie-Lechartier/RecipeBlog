@@ -151,11 +151,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setSlug($this->slugger->slug($recipeData['title'])->lower());
             $recipe->setDescription($faker->paragraph(3));
             //created at dateTimeImmutable
-            $date = new \DateTimeImmutable('now');
-            $dateAsDateTime = \DateTime::createFromImmutable($date);
-            $createdAt = \DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-10 days', $dateAsDateTime));
-            $recipe->setCreateAt($createdAt);
-
+            $recipe->setCreateAt(new \DateTimeImmutable($faker->date('Y-m-d H:i:s', 'now')));
             // Convert minutes to TIME format (HH:MM:00)
             $minutes = $recipeData['prepTime'];
             $hours = floor($minutes / 60);

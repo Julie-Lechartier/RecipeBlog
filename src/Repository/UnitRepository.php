@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Unit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,7 +16,15 @@ class UnitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Unit::class);
     }
-
+    public function findByName(?string $name): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+        if(!empty($name)){
+            $qb->andWhere('u.name LIKE :name')
+                ->setParameter('name', '%'.$name.'%');
+        }
+        return $qb;
+    }
     //    /**
     //     * @return Unit[] Returns an array of Unit objects
     //     */

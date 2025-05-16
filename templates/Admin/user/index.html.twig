@@ -15,25 +15,56 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <label for="search" class="form-label small text-muted">Rechercher un utilisateur</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-search text-muted"></i>
-                    </span>
-                    <input type="text" id="search" name="search" class="form-control border-start-0"
-                           placeholder="Prénom, nom, pseudo..."
-                           hx-post="{{ path('app_admin_user_table_filter') }}"
-                           hx-target="#table-container"
-                           hx-trigger="keyup changed delay:500ms"
-                           hx-indicator=".htmx-indicator"
-                           hx-include="[name='page']">
+        <div class="row mb-4">
+            <div class="col-12">
+                <label class="form-label small text-muted mb-3">Rechercher un utilisateur</label>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <input type="text"
+                               id="firstname"
+                               name="firstname"
+                               class="form-control"
+                               placeholder="Prénom"
+                               hx-post="{{ path('app_admin_user_table_filter') }}"
+                               hx-target="#table-container"
+                               hx-indicator=".htmx-indicator"
+                               hx-include="[name='page']"
+                               hx-trigger="keyup changed delay:500ms">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text"
+                               id="lastname"
+                               name="lastname"
+                               class="form-control"
+                               placeholder="Nom"
+                               hx-post="{{ path('app_admin_user_table_filter') }}"
+                               hx-target="#table-container"
+                               hx-indicator=".htmx-indicator"
+                               hx-include="[name='page']"
+                               hx-trigger="keyup changed delay:500ms">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               class="form-control"
+                               placeholder="Pseudo"
+                               hx-post="{{ path('app_admin_user_table_filter') }}"
+                               hx-target="#table-container"
+                               hx-indicator=".htmx-indicator"
+                               hx-include="[name='page']"
+                               hx-trigger="keyup changed delay:500ms">
+                    </div>
                 </div>
             </div>
-            <input type="hidden" name="page" value="{{ pagination.currentPageNumber|default(1) }}">
+        </div>
 
-            <span class="htmx-indicator">Chargement...</span>
+        <input type="hidden" name="page" value="{{ pagination.currentPageNumber|default(1) }}">
+
+        <div class="htmx-indicator d-flex justify-content-center my-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
         </div>
 
         <div class="col-12" id="table-container">

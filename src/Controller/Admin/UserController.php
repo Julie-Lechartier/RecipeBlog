@@ -104,6 +104,7 @@ final class UserController extends AbstractController
         $firstname = $request->get('firstname');
         $lastname = $request->get('lastname');
         $username = $request->get('username');
+
         $queryBuilder = $userRepository->findByNameAndUsername($username, $firstname, $lastname);
         $pagination = $paginator->paginate(
            $queryBuilder->getQuery(),

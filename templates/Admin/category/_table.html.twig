@@ -1,60 +1,69 @@
 {% if pagination is defined and pagination.items is not empty %}
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col" class="col-4">Nom</th>
-            <th scope="col" class="col-4">Nombre de recettes associées</th>
-            <th scope="col" class="col-4">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for category in pagination.items %}
+    <div class="pb-5 vh-100">
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ category.name }}</td>
-                <td>{{ category.recipes|length }}</td>
-                <td>
-                    <div class="d-flex gap-2 pe-3">
-                        <a href="{{ path('app_admin_recipe_category_edit', {'slug': category.slug}) }}"
-                           class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button type="button"
-                                class="btn-border-cherry rounded-pill px-3 py-2"
-                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ category.slug|replace({'-': ''}) }}">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </div>
-                </td>
+                <th scope="col" class="col-4">Nom</th>
+                <th scope="col" class="col-4">Nombre de recettes associées</th>
+                <th scope="col" class="col-4">Actions</th>
             </tr>
-            <!-- Modal de confirmation de suppression -->
-            <div class="modal fade" id="deleteModal{{ category.slug|replace({'-': ''}) }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </thead>
+            <tbody>
+            {% for category in pagination.items %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.recipes|length }}</td>
+                    <td>
+                        <div class="d-flex gap-2 pe-3">
+                            <a href="{{ path('app_admin_recipe_category_edit', {'slug': category.slug}) }}"
+                               class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button type="button"
+                                    class="btn-border-cherry rounded-pill px-3 py-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{ category.slug|replace({'-': ''}) }}">
+                                <i class="bi bi-trash3"></i>
+                            </button>
                         </div>
-                        <div class="modal-body">
-                            Êtes-vous sûr de vouloir supprimer la catégorie "{{ category.name }}" ?
-                            {% if category.recipes|length > 0 %}
-                                <div class="alert alert-warning mt-2">
-                                    Attention : Cette catégorie est associée à {{ category.recipes|length }} recette(s).
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <a href="{{ path('app_admin_recipe_category_delete', {'slug': category.slug}) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+                <!-- Modal de confirmation de suppression -->
+                <div class="modal fade" id="deleteModal{{ category.slug|replace({'-': ''}) }}" tabindex="-1"
+                     aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Êtes-vous sûr de vouloir supprimer la catégorie "{{ category.name }}" ?
+                                {% if category.recipes|length > 0 %}
+                                    <div class="alert alert-warning mt-2">
+                                        Attention : Cette catégorie est associée à {{ category.recipes|length }}
+                                        recette(s).
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_admin_recipe_category_delete', {'slug': category.slug}) }}"
+                                   class="btn btn-danger">Supprimer</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="mt-3">
-        {{ knp_pagination_render(pagination, 'Admin/components/pagination.html.twig') }}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="mt-3">
+            {{ knp_pagination_render(pagination, 'Admin/components/pagination.html.twig') }}
+        </div>
     </div>
 {% else %}
-    <p>Aucune catégorie disponible.</p>
+    <div class="vh-100 d-flex justify-content-center">
+        <p>Aucune catégorie disponible.</p>
+    </div>
 {% endif %}

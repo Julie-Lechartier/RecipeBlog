@@ -86,4 +86,21 @@ class RecipeCategoryController extends AbstractController
 
         return $this->redirectToRoute('app_admin_recipe_category_index');
     }
+
+    #[Route('/table/filter', name: 'app_admin_recipe_category_table_filter', methods: ['GET', 'POST'])]
+    public function filter(Request $request, RecipeCategoryRepository $recipeCategoryRepository, PaginatorInterface $paginator): Response
+    {
+        $name = $request->request->get('name', '');
+
+        $queryBuilder = $recipeCategoryRepository->findByName($name);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('admin/category/_table.html.twig', [
+            'pagination' => $pagination,
+            ]
+        );
+    }
 }

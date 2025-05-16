@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\RecipeCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,6 +23,16 @@ class RecipeCategoryRepository extends ServiceEntityRepository
     public function findOneBySlug(string $slug): ?RecipeCategory
     {
         return $this->findOneBy(['slug' => $slug]);
+    }
+
+    public function findByName(?string $name): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('c');
+            if(!empty($name)){
+                $qb->where('c.name LIKE :name')
+                    ->setParameter('name', '%' . $name . '%');
+            }
+           return $qb;
     }
 
     //    /**

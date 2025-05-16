@@ -1,42 +1,48 @@
 {% if pageCount > 1 %}
-<nav>
-    <ul class="pagination {{ options.page_class|default('') }}">
-        <!-- button before -->
-        {% if previous is defined %}
-        <li class="page-item">
-            <a class="page-link" href="{{ path(route_name, route_params|merge({'page': previous})) }}">
-                {{ options.previous_message|default('Previous') }}
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <span class="page-link">{{ options.previous_message|default('Previous') }}</span>
-        </li>
-        {% endif %}
-        {% for page in pagesInRange %}
-            {% if page == current %}
-                <li class="page-item {{ options.current_class|default('active') }}">
-                    <span class="page-link">{{ page }}</span>
+    <nav>
+        <ul class="pagination justify-content-center">
+            {# Previous button #}
+            {% if previous is defined %}
+                <li class="page-item">
+                    <a class="page-link border-0 text-dark" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
                 </li>
             {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(route_name, route_params|merge({'page': page})) }}">
-                        {{ page }}
-                    </a>
+                    <span class="page-link border-0 bg-transparent text-secondary-subtle" style="color: #e2e3e5!important;">
+                        <i class="bi bi-chevron-left"></i>
+                    </span>
                 </li>
             {% endif %}
-        {% endfor %}
-        {% if next is defined %}
-            <li class="page-item">
-                <a class="page-link" href="{{ path(route_name, route_params|merge({'page': next})) }}">
-                    {{ options.next_message|default('Next') }}
-                </a>
-            </li>
-        {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">{{ options.next_message|default('Next') }}</span>
-            </li>
-        {% endif %}
-    </ul>
-</nav>
+
+            {# Page numbers #}
+            {% for page in pagesInRange %}
+                {% if page == current %}
+                    <li class="page-item active">
+                        <span class="page-link border-0 bg-green" style="border-radius: 50px!important;">{{ page }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link border-0 text-dark" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {# Next button #}
+            {% if next is defined %}
+                <li class="page-item">
+                    <a class="page-link border-0 text-dark" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <span class="page-link border-0 bg-transparent" style="color: #e2e3e5!important;">
+                        <i class="bi bi-chevron-right text-secondary-subtle"></i>
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endif %}

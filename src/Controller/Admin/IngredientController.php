@@ -19,6 +19,7 @@ class IngredientController extends AbstractController
     public function __construct(private readonly SluggerInterface $slugger)
     {
     }
+
     #[Route('/', name: 'app_admin_ingredient_index', methods: ['GET'])]
     public function index(IngredientRepository $ingredientRepository, PaginatorInterface $paginator, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -36,6 +37,7 @@ class IngredientController extends AbstractController
         ]);
 
     }
+
     #[Route('/new', name: 'app_admin_ingredient_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -54,6 +56,7 @@ class IngredientController extends AbstractController
         ]);
 
     }
+
     #[Route('/edit/{slug}', name: 'app_admin_ingredient_edit', methods: ['GET'])]
     public function edit(Ingredient $ingredient, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -80,5 +83,20 @@ class IngredientController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_ingredient_index');
+    }
+
+    #[Route('/table/filter', name: 'app_admin_ingredient_table_filter', methods: ['GET', 'POST'])]
+    public function filterTable(Request $request, PaginatorInterface $paginator, IngredientRepository $ingredientRepository): Response
+    {
+        $name = $request->query->get('name');
+        $queryBuilder = $ingredientRepository->findByName($name);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('admin/ingredient/_table.html.twig', [
+            'pagination' => $pagination,
+        ]);
     }
 }

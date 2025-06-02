@@ -76,6 +76,8 @@ class UnitController extends AbstractController
     {
         $name = $request->request->get('name');
         $queryBuilder = $unitRepository->findByName($name);
+        dump($name);
+        die();
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),

@@ -1,0 +1,34 @@
+<div class="container-fluid bg-dark text-light">
+    <div class="row">
+        <div class="col-12 shadow-sm py-3 px-5">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <p class="fw-bold fs-6 text-uppercase">Toutes les catégories</p>
+                        <div class="d-flex justify-content-between">
+                            {% for category in categories|batch((categories|length / 3)|round(0, 'ceil')) %}
+                                <div class="col-md-4">
+                                    <ul class="list-unstyled">
+                                        {% for item in category %}
+                                            <li>
+                                                <a href="{{ path('app_recipe_category_show', {'category' : item.name}) }}" class="text-decoration-none text-light">
+                                                    {{ item.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-between py-2 px-5">
+            <a href="" class="text-decoration-none text-secondary">Plan du site</a>
+            <a href="" class="text-decoration-none text-secondary">Politique de confidentialité</a>
+        </div>
+    </div>
+</div>

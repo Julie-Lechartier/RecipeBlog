@@ -144,7 +144,7 @@
     </div>
     <div class="container-fluid py-4 bg-light rounded-3 mt-5">
         <div class="row mx-5">
-            {{ render(controller('App\\Controller\\CommentController::show', {'recipeSlug': recipes.slug})) }}
+            {% include 'comment/show.html.twig' with {'comments': comments, 'recipe': recipes} %}
         </div>
     </div>
 

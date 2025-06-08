@@ -6,12 +6,14 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\UserCommentType;
+use App\Repository\CommentRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -107,10 +109,29 @@ class CommentController extends AbstractController
 
     }
     #[Route('/delete/{id}', name: 'app_comment_delete', methods: ['POST'])]
-    public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
-    {
-        return $this->render('comment/delete.html.twig');
+    public function delete(
+        int $id,
+        Request $request,
+        CommentRepository $commentRepository,
+        EntityManagerInterface $entityManager,
+        CsrfTokenManagerInterface $csrfTokenManager
+    ): Response {
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            throw $this->createNotFoundException('Commentaire non trouvé.');
+        }
+
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete-comment-' . $comment->getId(), $submittedToken)) {
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_recipe_show', ['slug' => $comment->getRecipe()->getSlug()]);
     }
+
+
     #[Route('edit/{id}/content', name: 'app_comment_content', methods: ['GET'])]
     public function content(Comment $comment): Response
     {

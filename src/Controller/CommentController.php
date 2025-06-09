@@ -132,7 +132,7 @@ class CommentController extends AbstractController
     }
 
 
-    #[Route('edit/{id}/content', name: 'app_comment_content', methods: ['GET'])]
+    #[Route('/edit/{id}/content', name: 'app_comment_content', methods: ['GET'])]
     public function content(Comment $comment): Response
     {
         return $this->render('comment/_content.html.twig', [

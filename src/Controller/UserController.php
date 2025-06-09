@@ -23,10 +23,12 @@ class UserController extends AbstractController
         $user = $this->getUser();
         //get the user recipes
         $recipes = $user->getRecipes();
+        $comments = $user->getComments();
         $currentPageRoute = $request->query->get('currentPageRoute');
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'recipes' => $recipes,
+            'comments' => $comments,
             'currentPageRoute' => $currentPageRoute,
         ]);
     }

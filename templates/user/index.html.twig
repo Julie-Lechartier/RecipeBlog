@@ -62,7 +62,6 @@
                 </div>
             </div>
             <!-- Sidebar - Profile navigation End -->
-
             <div class="col-9">
                 <div class="row">
                     <!-- User presentation -->
@@ -159,10 +158,20 @@
                                 <th>Recette</th>
                                 <th>Contenu</th>
                                 <th>Date</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- TODO: Add comment -->
+                            {% for comment in comments %}
+                            <tr>
+                                <td>{{ comment.recipe.title }}</td>
+                                <td>{{ comment.content }}</td>
+                                <td>{{ comment.createdAt | date('d/m/Y, H:i') }}</td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

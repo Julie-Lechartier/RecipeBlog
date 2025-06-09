@@ -458,3 +458,53 @@ input[type="search"]:focus,
     box-shadow: 0 0 0 0.25rem rgba(var(--green-rgba), 0.25);
 }
 
+.category-header {
+    background: linear-gradient(45deg, #f8f9fa 30%, #ffffff 90%);
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.recipe-grid {
+    margin-top: 2rem;
+}
+.recipe-card {
+    transition: transform 0.2s ease-in-out;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+            180deg,
+            rgba(0,0,0,0.2) 0%,
+            rgba(0,0,0,0) 40%
+    );
+}
+.recipe-meta {
+    font-size: 0.9rem;
+}
+
+.author {
+    font-size: 0.85rem;
+}
+
+.recipe-footer {
+    margin-top: auto;
+    border-color: rgba(0,0,0,0.1) !important;
+}
+
+@media (max-width: 768px) {
+    .recipe-card {
+        margin-bottom: 1rem;
+    }
+}

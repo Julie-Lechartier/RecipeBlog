@@ -3,6 +3,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="h-100 border-0 shadow-sm recipe-card">
                 <div class="position-relative">
+
                     {% if recipe.media|length > 0 %}
                         <img src="{{ recipe.media[0].url }}"
                              class="card-img-top"
@@ -46,58 +47,3 @@
         </div>
     {% endfor %}
 </div>
-
-<style>
-    .recipe-card {
-        transition: transform 0.2s ease-in-out;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .recipe-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .recipe-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-                180deg,
-                rgba(0,0,0,0.2) 0%,
-                rgba(0,0,0,0) 40%
-        );
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        line-height: 1.4;
-    }
-
-    .card-text {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-
-    .recipe-meta {
-        font-size: 0.9rem;
-    }
-
-    .author {
-        font-size: 0.85rem;
-    }
-
-    .recipe-footer {
-        margin-top: auto;
-        border-color: rgba(0,0,0,0.1) !important;
-    }
-
-    @media (max-width: 768px) {
-        .recipe-card {
-            margin-bottom: 1rem;
-        }
-    }
-</style>

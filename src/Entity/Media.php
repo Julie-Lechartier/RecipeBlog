@@ -22,6 +22,10 @@ class Media
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
+    #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: 'media')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Recipe $recipe = null;
+
     #[ORM\ManyToOne(targetEntity: Banner::class, inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Banner $banner = null;
@@ -72,6 +76,15 @@ class Media
     public function setBanner(?Banner $banner): static
     {
         $this->banner = $banner;
+        return $this;
+    }
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+    public function setRecipe(?Recipe $recipe): static
+    {
+        $this->recipe = $recipe;
         return $this;
     }
 }

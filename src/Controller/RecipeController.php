@@ -42,7 +42,6 @@ class RecipeController extends AbstractController
         $recipe = $recipeRepository->findOneBy(['slug' => $slug]);
         $recipeIngredient = $recipeIngredientRepository->findBy(['recipe' => $recipe]);
         $comments = $commentRepository->findBy(['recipe' => $recipe]);
-
         //condition preparation time format
         $preparationTime = $recipe->getPreparationTime();
         $hours = (int)$preparationTime?->format('H');

@@ -15,20 +15,11 @@
 .bg-green{
     background-color: var(--green)!important;
 }
-.bg-cherry{
-    background-color: var(--cherry)!important;
-}
-.bg-light-cherry{
-    background-color: var(--light-cherry)!important;
-}
 .text-dark-green{
     color: var(--dark-green)!important;
 }
 .text-green{
     color: var(--green)!important;
-}
-.text-cherry{
-    color: var(--cherry)!important;
 }
 /* Custom Color End */
 
@@ -58,28 +49,10 @@
     background-color: var(--green)!important; ;
 }
 .btn-grey{
-    background-color: var(--bs-secondary-bg-subtle);
-    color: var(--bs-black);
+    background-color: var(--bs-secondary-bg-subtle)!important;
 }
 .btn-grey:hover{
-    background-color: var(--dark-grey);
-}
-
-.btn-full-cherry{
-    background-color: var(--cherry)!important;
-    color: white!important;
-}
-.btn-full-cherry:hover{
-    background-color: var(--dark-cherry) ;
-}
-.btn-border-cherry{
-    background-color: transparent!important;
-    border: 1px solid var(--cherry);
-    color: var(--cherry);
-}
-.btn-border-cherry:hover{
-    background-color: var(--cherry)!important;
-    color:white;
+    background-color: var(--dark-grey)!important;
 }
 .btn-border-green{
     background-color: transparent!important;
@@ -457,3 +430,31 @@ input[type="search"]:focus,
 .form-check {
     padding-left: 2rem;
 }
+
+
+/* Pagination styles */
+.pagination .page-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--green);
+    border-color: var(--green);
+    border-radius: 50px!important;
+}
+
+.pagination .page-item.active .page-link:hover {
+    color: white !important;
+}
+
+.pagination .page-link:focus {
+    box-shadow: 0 0 0 0.25rem rgba(var(--green-rgba), 0.25);
+}
+

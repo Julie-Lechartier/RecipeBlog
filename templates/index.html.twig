@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if banner.isActive %}
+    {% if banner and banner.isActive %}
         {% include 'components/hero.html.twig' %}
     {% endif %}
     <div class="container py-4">
@@ -23,8 +23,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 text-center">
                         <h2 class="fw-bold mb-3">Une communauté de passionnés de cuisine</h2>
-                        <p class="lead mb-4">Partagez vos recettes préférées, découvrez les créations d'autres
-                            cuisiniers amateurs et échangez vos astuces culinaires.</p>
+                        <p class="lead mb-4">Partagez vos recettes préférées, découvrez les créations d'autres cuisiniers amateurs et échangez vos astuces culinaires.</p>
                         <div class="row g-4 mt-3">
                             <div class="col-md-4">
                                 <div class="d-flex align-items-center justify-content-center mb-2">
@@ -80,7 +79,7 @@
                 </a>
             </div>
             <div class="recipe-scroll">
-                {{ render(path('app_include_recipe_scroll', {'category': 'Plats','limit': 10})) }}
+                {{ render(path('app_include_recipe_scroll', {'category': 'plats','limit': 10})) }}
             </div>
         </section>
 
@@ -96,7 +95,7 @@
                 </a>
             </div>
             <div class="recipe-scroll">
-                {{ render(path('app_include_recipe_scroll', {'category': 'Dessert','limit': 10})) }}
+                {{ render(path('app_include_recipe_scroll', {'category': 'dessert','limit': 10})) }}
             </div>
         </section>
         <!-- TODO: 'nos cuisinier les plus actifs, recettes populaires'-->

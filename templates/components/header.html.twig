@@ -2,7 +2,7 @@
         aria-label="Offcanvas navbar large"
         style="height: 55px;">
     <div class="container-flex  w-100">
-        <div class="row gap-lg-4 px-2 mx-0 no-wrap align-items-center">
+        <div class="row px-2 mx-0 no-wrap align-items-center">
             <!-- Modal nav button Start -->
             <button class="d-lg-none navbar-toggler col-6 border-0 d-flex justify-content-start align-items-center shadow-none"
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -12,11 +12,11 @@
                 </span>
             </button>
             <!-- Modal nav button End -->
-            <div class="col-lg-3 col-8 d-flex justify-content-center">
+            <div class="col-lg-2 col-8 d-flex justify-content-center">
                 <a href="{{ path('app_home') }}" class="text-decoration-none text-black"><img src="{{ asset('images/Logo_ma_meilleure_recette.png') }}" alt="Logo du site ma meilleur recette" style="width: 130px"></a>
             </div>
             <!-- Nav Start -->
-            <div class=" col-7 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
+            <div class="col-5 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
                  tabindex="-1" id="offcanvasNavbar"
                  aria-labelledby="offcanvasNavbarLabel">
                 <!-- Nav Mobile header-->
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <!-- Desktop Search bar Start -->
-            <div class="col-lg-4 d-lg-block d-none ">
+            <div class="col-lg-3 d-lg-block d-none ">
                 <div class="search-bar">
                     <div class="input-group ">
                         <input type="text" class="form-control bg-secondary-subtle" placeholder="Rechercher"
@@ -93,7 +93,8 @@
             </div>
             <!-- Desktop Search bar End -->
             <!-- Nav End -->
-            {% if currentPageRoute is defined and currentPageRoute == 'app_recipe_show' %}                <!-- Mobile Search bar Start if page single recipe -->
+            <!-- Mobile Search bar Start if page single recipe -->
+            {% if currentPageRoute is defined and currentPageRoute == 'app_recipe_show' %}
                 <div class="d-lg-none d-flex col-2 align-items-center justify-content-center ">
                     <!-- Button trigger modal -->
                     <button class="btn btn-outline-secondary bg-custom-red rounded-circle border border-0 icon icon-2 p-0"
@@ -120,7 +121,7 @@
                 </div>
             {% endif %}
             <!-- Mobile Search bar End -->
-            <div class="col-6 d-flex col-lg-1 justify-content-end">
+            <div class="col-2 d-flex col-lg-1 justify-content-end">
                 <div class="dropdown">
                     <button class="btn align-content-center text-black dropdown-toggle" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">

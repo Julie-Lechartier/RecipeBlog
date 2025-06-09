@@ -16,11 +16,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RecipeFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function __construct(
         private readonly SluggerInterface $slugger
-    )
-    {
+    ) {
     }
 
     public function load(ObjectManager $manager): void
@@ -39,6 +37,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         foreach ($categories as $category) {
             $categoryMap[$category->getName()] = $category;
         }
+
         $recipes = [
             // Apéro recipes
             [
@@ -151,16 +150,17 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setTitle($recipeData['title']);
             $recipe->setSlug($this->slugger->slug($recipeData['title'])->lower());
             $recipe->setDescription($faker->paragraph(3));
-            
+            //created at dateTimeImmutable
+            $recipe->setCreateAt(new \DateTimeImmutable($faker->date('Y-m-d H:i:s', 'now')));
             // Convert minutes to TIME format (HH:MM:00)
             $minutes = $recipeData['prepTime'];
             $hours = floor($minutes / 60);
             $remainingMinutes = $minutes % 60;
-            
+
             $prepTime = new \DateTime();
             $prepTime->setTime($hours, $remainingMinutes, 0);
             $recipe->setPreparationTime($prepTime);
-            
+
             $recipe->setServing($recipeData['serving']);
             $recipe->setAuthor($faker->randomElement($users));
 
@@ -169,6 +169,11 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                     $recipe->addCategory($categoryMap[$categoryName]);
                 }
             }
+
+            // Persist the Recipe first
+            $manager->persist($recipe);
+
+            // Create and persist Steps
             $numberOfSteps = $faker->numberBetween(3, 8);
             for ($j = 1; $j <= $numberOfSteps; $j++) {
                 $step = new Step();
@@ -178,16 +183,19 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 $recipe->addStep($step);
                 $manager->persist($step);
             }
+
+            // Create and persist Media
             $media = new Media();
             $media->setFilename($faker->slug);
             $media->setUrl($faker->imageUrl(800, 600));
             $media->setRecipe($recipe);
             $recipe->addMedia($media);
             $manager->persist($media);
-            $manager->persist($recipe);
         }
+
         $manager->flush();
     }
+
     public function getDependencies(): array
     {
         return [

@@ -20,7 +20,6 @@ class RecipeIngredientFixtures extends Fixture implements DependentFixtureInterf
         foreach ($recipes as $recipe) {
             $ingredientCount = rand(3, 6);
             shuffle($ingredients);
-
             for ($i = 0; $i < $ingredientCount; $i++) {
                 $recipeIngredient = new RecipeIngredient();
 

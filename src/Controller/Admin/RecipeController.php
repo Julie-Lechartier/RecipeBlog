@@ -54,7 +54,7 @@ class RecipeController extends AbstractController
         $recipe->setAuthor($currentUser);
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
+        $recipe->setCreateAt(new \DateTimeImmutable());
         if ($form->isSubmitted() && $form->isValid()) {
             // Title not null
             if (empty($recipe->getTitle())) {
@@ -70,6 +70,7 @@ class RecipeController extends AbstractController
             if (empty($slug)) {
                 $slug = $this->slugger->slug('recette-' . uniqid())->lower();
             }
+
 
             $recipe->setSlug($slug);
             $stepNumber = 1;
@@ -163,7 +164,7 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('app_admin_recipe_index');
     }
     #[Route('/table/filter', name: 'app_recipe_table_filter', methods: ['POST'])]
-    public function filter(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
+    public function TableFilter(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
     {
         $search = $request->request->get('search', '');
         $category = $request->request->get('category', '');

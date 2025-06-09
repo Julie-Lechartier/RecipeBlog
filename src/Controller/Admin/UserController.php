@@ -99,8 +99,20 @@ final class UserController extends AbstractController
     }
 
     #[Route('/table/filter', name: 'app_admin_user_table_filter', methods: ['GET', 'POST'])]
-    public function filterTable(Request $request): Response
+    public function filterTable(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
     {
+        $firstname = $request->get('firstname');
+        $lastname = $request->get('lastname');
+        $username = $request->get('username');
 
+        $queryBuilder = $userRepository->findByNameAndUsername($username, $firstname, $lastname);
+        $pagination = $paginator->paginate(
+           $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('admin/user/_table.html.twig', [
+            'pagination' => $pagination,
+        ]);
     }
 }

@@ -71,5 +71,21 @@ class UnitController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('app_admin_unit_index');
     }
+    #[Route('/table/filter', name: 'app_admin_unit_table_filter', methods: ['GET', 'POST'])]
+    public function filterTable(Request $request,UnitRepository $unitRepository, PaginatorInterface $paginator): Response
+    {
+        $name = $request->request->get('name');
+        $queryBuilder = $unitRepository->findByName($name);
+        dump($name);
+        die();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('admin/unit/_table.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
 
 }

@@ -1,13 +1,62 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <style>
+        .category-header {
+            background: linear-gradient(45deg, #f8f9fa 30%, #ffffff 90%);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .category-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #4CAF50;
+            border-radius: 2px;
+        }
+
+        .recipe-grid {
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <div class="row mt-5">
-            <h1 class="fw-bold text-uppercase fs-4">Nos {{ category }}</h1>
-            <div class="container">
-                {{ render(path('app_include_recipe_category', { 'category' : currentCategory.name })) }}
+    <div class="category-header mt-5">
+        <div class="container">
+            <div class="text-center d-flex gap-4 align-items-end mb-3">
+                <h1 class="mb-0">{{ category|capitalize }}</h1>
+                <div class="d-flex gap-2 fw-bold fs-5">
+                    <div>{{ recipes|length }}</div>
+                    <div>Résultat(s)</div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="container mb-5">
+        <div class="recipe-grid">
+            {{ render(path('app_include_recipe_category', {
+                'category' : currentCategory.name,
+            })) }}
+        </div>
+    </div>
 {% endblock %}
-

@@ -1,45 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    <style>
-        .category-header {
-            background: linear-gradient(45deg, #f8f9fa 30%, #ffffff 90%);
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
-
-        .category-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .category-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: #4CAF50;
-            border-radius: 2px;
-        }
-
-        .recipe-grid {
-            margin-top: 2rem;
-        }
-        @media (max-width: 768px) {
-            .category-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     <div class="category-header mt-5">
         <div class="container">

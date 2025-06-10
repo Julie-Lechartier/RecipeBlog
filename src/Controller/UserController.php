@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use App\Form\RecipeType;
 use App\Form\UserPresentationType;
+use App\Form\UserType;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,5 +48,18 @@ class UserController extends AbstractController
         return $this->render('user/_presentation_form.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    #[Route('/personal-information/{slug}', name: 'app_user_personal_info', methods: ['GET'])]
+    public function personalInfo(Request $request): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->render('user/_personal-info_form.html.twig', [
+                'form' => $form->createView()
+            ]);
+        }
     }
 }

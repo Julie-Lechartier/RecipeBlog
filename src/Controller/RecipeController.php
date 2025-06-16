@@ -75,67 +75,54 @@ class RecipeController extends AbstractController
             'currentCategoryId' => $categoryEntity->getId()
         ]);
     }
-    #[Route('/new', name: 'app_new_recipe', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $recipe = new Recipe();
-
         $currentUser = $this->getUser();
         if (!$currentUser) {
             $this->addFlash('error', 'Vous devez être connecté pour créer une recette');
             return $this->redirectToRoute('app_login');
         }
-
         $recipe->setAuthor($currentUser);
-
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
+        $recipe->setCreateAt(new \DateTimeImmutable());
         if ($form->isSubmitted() && $form->isValid()) {
+            // Title not null
             if (empty($recipe->getTitle())) {
                 $this->addFlash('error', 'Le titre est requis pour générer un slug');
-                return $this->render('recipe/new.html.twig', [
+                return $this->render('admin/recipe/new.html.twig', [
                     "form" => $form->createView(),
                     'recipe' => $recipe,
                 ]);
             }
 
-            $slug = $this->slugger->slug($recipe->getTitle())->lower();
-            // Slug not null
-            if (empty($slug)) {
-                $slug = $this->slugger->slug('recette-' . uniqid())->lower();
-            }
-
-            $recipe->setSlug($slug);
+            // Numérotation des étapes
             $stepNumber = 1;
             foreach ($recipe->getSteps() as $step) {
                 $step->setStepNumber($stepNumber);
                 $stepNumber++;
             }
 
-            // Image
-            $imageFile = $form->get('image')->getData();
-
             // Categories
             $category = $form->get('category')->getData();
             foreach ($category as $categoryItem) {
                 $recipe->addCategory($categoryItem);
             }
-            // Slug
-            if (empty($recipe->getSlug())) {
-                $recipe->setSlug($this->slugger->slug('recette-' . uniqid())->lower());
-            }
+
             $entityManager->persist($recipe);
+
             try {
                 $entityManager->flush();
                 $this->addFlash('success', 'Recette créée avec succès');
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_admin_recipe_index');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
             }
         }
 
-        return $this->render('recipe/new.html.twig', [
+        return $this->render('admin/recipe/new.html.twig', [
             "form" => $form->createView(),
             'recipe' => $recipe,
         ]);

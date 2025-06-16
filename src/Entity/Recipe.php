@@ -92,7 +92,7 @@ class Recipe
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
+        $this->initializeSlug();
         return $this;
     }
 
@@ -312,5 +312,12 @@ class Recipe
         $this->createAt = $createAt;
 
         return $this;
+    }
+    public function initializeSlug(): void
+    {
+        if (empty($this->slug) && $this->title) {
+            $slugger = new \Symfony\Component\String\Slugger\AsciiSlugger();
+            $this->slug = strtolower($slugger->slug($this->title));
+        }
     }
 }

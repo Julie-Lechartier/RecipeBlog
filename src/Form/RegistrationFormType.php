@@ -41,6 +41,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('birthDate', DateType::class, [
+                'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'required' => true,
                 'attr' => ['class' => 'form-control']
@@ -50,18 +51,6 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'form-control']
 
-            ])
-            ->add('newsletter', ChoiceType::class, [
-                'label' => 'S\'inscrire à la newsletter',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false
-                ],
-                'expanded' => true,
-                'choice_attr' => [
-                    'Oui' => ['class' => 'form-check-input'],
-                    'Non' => ['class' => 'form-check-input']
-                ]
             ])
         ;
     }

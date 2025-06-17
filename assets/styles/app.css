@@ -1,3 +1,5 @@
+*{box-sizing: border-box;}
+
 /* Custom Color Start */
 :root {
     --dark-green: #2E7D32;
@@ -142,8 +144,17 @@ input[type="color"]:focus,
 .scroll-container {
     display: flex;
     overflow-x: auto;
-    gap: 15px;
     padding: 10px 0;
+    gap:0!important;
+}
+
+.scroll-container > div.col-3{
+ margin:0;
+    padding:0;
+}
+
+.card-content{
+    padding:10px;
 }
 
 .card {

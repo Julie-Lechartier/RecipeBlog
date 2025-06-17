@@ -1,7 +1,7 @@
 <header class="navbar bg-white navbar-expand-lg p-0 position-fixed w-100 z-3 shadow-sm"
         aria-label="Offcanvas navbar large"
         style="height: 55px;">
-    <div class="container-flex  w-100">
+    <div class="container-fluid w-100">
         <div class="row px-2 mx-0 no-wrap align-items-center">
             <!-- Modal nav button Start -->
             <button class="d-lg-none navbar-toggler col-6 border-0 d-flex justify-content-start align-items-center shadow-none"
@@ -78,49 +78,8 @@
                     </ul>
                 </div>
             </div>
-            <!-- Desktop Search bar Start -->
-            <div class="col-lg-3 d-lg-block d-none ">
-                <div class="search-bar">
-                    <div class="input-group ">
-                        <input type="text" class="form-control bg-secondary-subtle" placeholder="Rechercher"
-                               aria-label="Search" aria-describedby="search-addon">
-                        <button class="btn btn-outline-secondary bg-secondary-subtle border-0" type="button"
-                                id="search-addon">
-                            <i class="bi bi-search text-secondary"></i>
-                        </button>
-                    </div>
-                </div>
             </div>
-            <!-- Desktop Search bar End -->
             <!-- Nav End -->
-            <!-- Mobile Search bar Start if page single recipe -->
-            {% if currentPageRoute is defined and currentPageRoute == 'app_recipe_show' %}
-                <div class="d-lg-none d-flex col-2 align-items-center justify-content-center ">
-                    <!-- Button trigger modal -->
-                    <button class="btn btn-outline-secondary bg-custom-red rounded-circle border border-0 icon icon-2 p-0"
-                            type="button" id="search-addon" data-bs-toggle="modal" data-bs-target="#Modal">
-                        <i class="bi bi-search text-light icon-2-size"></i>
-                    </button>
-
-                    <!-- Modal search Start -->
-                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <form class="d-flex" role="search">
-                                        <input class="form-control me-2 focus-ring-success" type="search"
-                                               placeholder="Search" aria-label="Search">
-                                        <button class="btn bg-custom-green" type="submit"><i
-                                                    class="bi bi-search text-light"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal search End -->
-                </div>
-            {% endif %}
-            <!-- Mobile Search bar End -->
             <div class="col-2 d-flex col-lg-1 justify-content-end">
                 <div class="dropdown">
                     <button class="btn align-content-center text-black dropdown-toggle" type="button"

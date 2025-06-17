@@ -27,7 +27,6 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = $form->get('password')->getData();
 
-            // password is not null
             if (!$plainPassword) {
                 $this->addFlash('error', 'Password cannot be empty.');
                 return $this->render('registration/register.html.twig', [

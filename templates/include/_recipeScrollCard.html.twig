@@ -1,6 +1,7 @@
 <div class="scroll-container">
     {% for recipe in recipes %}
         <div class="col-3 ">
+            <div class="card-content">
             <a class="card-home rounded-4 border-0 shadow-sm text-decoration-none text-black"
                style="width: 20rem; height:19rem" href="{{ path('app_recipe_show', {'slug': recipe.slug}) }}">
                 <div class="position-relative">
@@ -50,6 +51,7 @@
                     </ul>
                 </div>
             </a>
+        </div>
         </div>
     {% endfor %}
 </div>

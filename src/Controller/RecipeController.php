@@ -75,7 +75,7 @@ class RecipeController extends AbstractController
             'currentCategoryId' => $categoryEntity->getId()
         ]);
     }
-    #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_new_recipe', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $recipe = new Recipe();
@@ -171,7 +171,6 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
         ]);
     }
-
     #[Route('/delete/{slug}', name: 'app_recipe_delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
@@ -179,7 +178,6 @@ class RecipeController extends AbstractController
             $entityManager->remove($recipe);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('app_recipe_index');
     }
 }

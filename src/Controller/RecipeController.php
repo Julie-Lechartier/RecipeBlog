@@ -171,7 +171,6 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
         ]);
     }
-
     #[Route('/delete/{slug}', name: 'app_recipe_delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
@@ -179,7 +178,6 @@ class RecipeController extends AbstractController
             $entityManager->remove($recipe);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('app_recipe_index');
     }
 }

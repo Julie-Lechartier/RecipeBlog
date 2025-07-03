@@ -1,9 +1,10 @@
 framework:
     asset_mapper:
-        # The paths to make available to the asset mapper.
         paths:
             - assets/
         missing_import_mode: strict
+        extensions:
+            css: text/css
 
 when@prod:
     framework:
@@ -11,3 +12,4 @@ when@prod:
             paths:
                 - assets/
                 - node_modules/
+            hashed_file_names: false

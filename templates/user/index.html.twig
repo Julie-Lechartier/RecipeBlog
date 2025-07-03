@@ -53,8 +53,9 @@
                                data-target="security">
                                 <i class="bi bi-shield-lock me-2"></i>Sécurité
                             </a>
-                            <a href="{{path('app_user_personal_info', {'slug' : app.user.slug })}}"
-                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link">
+                            <a href="#personalInfo"
+                               class="list-group-item list-group-item-action border-0 py-3 profile-nav-link"
+                               data-target="personalInfo">
                                 <i class="bi bi-person-vcard me-2"></i>Informations personnelles
                             </a>
                         </div>
@@ -62,6 +63,7 @@
                 </div>
             </div>
             <!-- Sidebar - Profile navigation End -->
+
             <div class="col-9">
                 <div class="row">
                     <!-- User presentation -->
@@ -158,20 +160,10 @@
                                 <th>Recette</th>
                                 <th>Contenu</th>
                                 <th>Date</th>
-                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for comment in comments %}
-                            <tr>
-                                <td>{{ comment.recipe.title }}</td>
-                                <td>{{ comment.content }}</td>
-                                <td>{{ comment.createdAt | date('d/m/Y, H:i') }}</td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            {% endfor %}
+                            <!-- TODO: Add comment -->
                             </tbody>
                         </table>
                     </div>
@@ -179,6 +171,12 @@
                     <!-- Security section -->
                     <div class="col-12 profile-section" id="security" style="display: none;">
                         <h2>Sécurité</h2>
+                        <!-- Add here -->
+                    </div>
+
+                    <!-- Personal info section -->
+                    <div class="col-12 profile-section" id="personalInfo" style="display: none;">
+                        <h2>Informations personnelles</h2>
                         <!-- Add here -->
                     </div>
                 </div>
@@ -191,30 +189,59 @@
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const navLinks = document.querySelectorAll('.profile-nav-link');
+            console.log('Script loaded'); // Debug
 
-            navLinks.forEach(function (link) {
+            const navLinks = document.querySelectorAll('.profile-nav-link');
+            console.log('Found links:', navLinks.length); // Debug
+
+            if (navLinks.length === 0) {
+                console.error('No navigation links found!');
+                return;
+            }
+
+            navLinks.forEach(function (link, index) {
+                console.log('Adding listener to link', index, link.getAttribute('data-target')); // Debug
+
                 link.addEventListener('click', function (e) {
+                    console.log('Click on:', this.getAttribute('data-target')); // Debug
                     e.preventDefault();
+
+                    // Retirer la classe active de tous les liens
                     navLinks.forEach(function (navLink) {
                         navLink.classList.remove('active-profil');
                     });
+
+                    // Ajouter la classe active au lien cliqué
                     this.classList.add('active-profil');
-                    const targetId = this.getAttribute('data-target');
-                    document.querySelectorAll('.profile-section').forEach(function (section) {
+
+                    // Masquer toutes les sections
+                    const allSections = document.querySelectorAll('.profile-section');
+                    console.log('Found sections:', allSections.length); // Debug
+
+                    allSections.forEach(function (section) {
                         section.style.display = 'none';
                     });
-                    document.getElementById(targetId).style.display = 'block';
+
+                    // Afficher la section correspondante
+                    const targetId = this.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        targetSection.style.display = 'block';
+                        console.log('Showing section:', targetId); // Debug
+                    } else {
+                        console.error('Section not found:', targetId); // Debug
+                    }
                 });
             });
-            if (!window.location.hash) {
-                document.getElementById('bio').style.display = 'block';
+
+            // S'assurer que la section bio est visible au chargement
+            const bioSection = document.getElementById('bio');
+            if (bioSection) {
+                bioSection.style.display = 'block';
+                console.log('Bio section set to visible'); // Debug
             } else {
-                const targetId = window.location.hash.substring(1);
-                const targetLink = document.querySelector(`[data-target="${targetId}"]`);
-                if (targetLink) {
-                    targetLink.click();
-                }
+                console.error('Bio section not found!'); // Debug
             }
         });
     </script>

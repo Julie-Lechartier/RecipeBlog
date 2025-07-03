@@ -15,25 +15,16 @@ class LoginController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        if ($error instanceof AuthenticationException) {
-            dump([
-                'error_message' => $error->getMessage(),
-                'error_code' => $error->getCode(),
-                'error_data' => $error->getMessageData(),
-            ]);
+        $errorMessage = null;
+
+        if ($error) {
+            $errorMessage = 'Nom d\'utilisateur ou mot de passe invalide.';
         }
-        // Check if the user is already logged in
-        if ($this->getUser()) {
-            dump([
-                'user' => $this->getUser()->getUserIdentifier(),
-                'roles' => $this->getUser()->getRoles(),
-            ]);
-        }
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error,
+            'error' => $errorMessage,
         ]);
     }
 

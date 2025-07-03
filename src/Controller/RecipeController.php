@@ -75,7 +75,7 @@ class RecipeController extends AbstractController
             'currentCategoryId' => $categoryEntity->getId()
         ]);
     }
-    #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_new_recipe', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $recipe = new Recipe();

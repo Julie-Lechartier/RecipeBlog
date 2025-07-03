@@ -6,9 +6,12 @@ use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
@@ -313,11 +316,23 @@ class Recipe
 
         return $this;
     }
-    public function initializeSlug(): void
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeSlug(PreUpdateEventArgs $eventArgs = null): void
     {
-        if (empty($this->slug) && $this->title) {
-            $slugger = new \Symfony\Component\String\Slugger\AsciiSlugger();
-            $this->slug = strtolower($slugger->slug($this->title));
+        $slugger = new AsciiSlugger();
+
+        if ($eventArgs) {
+            if ($eventArgs->hasChangedField('title')) {
+                $newTitle = $eventArgs->getNewValue('title');
+                if (!empty($newTitle)) {
+                    $this->slug = strtolower($slugger->slug($newTitle));
+                }
+            }
+        } else {
+            if (empty($this->slug) && $this->title) {
+                $this->slug = strtolower($slugger->slug($this->title));
+            }
         }
     }
 }

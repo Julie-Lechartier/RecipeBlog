@@ -141,9 +141,13 @@ input[type="color"]:focus,
 }
 
 /* Recipe Card */
+.recipe-scroll{
+ box-shadow: inset 0  10px rgba(0,0,0,0.1);
+}
 .scroll-container {
     display: flex;
     overflow-x: auto;
+    gap: 15px;
     padding: 10px 0;
     gap:0!important;
 }

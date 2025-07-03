@@ -23,9 +23,10 @@
                     <div class="">
                         <form method="post">
                             {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
                             {% endif %}
-
                             {% if app.user %}
                                 <div class="mb-3">
                                     You are logged in as {{ app.user.userIdentifier }}, <a

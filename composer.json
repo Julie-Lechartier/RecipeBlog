@@ -50,7 +50,8 @@
         "symfony/yaml": "6.4.*",
         "twbs/bootstrap-icons": "^1.11",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+      "ext-http": "*"
     },
     "config": {
         "allow-plugins": {
@@ -103,7 +104,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.0",
-        "phpunit/phpunit": "^9.6",
+        "phpunit/phpunit": "^9.5",
         "smknstd/fakerphp-picsum-images": "^1.0",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",

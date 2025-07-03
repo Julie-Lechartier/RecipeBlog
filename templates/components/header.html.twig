@@ -2,7 +2,7 @@
         aria-label="Offcanvas navbar large"
         style="height: 55px;">
     <div class="container-fluid w-100">
-        <div class="row px-2 mx-0 no-wrap align-items-center">
+        <div class="row px-2 mx-0 no-wrap align-items-center justify-content-between w-100">
             <!-- Modal nav button Start -->
             <button class="d-lg-none navbar-toggler col-6 border-0 d-flex justify-content-start align-items-center shadow-none"
                     type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -16,7 +16,7 @@
                 <a href="{{ path('app_home') }}" class="text-decoration-none text-black"><img src="{{ asset('images/Logo_ma_meilleure_recette.png') }}" alt="Logo du site ma meilleur recette" style="width: 130px"></a>
             </div>
             <!-- Nav Start -->
-            <div class="col-5 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold text-center"
+            <div class="col-5 offcanvas offcanvas-start offcanvas-fullscreen text-custom-black bg-white fw-bold d-flex justify-content-center"
                  tabindex="-1" id="offcanvasNavbar"
                  aria-labelledby="offcanvasNavbarLabel">
                 <!-- Nav Mobile header-->
@@ -29,7 +29,7 @@
                 </div>
                 <!-- Nav body -->
                 <div class="offcanvas-body overflow-lg-hidden">
-                    <ul class="navbar-nav gap-2 justify-content-end align-items-center flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
+                    <ul class="navbar-nav gap-2 justify-content-center align-items-center flex-grow-1 text-uppercase tw-bold text-lg-center text-start">
                         <li class="nav-item">
                             <a href="{{ path('app_recipe_category_show', {'category' : 'apero'}) }}"
                                class="text-decoration-none nav-link-hover position-relative text-black {{ app.request.get('_route') == 'app_recipe_category_show' and app.request.get('category') == 'apero' ? 'active' : '' }}">
@@ -78,8 +78,6 @@
                     </ul>
                 </div>
             </div>
-            </div>
-            <!-- Nav End -->
             <div class="col-2 d-flex col-lg-1 justify-content-end">
                 <div class="dropdown">
                     <button class="btn align-content-center text-black dropdown-toggle" type="button"
@@ -117,6 +115,9 @@
                     </ul>
                 </div>
             </div>
+            </div>
+            <!-- Nav End -->
+
         </div>
     </div>
 </header>

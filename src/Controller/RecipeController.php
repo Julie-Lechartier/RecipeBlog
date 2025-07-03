@@ -92,6 +92,8 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setCreateAt(new \DateTimeImmutable());
+
             if (empty($recipe->getTitle())) {
                 $this->addFlash('error', 'Le titre est requis pour générer un slug');
                 return $this->render('recipe/new.html.twig', [
@@ -107,24 +109,29 @@ class RecipeController extends AbstractController
             }
 
             $recipe->setSlug($slug);
+
             $stepNumber = 1;
             foreach ($recipe->getSteps() as $step) {
                 $step->setStepNumber($stepNumber);
+                $step->setRecipe($recipe);
                 $stepNumber++;
+            }
+
+            foreach ($recipe->getRecipeIngredients() as $recipeIngredient) {
+                $recipeIngredient->setRecipe($recipe);
             }
 
             // Image
             $imageFile = $form->get('image')->getData();
+            // TODO: Traitement de l'image si nécessaire
 
-            // Categories
-            $category = $form->get('category')->getData();
-            foreach ($category as $categoryItem) {
-                $recipe->addCategory($categoryItem);
+            $categories = $form->get('category')->getData();
+            if ($categories) {
+                foreach ($categories as $categoryItem) {
+                    $recipe->addCategory($categoryItem);
+                }
             }
-            // Slug
-            if (empty($recipe->getSlug())) {
-                $recipe->setSlug($this->slugger->slug('recette-' . uniqid())->lower());
-            }
+
             $entityManager->persist($recipe);
             try {
                 $entityManager->flush();
@@ -132,6 +139,9 @@ class RecipeController extends AbstractController
                 return $this->redirectToRoute('app_home');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
+
+                error_log('Erreur création recette: ' . $e->getMessage());
+                error_log('Stack trace: ' . $e->getTraceAsString());
             }
         }
 
